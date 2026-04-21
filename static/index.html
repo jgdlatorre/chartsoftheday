@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CandleEye">
+<meta name="theme-color" content="#0B0E11">
+<title>Charts of the Day</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    font-family: 'Nunito', system-ui, sans-serif;
+    background: #0B0E11;
+    color: #EAECEF;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+  }
+  body {
+    padding: max(12px, env(safe-area-inset-top)) 10px max(20px, env(safe-area-inset-bottom)) 10px;
+    position: relative;
+    overflow-x: hidden;
+  }
+  /* Decorative golden arcs, WOTD-style */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 900px; height: 900px;
+    border: 1px solid rgba(240, 185, 11, 0.12);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    border: 1px solid rgba(240, 185, 11, 0.2);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  #root { width: 100%; max-width: 520px; margin: 0 auto; position: relative; z-index: 1; }
+
+  h1, .display { font-family: 'Fraunces', 'Georgia', serif; font-weight: 700; letter-spacing: -0.02em; }
+
+  .card {
+    background: #1E2026;
+    border: 1px solid #2B3139;
+    border-radius: 16px;
+    padding: 18px 16px;
+  }
+
+  .btn {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    padding: 18px 0;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.08s, opacity 0.2s;
+    letter-spacing: 0.02em;
+    color: #0B0E11;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+  /* Trading buttons keep green/red (market colors) */
+  .btn-long { background: #0ECB81; color: #FFFFFF; }
+  .btn-short { background: #F6465D; color: #FFFFFF; }
+  .btn-primary { background: #F0B90B; color: #0B0E11; }
+  .btn-ghost { background: transparent; color: #EAECEF; border: 1px solid #2B3139; }
+
+  /* Outcomes: gold (hit) / slate-blue (miss) — preserve from CandleEye philosophy */
+  .hit-bg { background: #F0B90B; color: #0B0E11; }
+  .hit-fg { color: #F0B90B; }
+  .miss-bg { background: #5E6673; color: #EAECEF; }
+  .miss-fg { color: #848E9C; }
+
+  .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #2B3139; border: 1.5px solid #3C434D;
+    transition: background 0.25s, transform 0.25s;
+  }
+  .dot.hit { background: #F0B90B; border-color: #F0B90B; }
+  .dot.miss { background: #5E6673; border-color: #5E6673; }
+  .dot.active { background: #F0B90B; opacity: 0.5; box-shadow: 0 0 0 3px rgba(240,185,11,0.25); }
+
+  .chip {
+    display: inline-block; font-size: 12px; font-weight: 700;
+    padding: 4px 10px; border-radius: 999px;
+    background: #1E2026; color: #EAECEF; margin: 3px;
+    border: 1px solid #2B3139;
+  }
+
+  .tf-group {
+    display: inline-flex; background: #1E2026; border: 1px solid #2B3139;
+    border-radius: 10px; padding: 2px; gap: 2px;
+  }
+  .tf-btn {
+    font-family: 'Nunito'; font-weight: 700; font-size: 12px;
+    padding: 4px 10px; border: none; background: transparent;
+    color: #848E9C; cursor: pointer; border-radius: 8px;
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+    transition: background 0.12s, color 0.12s;
+  }
+  .tf-btn.tf-active {
+    background: #F0B90B; color: #0B0E11;
+  }
+  .tf-btn:disabled { cursor: not-allowed; }
+  .tf-btn.tf-locked { opacity: 0.35; }
+
+  .lang-group {
+    display: inline-flex; background: #1E2026; border: 1px solid #2B3139;
+    border-radius: 10px; padding: 2px; gap: 2px;
+  }
+  .lang-btn {
+    font-family: 'Nunito', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+    font-weight: 700; font-size: 12px;
+    padding: 5px 12px; border: none; background: transparent;
+    color: #848E9C; cursor: pointer; border-radius: 8px;
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+    transition: background 0.12s, color 0.12s;
+  }
+  .lang-btn.lang-active {
+    background: #F0B90B; color: #0B0E11;
+  }
+
+  /* First-play tooltips */
+  .ce-tooltip {
+    position: absolute; z-index: 1000;
+    background: #2C3E50; color: #FFFBF5;
+    font-family: 'Nunito', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+    font-size: 13px; font-weight: 600;
+    padding: 10px 14px; border-radius: 10px;
+    max-width: 260px; line-height: 1.35;
+    box-shadow: 0 4px 16px rgba(44,62,80,0.25);
+    opacity: 0; transform: translateY(-4px);
+    transition: opacity 180ms ease, transform 180ms ease;
+    pointer-events: none;
+  }
+  .ce-tooltip.visible { opacity: 1; transform: translateY(0); }
+  .ce-tooltip::before {
+    content: ''; position: absolute;
+    width: 0; height: 0;
+    border-style: solid;
+  }
+  .ce-tooltip.arrow-up::before {
+    top: -8px; left: 24px;
+    border-width: 0 8px 10px 8px;
+    border-color: transparent transparent #2C3E50 transparent;
+  }
+  .ce-tooltip.arrow-down::before {
+    bottom: -8px; left: 24px;
+    border-width: 10px 8px 0 8px;
+    border-color: #2C3E50 transparent transparent transparent;
+  }
+
+  @keyframes pop {
+    0% { transform: scale(0.85); opacity: 0; }
+    60% { transform: scale(1.08); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .pop { animation: pop 0.4s cubic-bezier(0.2, 0.8, 0.4, 1.2) both; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
+  }
+  .shake { animation: shake 0.35s both; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in { animation: fadeIn 0.28s ease-out both; }
+
+  /* Button "chosen" pulse — fires right after user taps, before reveal arrives */
+  @keyframes chosenPulse {
+    0% { transform: translateY(3px) scale(1); box-shadow: 0 1px 0 #2C3E50; }
+    40% { transform: translateY(0) scale(1.04); box-shadow: 0 6px 0 #2C3E50, 0 0 0 6px rgba(255,217,61,0.35); }
+    100% { transform: translateY(0) scale(1); box-shadow: 0 4px 0 #2C3E50; }
+  }
+  .chosen { animation: chosenPulse 0.45s ease-out both; }
+
+  /* Timer-big: appears in last 4s, over the chart */
+  .timer-big {
+    position: absolute; top: 10px; right: 10px;
+    background: #FFD93D; color: #2C3E50;
+    font-family: 'Fraunces', serif; font-weight: 700;
+    font-size: 40px; line-height: 1;
+    padding: 8px 14px; border-radius: 12px;
+    border: 2px solid #2C3E50;
+    box-shadow: 0 3px 0 #2C3E50;
+    pointer-events: none;
+    animation: timerPulse 0.6s ease-in-out infinite alternate;
+  }
+  .timer-big.danger { background: #FF8A7A; color: #2C3E50; animation-duration: 0.3s; }
+  @keyframes timerPulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
+  }
+
+  /* Count-up number animation — pops when score updates */
+  @keyframes scoreBump {
+    0% { transform: scale(1); color: #EAECEF; }
+    40% { transform: scale(1.25); color: #F0B90B; }
+    100% { transform: scale(1); color: #EAECEF; }
+  }
+  .score-bump { animation: scoreBump 0.5s ease-out both; }
+  @keyframes scoreBumpMiss {
+    0% { transform: scale(1); color: #EAECEF; }
+    30% { transform: scale(0.92); color: #848E9C; }
+    100% { transform: scale(1); color: #EAECEF; }
+  }
+  .score-bump-miss { animation: scoreBumpMiss 0.45s ease-out both; }
+
+  /* Confetti container — absolute overlay */
+  #confetti-layer {
+    position: fixed; inset: 0; pointer-events: none; z-index: 100; overflow: hidden;
+  }
+  .confetti {
+    position: absolute; width: 10px; height: 14px;
+    top: -20px;
+    animation: fall linear forwards;
+  }
+  @keyframes fall {
+    to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  .timer-bar { height: 6px; border-radius: 3px; background: #2B3139; overflow: hidden; }
+  .timer-fill { height: 100%; background: #F0B90B; transition: width 0.1s linear, background 0.2s; }
+
+  #chart-wrap {
+    background: #FFFFFF;
+    border-radius: 12px;
+    border: 1px solid #2B3139;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 420 / 520;
+    width: 100%;
+  }
+
+  .meta-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #848E9C; }
+
+  .link-btn {
+    background: none; border: none; color: #848E9C; text-decoration: underline;
+    font-family: 'Nunito'; font-size: 13px; cursor: pointer; padding: 0;
+  }
+
+  table.trades { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table.trades th, table.trades td { padding: 6px 4px; text-align: left; border-bottom: 1px solid #2B3139; }
+  table.trades th { font-weight: 700; color: #848E9C; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; }
+  table.trades td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .status-pill { padding: 2px 8px; border-radius: 999px; font-weight: 700; font-size: 11px; }
+  .pill-hit { background: #F0B90B; color: #0B0E11; }
+  .pill-miss { background: #5E6673; color: #FFFFFF; }
+</style>
+</head>
+<body>
+<div id="confetti-layer"></div>
+<div id="root">
+  <div id="screen"></div>
+</div>
+
+<script>
+'use strict';
+
+// ──────────────────────────────────────────────────────────────
+// Config & state
+// ──────────────────────────────────────────────────────────────
+const CONTEXT_BARS = 80;
+const FUTURE_BARS = 48;
+const ROUND_SECONDS = 10;
+const ROUNDS_PER_GAME = 5;  // COTD: 5 charts per day
+
+// ──────────────────────────────────────────────────────────────
+// i18n — dictionary + helpers
+// ──────────────────────────────────────────────────────────────
+const I18N = {
+  es: {
+    langName: 'Español',
+    appTagline: 'Lee el mercado en 10 segundos',
+    // Charts of the Day (COTD) — adapted from Binance WOTD framework
+    cotdName: 'Gráficos del día',
+    cotdSharePool: 'Comparte 500 puntos',
+    cotdPeriod: (from, to) => `De ${from} a ${to}`,
+    cotdTheme: 'Tema',
+    cotdThemeCurrent: 'Mercados alcistas',
+    cotdPerformance: 'Tu resultado',
+    cotdWeekdays: ['L', 'M', 'X', 'J', 'V', 'S', 'D'],
+    cotdPerformancePeriod: (from, to) => `Periodo: entre ${from} y ${to}`,
+    cotdPlay: 'Jugar',
+    cotdObtain: 'Obtén',
+    cotdWinsNeeded: 'Acierta 3 días para obtener recompensas',
+    cotdParticipants: 'Número total de participantes',
+    cotdRewardPool: 'Pool de recompensas',
+    cotdHistory: 'Historial de actividad',
+    cotdHowToPlay: 'Cómo jugar',
+    cotdHowInstruction: 'Decide si suben o bajan los 5 gráficos del día. Tienes 10 segundos para cada uno.',
+    cotdHowCorrect: 'Acierto: el precio fue en tu dirección',
+    cotdHowWrong: 'Fallo: el precio fue en la dirección opuesta',
+    cotdHowStreak: 'Los usuarios que acierten 3 días podrán optar al reparto del pool de recompensas.',
+    cotdConfirm: 'Confirmar',
+    cotdNextChart: 'Nuevos gráficos en:',
+    cotdAlreadyPlayed: 'Ya has jugado hoy',
+    cotdComeBackTomorrow: 'Vuelve mañana para el siguiente gráfico',
+    cotdPlayNow: 'Jugar hoy',
+    cotdResultHit: '¡Acierto!',
+    cotdResultMiss: 'Fallo',
+    cotdResultYourStreak: (n) => `Tu racha esta semana: ${n}/3`,
+    cotdShareTitle: '¡Pon a prueba tu ojo con los Gráficos del día!',
+    cotdShareButton: 'Compartir',
+    cotdReferralCode: 'Código de referido',
+    cotdShareLink: 'Compartir enlace',
+    homeRules1Html: '<b>5 rondas</b> · <b>10 segundos</b> cada una',
+    homeRules2Html: 'Gráfico real. Decides <b style="color:#2D7D4E;">SUBE</b> o <b style="color:#A3352F;">BAJA</b>.',
+    homeRules3Html: '¿Sube o baja en las próximas <b>48 velas</b>?',
+    homeStart: 'Empezar',
+    homePitch: '10 segundos. El gráfico. Contra 100 bots.',
+    // TODO: replace with compliance-approved copy before public launch
+    disclaimerHome: 'Aplicación educativa. Los resultados pasados no garantizan resultados futuros.',
+    disclaimerSummary1: 'Aplicación educativa con datos históricos. Los resultados simulados no representan trading real.',
+    disclaimerSummary2: 'No es asesoramiento financiero. Los aciertos pasados no garantizan aciertos futuros.',
+    loading: 'cargando vela aleatoria...',
+    round: 'ronda',
+    anonymousAsset: 'activo anónimo',
+    streakLabel: 'racha',
+    monkeySentiment: '100 bots opinan:',
+    long: 'sube',
+    short: 'baja',
+    btnLong: '↑ SUBE',
+    btnShort: '↓ BAJA',
+    nextRound: 'siguiente ronda...',
+    monkeyHitCount: (n) => `🤖 ${n}/100`,
+    // summary
+    gameOver: 'SESIÓN TERMINADA',
+    summaryHits: (h) => `${h}A`,
+    summaryMisses: (m) => `${m}F`,
+    summaryTimeouts: (t) => `${t}T`,
+    summaryAvgDecision: (s) => `Ø ${s}s`,
+    verdictStrong: 'Tienes ojo. Los bots ni se acercaron.',
+    verdictSlight: 'Buen ojo. Les ganaste a los bots con claridad.',
+    verdictTied: 'Los bots te miraron a los ojos. Empate.',
+    verdictWorse: 'Los bots ganaron esta vez. Por poco.',
+    verdictCrushed: 'Los bots te ganaron. Por mucho.',
+    vsMonkey: 'VS BOTS · PERCENTIL',
+    you: 'tú',
+    monkey: 'bots',
+    top: 'top',
+    diff: 'diff',
+    history: 'HISTORIAL',
+    replay: 'Empezar',
+    home: 'inicio',
+    profileStrong: 'fuerte',
+    profileMid: 'medio',
+    profileWeak: 'débil',
+    // First-play tooltips
+    tooltipTimer: '10 segundos. Sin pausa, sin saltar.',
+    tooltipButtons: '¿Sube o baja en las próximas 48 velas?',
+    tooltipMonkey: '100 bots votan en la misma ronda. Gánales.',
+    // date
+    months: ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'],
+    formatDate: (d, months) => {
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${day} ${months[d.getMonth()]} ${d.getFullYear()}`;
+    },
+  },
+  en: {
+    langName: 'English',
+    appTagline: 'Read the market in 10 seconds',
+    cotdName: 'Charts of the Day',
+    cotdSharePool: 'Share 500 points',
+    cotdPeriod: (from, to) => `From ${from} to ${to}`,
+    cotdTheme: 'Theme',
+    cotdThemeCurrent: 'Bull markets',
+    cotdPerformance: 'Your result',
+    cotdWeekdays: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+    cotdPerformancePeriod: (from, to) => `Period: between ${from} and ${to}`,
+    cotdPlay: 'Play',
+    cotdObtain: 'Earn',
+    cotdWinsNeeded: 'Win 3 days to earn rewards',
+    cotdParticipants: 'Total participants',
+    cotdRewardPool: 'Reward pool',
+    cotdHistory: 'Activity history',
+    cotdHowToPlay: 'How to play',
+    cotdHowInstruction: "Decide if today's 5 charts go up or down. 10 seconds each.",
+    cotdHowCorrect: 'Hit: price went your way',
+    cotdHowWrong: 'Miss: price went the opposite way',
+    cotdHowStreak: 'Users who win on 3 days become eligible to share the reward pool.',
+    cotdConfirm: 'Confirm',
+    cotdNextChart: 'New charts in:',
+    cotdAlreadyPlayed: 'Already played today',
+    cotdComeBackTomorrow: 'Come back tomorrow for the next chart',
+    cotdPlayNow: 'Play today',
+    cotdResultHit: 'Hit!',
+    cotdResultMiss: 'Miss',
+    cotdResultYourStreak: (n) => `Your streak this week: ${n}/3`,
+    cotdShareTitle: 'Test your eye with the Charts of the Day!',
+    cotdShareButton: 'Share',
+    cotdReferralCode: 'Referral code',
+    cotdShareLink: 'Share link',
+    homeRules1Html: '<b>5 rounds</b> · <b>10 seconds</b> each',
+    homeRules2Html: 'Real chart. Choose <b style="color:#2D7D4E;">UP</b> or <b style="color:#A3352F;">DOWN</b>.',
+    homeRules3Html: 'Will it go up or down in the next <b>48 candles</b>?',
+    homeStart: 'Start',
+    homePitch: '10 seconds. The chart. Against 100 bots.',
+    disclaimerHome: 'Educational app. Past results do not guarantee future results.',
+    disclaimerSummary1: 'Educational app using historical data. Simulated results do not represent actual trading.',
+    disclaimerSummary2: 'Not financial advice. Past wins do not guarantee future wins.',
+    loading: 'loading random candle...',
+    round: 'round',
+    anonymousAsset: 'anonymous asset',
+    streakLabel: 'streak',
+    monkeySentiment: '100 bots think:',
+    long: 'up',
+    short: 'down',
+    btnLong: '↑ UP',
+    btnShort: '↓ DOWN',
+    nextRound: 'next round...',
+    monkeyHitCount: (n) => `🤖 ${n}/100`,
+    gameOver: 'SESSION ENDED',
+    summaryHits: (h) => `${h}H`,
+    summaryMisses: (m) => `${m}M`,
+    summaryTimeouts: (t) => `${t}T`,
+    summaryAvgDecision: (s) => `Ø ${s}s`,
+    verdictStrong: "You've got the eye. The bots weren't close.",
+    verdictSlight: 'Good eye. You beat the bots clearly.',
+    verdictTied: 'The bots looked you in the eye. Tie.',
+    verdictWorse: 'The bots won this time. Barely.',
+    verdictCrushed: 'The bots won. By a lot.',
+    vsMonkey: 'VS BOTS · PERCENTILE',
+    you: 'you',
+    monkey: 'bots',
+    top: 'top',
+    diff: 'diff',
+    history: 'HISTORY',
+    replay: 'Start',
+    home: 'home',
+    profileStrong: 'strong',
+    profileMid: 'mid',
+    profileWeak: 'weak',
+    tooltipTimer: '10 seconds. No pause, no skip.',
+    tooltipButtons: 'Up or down in the next 48 candles?',
+    tooltipMonkey: '100 bots vote the same round. Beat them.',
+    months: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    formatDate: (d, months) => {
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${months[d.getMonth()]} ${day}, ${d.getFullYear()}`;
+    },
+  },
+  zh: {
+    langName: '简体中文',
+    appTagline: '10秒看懂市场',
+    cotdName: '每日图表',
+    cotdSharePool: '瓜分 500 积分',
+    cotdPeriod: (from, to) => `${from} 至 ${to}`,
+    cotdTheme: '主题',
+    cotdThemeCurrent: '牛市行情',
+    cotdPerformance: '您的结果',
+    cotdWeekdays: ['一', '二', '三', '四', '五', '六', '日'],
+    cotdPerformancePeriod: (from, to) => `期间: ${from} 至 ${to}`,
+    cotdPlay: '游玩',
+    cotdObtain: '获得',
+    cotdWinsNeeded: '答对 3 天即可获得奖励',
+    cotdParticipants: '参与总人数',
+    cotdRewardPool: '奖励池',
+    cotdHistory: '活动历史',
+    cotdHowToPlay: '如何游玩',
+    cotdHowInstruction: '判断今日 5 张图表是涨是跌。每张 10 秒。',
+    cotdHowCorrect: '命中: 价格如你所料',
+    cotdHowWrong: '错过: 价格反方向',
+    cotdHowStreak: '本期间内答对 3 天的用户将可瓜分奖励池。',
+    cotdConfirm: '确认',
+    cotdNextChart: '新图表将在:',
+    cotdAlreadyPlayed: '今天已完成',
+    cotdComeBackTomorrow: '明天再来看下一个图表',
+    cotdPlayNow: '今日游玩',
+    cotdResultHit: '命中!',
+    cotdResultMiss: '错过',
+    cotdResultYourStreak: (n) => `本周连胜: ${n}/3`,
+    cotdShareTitle: '用每日图表考验你的眼光!',
+    cotdShareButton: '分享',
+    cotdReferralCode: '推荐代码',
+    cotdShareLink: '分享链接',
+    homeRules1Html: '<b>5 局</b> · 每局 <b>10 秒</b>',
+    homeRules2Html: '币安图表。选 <b style="color:#2D7D4E;">涨</b> 或 <b style="color:#A3352F;">跌</b>。',
+    homeRules3Html: '接下来的 <b>48 根K线</b> 会涨还是跌？',
+    homeStart: '开始',
+    homePitch: '10 秒。看图表。对战 100 个机器人。',
+    disclaimerHome: '教育应用。过往表现不代表未来结果。',
+    disclaimerSummary1: '基于历史数据的教育应用。模拟结果不代表真实交易。',
+    disclaimerSummary2: '非投资建议。过去的成绩不保证未来的成绩。',
+    loading: '加载随机K线中...',
+    round: '局',
+    anonymousAsset: '匿名标的',
+    streakLabel: '连胜',
+    monkeySentiment: '100 个机器人的看法:',
+    long: '涨',
+    short: '跌',
+    btnLong: '↑ 涨',
+    btnShort: '↓ 跌',
+    nextRound: '下一局...',
+    monkeyHitCount: (n) => `🤖 ${n}/100`,
+    gameOver: '本局结束',
+    summaryHits: (h) => `对${h}`,
+    summaryMisses: (m) => `错${m}`,
+    summaryTimeouts: (t) => `超时${t}`,
+    summaryAvgDecision: (s) => `平均 ${s}秒`,
+    verdictStrong: '你有眼光。机器人根本追不上。',
+    verdictSlight: '眼光不错。明显赢过机器人。',
+    verdictTied: '机器人和你打成平手。',
+    verdictWorse: '这次机器人赢了。差一点。',
+    verdictCrushed: '机器人大胜。',
+    vsMonkey: '对比机器人 · 百分位',
+    you: '你',
+    monkey: '机器人',
+    top: '前',
+    diff: '差距',
+    history: '历史',
+    replay: '开始',
+    home: '首页',
+    profileStrong: '强',
+    profileMid: '中',
+    profileWeak: '弱',
+    tooltipTimer: '10 秒。不能暂停，不能跳过。',
+    tooltipButtons: '接下来 48 根K线，涨还是跌？',
+    tooltipMonkey: '100 个机器人也在投票。打败它们。',
+    months: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+    formatDate: (d, months) => {
+      return `${d.getFullYear()}年${months[d.getMonth()]}${d.getDate()}日`;
+    },
+  },
+};
+
+function detectLang() {
+  // localStorage wins
+  try {
+    const saved = localStorage.getItem('candleeye_lang');
+    if (saved && I18N[saved]) return saved;
+  } catch (e) {}
+  // Fallback: navigator
+  const nav = (navigator.language || 'es').toLowerCase();
+  if (nav.startsWith('zh')) return 'zh';
+  if (nav.startsWith('en')) return 'en';
+  return 'es';
+}
+function setLang(code) {
+  if (!I18N[code]) return;
+  state.lang = code;
+  try { localStorage.setItem('candleeye_lang', code); } catch (e) {}
+}
+function t(key) {
+  const dict = I18N[state.lang] || I18N.es;
+  const fallback = I18N.es;
+  return dict[key] !== undefined ? dict[key] : fallback[key];
+}
+function formatDate(iso) {
+  const d = new Date(iso);
+  const dict = I18N[state.lang] || I18N.es;
+  return dict.formatDate(d, dict.months);
+}
+
+const state = {
+  screen: 'home',
+  round: 0,
+  score: 0,
+  streak: 0,
+  history: [],
+  monkeyScore: 0,
+  current: null,
+  tfActive: '1h',
+  currentStart: 0,
+  timerHandle: null,
+  timerStart: 0,
+  lastReveal: null,
+  lang: 'es',  // set from detectLang() at boot
+};
+
+function streakMult(s) {
+  if (s >= 5) return 2.5;
+  if (s >= 4) return 2;
+  if (s >= 3) return 1.5;
+  if (s >= 2) return 1.2;
+  return 1;
+}
+
+// ──────────────────────────────────────────────────────────────
+// Haptic feedback (works in PWAs, limited in plain Safari iOS)
+// ──────────────────────────────────────────────────────────────
+function haptic(pattern) {
+  if (navigator.vibrate) {
+    try { navigator.vibrate(pattern); } catch (e) {}
+  }
+}
+
+// ──────────────────────────────────────────────────────────────
+// Confetti (small celebration only for streak hits ≥ 2)
+// Intensity scales with streak: subtle at ×1.2, big at ×2.5.
+// ──────────────────────────────────────────────────────────────
+const CONFETTI_COLORS = ['#FFD93D', '#F0B847', '#B8860B', '#7BD389', '#FFFBF5'];
+function burstConfetti(intensity) {
+  const layer = document.getElementById('confetti-layer');
+  if (!layer) return;
+  const n = Math.round(12 + intensity * 40); // 12 to ~52
+  const vw = window.innerWidth;
+  for (let i = 0; i < n; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti';
+    const color = CONFETTI_COLORS[i % CONFETTI_COLORS.length];
+    const startX = vw * 0.5 + (Math.random() - 0.5) * vw * 0.9;
+    const drift = (Math.random() - 0.5) * 200;
+    const dur = 1.4 + Math.random() * 1.4;
+    const delay = Math.random() * 0.2;
+    const rot = Math.random() * 360;
+    el.style.left = startX + 'px';
+    el.style.background = color;
+    el.style.animationDuration = dur + 's';
+    el.style.animationDelay = delay + 's';
+    el.style.transform = `translateX(${drift}px) rotate(${rot}deg)`;
+    layer.appendChild(el);
+    setTimeout(() => el.remove(), (dur + delay) * 1000 + 100);
+  }
+}
+
+// ──────────────────────────────────────────────────────────────
+// Indicator math
+// ──────────────────────────────────────────────────────────────
+function sma(bars, period, field) {
+  field = field || 'c';
+  const out = new Array(bars.length).fill(null);
+  let sum = 0;
+  for (let i = 0; i < bars.length; i++) {
+    sum += bars[i][field];
+    if (i >= period) sum -= bars[i - period][field];
+    if (i >= period - 1) out[i] = sum / period;
+  }
+  return out;
+}
+
+// ──────────────────────────────────────────────────────────────
+// Chart (light background, Binance-web-style)
+//
+// Bars layout (index-wise):
+//   [0                  warmup-1][warmup ... warmup+context-1][future...]
+//   ▲ SMAs computed from here      ▲ context visible           ▲ future (if showAll)
+//
+// Horizontally, the SVG is divided so the future occupies 37.5% of the x-axis
+// from the start — even when we haven't revealed it yet — so the composition
+// doesn't shift on reveal.
+// ──────────────────────────────────────────────────────────────
+function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
+  // allBars includes warmup + context (always) and future (only if showAll)
+  const contextEnd = warmupCount + contextBars;
+  const visibleFrom = warmupCount;
+  const visibleTo = showAll ? allBars.length : contextEnd;
+
+  const W = 420, H = 520;
+  const padL = 8, padR = 8;
+  const priceTop = 14, priceBot = 420;
+  const volTop = 434, volBot = 500;
+
+  // SMAs computed over ALL bars (warmup + context + future if any)
+  const s50  = sma(allBars, 50);
+  const s200 = sma(allBars, 200);
+
+  // Price range auto-scales to include OHLC + visible SMAs (TradingView/Binance behavior).
+  // Without this, SMA 200 often falls outside the visible range, which looks like a bug
+  // to novices even though it's technically correct.
+  let minP = Infinity, maxP = -Infinity, maxV = 0;
+  for (let i = visibleFrom; i < visibleTo; i++) {
+    const b = allBars[i]; if (!b) continue;
+    if (b.l < minP) minP = b.l;
+    if (b.h > maxP) maxP = b.h;
+    if (b.v > maxV) maxV = b.v;
+    // Include SMA values in the range too
+    if (s50[i] != null) {
+      if (s50[i] < minP) minP = s50[i];
+      if (s50[i] > maxP) maxP = s50[i];
+    }
+    if (s200[i] != null) {
+      if (s200[i] < minP) minP = s200[i];
+      if (s200[i] > maxP) maxP = s200[i];
+    }
+  }
+  const padP = (maxP - minP) * 0.08;
+  minP -= padP; maxP += padP;
+
+  // X-axis layout: always reserve contextBars + futureBars slots in the usable width,
+  // so context occupies 62.5% and future occupies 37.5% — even when future is blank.
+  const slotsTotal = contextBars + futureBars;
+  const usableW = W - padL - padR;
+  const barW = usableW / slotsTotal;
+
+  // Map a bar global index to x-coordinate.
+  // Global index `warmup+k` corresponds to slot k on screen (0..CONTEXT+FUTURE-1).
+  const xAt = (globalIdx) => {
+    const slot = globalIdx - visibleFrom;  // 0 at first context bar
+    return padL + slot * barW + barW / 2;
+  };
+  const yPrice = p => priceTop + (priceBot - priceTop) * (1 - (p - minP) / (maxP - minP));
+  const yVol = v => volBot - (volBot - volTop) * (v / maxV);
+
+  let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="display:block; width:100%; height:auto;">`;
+
+  // Backgrounds (white main, slightly cream vol panel)
+  svg += `<rect x="0" y="0" width="${W}" height="${H}" fill="#FFFFFF"/>`;
+  svg += `<rect x="0" y="${volTop-2}" width="${W}" height="${volBot-volTop+4}" fill="#FBF7EE"/>`;
+
+  // Subtle horizontal grid in price area
+  for (let i = 1; i < 4; i++) {
+    const y = priceTop + (priceBot - priceTop) * i / 4;
+    svg += `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${W - padR}" y2="${y.toFixed(1)}" stroke="#E8E2D3" stroke-width="0.5"/>`;
+  }
+
+  // SMAs — draw only segments that fall inside the visible price range.
+  // If the SMA is entirely off-screen in the visible window, mark it in the
+  // legend so the user knows it exists but just isn't here.
+  function drawSMA(arr, color, width) {
+    let d = '';
+    let segmentsDrawn = 0;
+    let anyInRange = false;
+    for (let i = visibleFrom; i < visibleTo; i++) {
+      const v = arr[i];
+      if (v === null || v === undefined) continue;
+      // is this value inside the visible price range?
+      const inRange = v >= minP && v <= maxP;
+      if (inRange) {
+        anyInRange = true;
+        const y = yPrice(v);
+        d += (d === '' ? 'M' : 'L') + xAt(i).toFixed(1) + ' ' + y.toFixed(1) + ' ';
+      } else if (d !== '') {
+        // broke the segment — flush what we have and start fresh next inRange
+        svg += `<path d="${d}" stroke="${color}" stroke-width="${width}" fill="none" opacity="0.95" stroke-linejoin="round"/>`;
+        d = '';
+        segmentsDrawn++;
+      }
+    }
+    if (d !== '') {
+      svg += `<path d="${d}" stroke="${color}" stroke-width="${width}" fill="none" opacity="0.95" stroke-linejoin="round"/>`;
+      segmentsDrawn++;
+    }
+    return anyInRange;
+  }
+  const sma50InRange = drawSMA(s50,  '#D14B9A', 2);
+  const sma200InRange = drawSMA(s200, '#3A7AC8', 2.2);
+
+  // Candles + volume — combined into 6 <path> elements (2 per layer × 2 colors).
+  // This reduces node count from ~400 to 6 per chart, huge win on mobile Safari.
+  const candleW = Math.max(2.5, barW * 0.72);
+  const wickW = Math.max(1, barW * 0.12);
+  const halfCandle = candleW / 2;
+
+  let wickUpD = '', wickDnD = '';
+  let bodyUpD = '', bodyDnD = '';
+  let volUpD = '', volDnD = '';
+
+  for (let i = visibleFrom; i < visibleTo; i++) {
+    const b = allBars[i]; if (!b) continue;
+    const x = xAt(i);
+    const up = b.c >= b.o;
+    const yH = yPrice(b.h), yL = yPrice(b.l);
+    const yTop = yPrice(Math.max(b.o, b.c));
+    const yBot = yPrice(Math.min(b.o, b.c));
+    const bodyH = Math.max(1, yBot - yTop);
+    const vy = yVol(b.v);
+    const volH = volBot - vy;
+    const xLeft = x - halfCandle;
+
+    // Wick as "M x,yH L x,yL"
+    const wickSeg = 'M' + x.toFixed(1) + ' ' + yH.toFixed(1) + 'L' + x.toFixed(1) + ' ' + yL.toFixed(1);
+    // Body as rect-equivalent path "M xLeft,yTop h w v h h -w Z"
+    const bodySeg = 'M' + xLeft.toFixed(1) + ' ' + yTop.toFixed(1) +
+                    'h' + candleW.toFixed(1) + 'v' + bodyH.toFixed(1) +
+                    'h' + (-candleW).toFixed(1) + 'Z';
+    const volSeg = 'M' + xLeft.toFixed(1) + ' ' + vy.toFixed(1) +
+                   'h' + candleW.toFixed(1) + 'v' + volH.toFixed(1) +
+                   'h' + (-candleW).toFixed(1) + 'Z';
+
+    if (up) {
+      wickUpD += wickSeg;
+      bodyUpD += bodySeg;
+      volUpD += volSeg;
+    } else {
+      wickDnD += wickSeg;
+      bodyDnD += bodySeg;
+      volDnD += volSeg;
+    }
+  }
+
+  // Order: volumes first (they're below), then bodies, then wicks on top.
+  if (volUpD) svg += `<path d="${volUpD}" fill="#26A69A" opacity="0.55"/>`;
+  if (volDnD) svg += `<path d="${volDnD}" fill="#EF5350" opacity="0.55"/>`;
+  if (wickUpD) svg += `<path d="${wickUpD}" stroke="#26A69A" stroke-width="${wickW.toFixed(1)}" stroke-linecap="round" fill="none"/>`;
+  if (wickDnD) svg += `<path d="${wickDnD}" stroke="#EF5350" stroke-width="${wickW.toFixed(1)}" stroke-linecap="round" fill="none"/>`;
+  if (bodyUpD) svg += `<path d="${bodyUpD}" fill="#26A69A"/>`;
+  if (bodyDnD) svg += `<path d="${bodyDnD}" fill="#EF5350"/>`;
+
+  // Decision marker + future zone
+  const decisionGlobalIdx = contextEnd - 1;
+  const decisionX = xAt(decisionGlobalIdx) + barW / 2;
+
+  if (showAll) {
+    // Dotted vertical line at decision point
+    svg += `<line x1="${decisionX.toFixed(1)}" y1="${priceTop}" x2="${decisionX.toFixed(1)}" y2="${volBot}" stroke="#2C3E50" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>`;
+    // entry price horizontal guide
+    const entryY = yPrice(allBars[decisionGlobalIdx].c);
+    svg += `<line x1="${padL}" y1="${entryY.toFixed(1)}" x2="${W - padR}" y2="${entryY.toFixed(1)}" stroke="#B8860B" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.7"/>`;
+  } else {
+    // Reserved future zone — slightly cream, with a dotted vertical boundary
+    svg += `<rect x="${decisionX.toFixed(1)}" y="0" width="${(W - decisionX).toFixed(1)}" height="${H}" fill="#F5EFE0" opacity="0.55"/>`;
+    svg += `<line x1="${decisionX.toFixed(1)}" y1="${priceTop}" x2="${decisionX.toFixed(1)}" y2="${volBot}" stroke="#2C3E50" stroke-width="1" stroke-dasharray="3,3" opacity="0.45"/>`;
+    const midX = decisionX + (W - decisionX) / 2;
+    const midY = (priceTop + priceBot) / 2;
+    svg += `<text x="${midX.toFixed(1)}" y="${(midY + 10).toFixed(1)}" text-anchor="middle" fill="#8A95A8" font-family="Georgia, serif" font-size="36" font-weight="800">?</text>`;
+  }
+
+  // SMA legend (top-left, discreet). SMAs are always in range now thanks to auto-scale.
+  const legendW = 68;
+  svg += `<g font-family="Nunito" font-size="9" font-weight="700">`;
+  svg += `<rect x="${padL}" y="${priceTop}" width="${legendW}" height="30" fill="#FFFFFF" opacity="0.88"/>`;
+  svg += `<line x1="${padL + 4}" y1="${priceTop + 9}" x2="${padL + 18}" y2="${priceTop + 9}" stroke="#D14B9A" stroke-width="2"/>`;
+  svg += `<text x="${padL + 22}" y="${priceTop + 12}" fill="#5A6A85">SMA 50</text>`;
+  svg += `<line x1="${padL + 4}" y1="${priceTop + 23}" x2="${padL + 18}" y2="${priceTop + 23}" stroke="#3A7AC8" stroke-width="2.2"/>`;
+  svg += `<text x="${padL + 22}" y="${priceTop + 26}" fill="#5A6A85">SMA 200</text>`;
+  svg += `</g>`;
+
+  // Vol label
+  svg += `<text x="${padL}" y="${volTop + 12}" fill="#8A95A8" font-family="Nunito" font-size="9" font-weight="700">VOL</text>`;
+
+  svg += `</svg>`;
+  return svg;
+}
+
+// ──────────────────────────────────────────────────────────────
+// API
+// ──────────────────────────────────────────────────────────────
+async function apiGetRound(overrideIndex) {
+  // COTD mode: fetch today's chart N.
+  // For main flow, state.round has just been incremented (1..5), so use it.
+  // For prefetch, pass overrideIndex explicitly (next round).
+  const idx = overrideIndex != null ? overrideIndex : state.round;
+  const clamped = Math.max(1, Math.min(5, idx));
+  const r = await fetch(`/daily/${clamped}`);
+  if (!r.ok) throw new Error('round fetch failed');
+  return r.json();
+}
+
+async function apiDecide(roundId, decision, tfUsed) {
+  const r = await fetch('/decide', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({round_id: roundId, decision, tf_used: tfUsed}),
+  });
+  if (!r.ok) throw new Error('decide failed');
+  return r.json();
+}
+
+async function apiSaveSession(rounds) {
+  const r = await fetch('/session', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({rounds}),
+  });
+  return r.json();
+}
+
+// ──────────────────────────────────────────────────────────────
+// Game flow
+// ──────────────────────────────────────────────────────────────
+function startGame() {
+  state.round = 0;
+  state.score = 0;
+  state.streak = 0;
+  state.history = [];
+  state.monkeyScore = 0;
+  state._prefetchPromise = null;
+  nextRound();
+}
+
+// Hydrate compact bar arrays [o,h,l,c,v] into {o,h,l,c,v} objects the chart expects.
+function hydrateBars(arr) {
+  const out = new Array(arr.length);
+  for (let i = 0; i < arr.length; i++) {
+    const b = arr[i];
+    out[i] = { o: b[0], h: b[1], l: b[2], c: b[3], v: b[4] };
+  }
+  return out;
+}
+function hydrateRound(data) {
+  if (data && data.timeframes) {
+    for (const tfName in data.timeframes) {
+      const tf = data.timeframes[tfName];
+      if (tf && Array.isArray(tf.bars) && tf.bars.length > 0 && Array.isArray(tf.bars[0])) {
+        tf.bars = hydrateBars(tf.bars);
+      }
+    }
+    // Pre-render the 3 ciego SVGs once — avoids re-rendering on each TF switch.
+    data._svgCache = {};
+    for (const tfName in data.timeframes) {
+      const tf = data.timeframes[tfName];
+      const contextCount = tf.bars.length - tf.warmup_count;
+      data._svgCache[tfName] = renderChart(
+        tf.bars, tf.warmup_count, contextCount, tf.future_count, false
+      );
+    }
+  }
+  return data;
+}
+function hydrateFutureByTf(byTf) {
+  const out = {};
+  for (const tfName in byTf) {
+    const arr = byTf[tfName];
+    if (Array.isArray(arr) && arr.length > 0 && Array.isArray(arr[0])) {
+      out[tfName] = hydrateBars(arr);
+    } else {
+      out[tfName] = arr || [];
+    }
+  }
+  return out;
+}
+
+async function nextRound() {
+  if (state.round >= ROUNDS_PER_GAME) {
+    showSummary();
+    return;
+  }
+  state.round++;
+
+  // Use prefetched data if available; otherwise fetch now
+  let data;
+  if (state._prefetchPromise) {
+    renderLoading();
+    try {
+      data = await state._prefetchPromise;
+    } catch (err) {
+      screen.innerHTML = `<div class="card"><p>Error de red: ${err.message}</p></div>`;
+      return;
+    }
+    state._prefetchPromise = null;
+  } else {
+    renderLoading();
+    try {
+      data = await apiGetRound();
+    } catch (err) {
+      screen.innerHTML = `<div class="card"><p>Error de red: ${err.message}</p></div>`;
+      return;
+    }
+  }
+
+  hydrateRound(data);
+  state.current = data;
+  state.tfActive = '1h';
+  state.currentStart = Date.now();
+  renderPlay();
+  startTimer();
+  // First-ever play: show tooltips on round 1 only
+  if (state.round === 1) runFirstPlayTooltips();
+}
+
+function prefetchNextRound() {
+  // Fire-and-forget: starts downloading the next round during the reveal.
+  // state.round is the *current* round; prefetch the NEXT one.
+  if (state.round >= ROUNDS_PER_GAME) return;
+  const nextIdx = state.round + 1;
+  state._prefetchPromise = apiGetRound(nextIdx).catch(err => {
+    state._prefetchPromise = null;
+    throw err;
+  });
+}
+
+// ──────────────────────────────────────────────────────────────
+// First-play tooltips — shown once per user, then never again.
+// Stored in localStorage under candleeye_first_play_done.
+// ──────────────────────────────────────────────────────────────
+const TOOLTIP_STATE = { timeouts: [], active: null };
+
+function hasCompletedFirstPlay() {
+  try { return localStorage.getItem('candleeye_first_play_done') === '1'; } catch (e) { return false; }
+}
+function markFirstPlayComplete() {
+  try { localStorage.setItem('candleeye_first_play_done', '1'); } catch (e) {}
+}
+
+function clearAllTooltips() {
+  TOOLTIP_STATE.timeouts.forEach(clearTimeout);
+  TOOLTIP_STATE.timeouts = [];
+  const existing = document.querySelectorAll('.ce-tooltip');
+  existing.forEach(el => el.remove());
+  TOOLTIP_STATE.active = null;
+}
+
+function showTooltip(text, anchorId, position = 'below') {
+  clearAllTooltips();
+  const anchor = document.getElementById(anchorId);
+  if (!anchor) return;
+  const rect = anchor.getBoundingClientRect();
+  const screenRect = document.getElementById('screen').getBoundingClientRect();
+  const tip = document.createElement('div');
+  tip.className = 'ce-tooltip ' + (position === 'above' ? 'arrow-down' : 'arrow-up');
+  tip.textContent = text;
+  document.body.appendChild(tip);
+  // Position relative to viewport
+  const tipW = Math.min(260, screenRect.width - 40);
+  tip.style.maxWidth = tipW + 'px';
+  // Force layout to get height
+  const tipH = tip.offsetHeight;
+  let top, left;
+  if (position === 'above') {
+    top = rect.top + window.scrollY - tipH - 12;
+  } else {
+    top = rect.bottom + window.scrollY + 12;
+  }
+  // Horizontal: left-align to anchor but clamp within screen
+  left = rect.left + window.scrollX;
+  const maxLeft = screenRect.right + window.scrollX - tipW - 10;
+  const minLeft = screenRect.left + window.scrollX + 10;
+  if (left > maxLeft) left = maxLeft;
+  if (left < minLeft) left = minLeft;
+  tip.style.top = top + 'px';
+  tip.style.left = left + 'px';
+  // Fade in next tick
+  requestAnimationFrame(() => tip.classList.add('visible'));
+  TOOLTIP_STATE.active = tip;
+}
+
+function runFirstPlayTooltips() {
+  if (hasCompletedFirstPlay()) return;
+  // Wait 500ms after render for UI to settle, then show sequence
+  const schedule = (delay, fn) => {
+    TOOLTIP_STATE.timeouts.push(setTimeout(fn, delay));
+  };
+  schedule(500, () => showTooltip(t('tooltipTimer'), 'timer-txt', 'above'));
+  schedule(3500, () => showTooltip(t('tooltipButtons'), 'btn-long', 'above'));
+  schedule(6500, () => showTooltip(t('tooltipMonkey'), 'monkey-long-bar', 'above'));
+  schedule(9500, clearAllTooltips);
+}
+
+function startTimer() {
+  clearInterval(state.timerHandle);
+  state.timerStart = Date.now();
+  state.timerHandle = setInterval(tick, 80);
+}
+
+function tick() {
+  const elapsed = (Date.now() - state.timerStart) / 1000;
+  const remaining = Math.max(0, ROUND_SECONDS - elapsed);
+  const frac = remaining / ROUND_SECONDS;
+  const bar = document.getElementById('timer-fill');
+  const txt = document.getElementById('timer-txt');
+  if (bar) {
+    bar.style.width = (frac * 100) + '%';
+    bar.style.background = frac < 0.3 ? '#FF8A7A' : frac < 0.6 ? '#FFB547' : '#FFD93D';
+  }
+  if (txt) txt.textContent = remaining.toFixed(1) + 's';
+
+  // Show/hide big timer when we cross the 4s threshold
+  const bigWrap = document.getElementById('chart-wrap');
+  let big = document.getElementById('timer-big');
+  if (remaining <= 4 && remaining > 0) {
+    if (!big && bigWrap) {
+      big = document.createElement('div');
+      big.id = 'timer-big';
+      big.className = 'timer-big';
+      bigWrap.appendChild(big);
+    }
+    if (big) {
+      big.textContent = Math.ceil(remaining);
+      if (remaining <= 2) {
+        big.classList.add('danger');
+      } else {
+        big.classList.remove('danger');
+      }
+    }
+  } else if (big) {
+    big.remove();
+  }
+
+  if (remaining <= 0) {
+    clearInterval(state.timerHandle);
+    state.timerHandle = null;
+    if (big) big.remove();
+    handleDecision(null);
+  }
+}
+
+// Pause timer when tab goes to background (e.g. iOS lock screen)
+document.addEventListener('visibilitychange', () => {
+  if (!state.timerHandle && state._frozenRemaining == null) return;
+  if (document.hidden) {
+    const elapsed = (Date.now() - state.timerStart) / 1000;
+    state._frozenRemaining = Math.max(0, ROUND_SECONDS - elapsed);
+    clearInterval(state.timerHandle);
+    state.timerHandle = null;
+  } else if (state._frozenRemaining != null) {
+    state.timerStart = Date.now() - (ROUND_SECONDS - state._frozenRemaining) * 1000;
+    state._frozenRemaining = null;
+    state.timerHandle = setInterval(tick, 80);
+  }
+});
+
+async function handleDecision(decision) {
+  clearInterval(state.timerHandle);
+  state.timerHandle = null;
+  clearAllTooltips();  // dismiss any first-play tooltip
+  if (state.round === 1) markFirstPlayComplete();
+  const big = document.getElementById('timer-big');
+  if (big) big.remove();
+
+  const msToDecide = Date.now() - state.currentStart;
+
+  // Immediate UX: haptic tap + pulse chosen button
+  if (decision !== null) {
+    haptic(12);
+    const chosenId = decision === 'long' ? 'btn-long' : 'btn-short';
+    const chosen = document.getElementById(chosenId);
+    if (chosen) chosen.classList.add('chosen');
+  } else {
+    haptic([20, 40, 20]);  // timeout: shorter triple-buzz
+  }
+
+  // disable both buttons
+  const lb = document.getElementById('btn-long');
+  const sb = document.getElementById('btn-short');
+  if (lb) lb.disabled = true;
+  if (sb) sb.disabled = true;
+
+  try {
+    const result = await apiDecide(state.current.round_id, decision, state.tfActive);
+    const isTimeout = decision === null;
+    const hit = !isTimeout && result.hit;
+
+    let points;
+    if (isTimeout || !hit) {
+      points = -100;
+      state.streak = 0;
+    } else {
+      state.streak++;
+      points = Math.round(100 * streakMult(state.streak));
+    }
+    state.score += points;
+    if (result.monkey_hit) state.monkeyScore += 100; else state.monkeyScore -= 100;
+
+    // Outcome haptic + confetti
+    if (hit) {
+      // mild buzz on hit, stronger on streak hits
+      if (state.streak >= 2) {
+        haptic([20, 30, 30]);
+        // confetti intensity 0.2 at streak 2, up to 1.0 at streak 5+
+        const intensity = Math.min(1, 0.15 + (state.streak - 1) * 0.22);
+        burstConfetti(intensity);
+      } else {
+        haptic(25);
+      }
+    } else {
+      haptic([50, 30, 50]);  // sharper double-buzz on fail/timeout
+    }
+
+    // Future bars now come keyed by TF (each TF is its own game)
+    const futureByTf = hydrateFutureByTf(result.future_bars_by_tf || {});
+    const tfReveals = {};
+    for (const tfName of ['1h', '4h', '1d']) {
+      const tf = state.current.timeframes[tfName];
+      if (!tf) continue;
+      const future = futureByTf[tfName] || [];
+      tfReveals[tfName] = {
+        bars: tf.bars.concat(future),
+        warmup_count: tf.warmup_count,
+        context_count: tf.bars.length - tf.warmup_count,
+        future_count: future.length,
+      };
+    }
+
+    state.lastReveal = {
+      tfReveals,
+      tfBet: state.tfActive,  // TF the user was on when deciding = the TF of the bet
+      hit,
+      timeout: isTimeout,
+      points,
+      decision,
+      truth: result.truth,
+      symbol: result.symbol,
+      decision_ts: result.decision_ts,
+      exit_ts: result.exit_ts,
+      entry_price: result.entry_price,
+      exit_price: result.exit_price,
+      pct_change: result.pct_change,
+      ms_to_decide: msToDecide,
+      streak_after: state.streak,
+      score_after: state.score,
+      monkey_decision: result.monkey_decision,
+      monkey_hit: result.monkey_hit,
+      monkey_sentiment_long_pct: result.monkey_sentiment_long_pct,
+      monkey_hits_individual: result.monkey_hits_individual,
+    };
+
+    state.history.push({
+      round_idx: state.round,
+      symbol: result.symbol,
+      start_ts: result.start_ts,
+      decision_ts: result.decision_ts,
+      exit_ts: result.exit_ts,
+      entry_price: result.entry_price,
+      exit_price: result.exit_price,
+      pct_change: result.pct_change.toFixed(4),
+      decision: decision || '',
+      truth: result.truth,
+      hit: hit,
+      timeout: isTimeout,
+      tf_used: state.tfActive,
+      ms_to_decide: msToDecide,
+      points: points,
+      streak_after: state.streak,
+      score_after: state.score,
+      monkey_decision: result.monkey_decision,
+      monkey_hit: result.monkey_hit,
+    });
+
+    renderReveal();
+    prefetchNextRound();  // start loading next round in background during the 3s reveal
+    setTimeout(() => nextRound(), 3000);
+  } catch (err) {
+    screen.innerHTML = `<div class="card"><p>Error: ${err.message}</p></div>`;
+  }
+}
+
+// ──────────────────────────────────────────────────────────────
+// Rendering
+// ──────────────────────────────────────────────────────────────
+const screen = document.getElementById('screen');
+
+function dotsHTML(activeIdx) {
+  let h = '<div style="display:flex; gap:5px;">';
+  for (let i = 0; i < ROUNDS_PER_GAME; i++) {
+    let cls = 'dot';
+    if (i < state.history.length) {
+      if (state.history[i].hit) cls += ' hit'; else cls += ' miss';
+    } else if (i === activeIdx) {
+      cls += ' active';
+    }
+    h += `<div class="${cls}"></div>`;
+  }
+  return h + '</div>';
+}
+
+// ──────────────────────────────────────────────────────────────
+// Charts of the Day (COTD) — weekly state & persistence
+// ──────────────────────────────────────────────────────────────
+// Structure in localStorage.candleeye_cotd:
+// {
+//   "weekStart": "2026-04-20",         // Monday of current week, YYYY-MM-DD
+//   "days": {
+//     "2026-04-21": { played: true, hit: true },
+//     ...
+//   }
+// }
+// Production would fetch this from a Binance user profile instead.
+function getMondayOfWeek(date) {
+  const d = new Date(date);
+  const day = d.getUTCDay();
+  const diff = (day === 0 ? -6 : 1 - day);
+  d.setUTCDate(d.getUTCDate() + diff);
+  return d.toISOString().slice(0, 10);
+}
+function getSundayOfWeek(date) {
+  const monday = new Date(getMondayOfWeek(date) + 'T00:00:00Z');
+  monday.setUTCDate(monday.getUTCDate() + 6);
+  return monday.toISOString().slice(0, 10);
+}
+function todayISO() {
+  return new Date().toISOString().slice(0, 10);
+}
+function getCOTDState() {
+  const today = todayISO();
+  const weekStart = getMondayOfWeek(today);
+  let st;
+  try { st = JSON.parse(localStorage.getItem('candleeye_cotd') || '{}'); }
+  catch (e) { st = {}; }
+  // New week: reset
+  if (st.weekStart !== weekStart) {
+    st = { weekStart, days: {} };
+    try { localStorage.setItem('candleeye_cotd', JSON.stringify(st)); } catch (e) {}
+  }
+  if (!st.days) st.days = {};
+  return st;
+}
+function recordCOTDResult(hit) {
+  const st = getCOTDState();
+  const today = todayISO();
+  st.days[today] = { played: true, hit: hit };
+  try { localStorage.setItem('candleeye_cotd', JSON.stringify(st)); } catch (e) {}
+  return st;
+}
+function countCOTDWins() {
+  const st = getCOTDState();
+  return Object.values(st.days).filter(d => d.hit).length;
+}
+function countCOTDPlayed() {
+  const st = getCOTDState();
+  return Object.keys(st.days).length;
+}
+function hasCOTDPlayedToday() {
+  const st = getCOTDState();
+  return !!st.days[todayISO()];
+}
+function msUntilNextDay() {
+  const now = new Date();
+  const tomorrow = new Date(now);
+  tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+  tomorrow.setUTCHours(0, 0, 0, 0);
+  return tomorrow.getTime() - now.getTime();
+}
+function formatCountdown(ms) {
+  const s = Math.floor(ms / 1000);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  return { h, m, s: sec };
+}
+
+function renderHome() {
+  const langBtn = (code, label) => {
+    const active = state.lang === code;
+    return `<button class="lang-btn ${active ? 'lang-active' : ''}" data-lang="${code}">${label}</button>`;
+  };
+
+  // Weekly state
+  const st = getCOTDState();
+  const weekFrom = st.weekStart;
+  const weekTo = getSundayOfWeek(todayISO());
+  const wins = countCOTDWins();
+  const played = countCOTDPlayed();
+  const alreadyToday = hasCOTDPlayedToday();
+
+  // Fake participants for prototype (production: server returns real count)
+  const fakeParticipants = '93,198';
+
+  // 3 progress badges — smaller for compact layout
+  const badgeHTML = (idx) => {
+    const filled = idx < wins;
+    return `<div style="width:38px;height:38px;border-radius:50%;background:${filled ? '#F0B90B' : '#2B3139'};display:flex;align-items:center;justify-content:center;${filled ? '' : 'opacity:0.5;'}">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 12L10 18L20 6" stroke="${filled ? '#0B0E11' : '#5E6673'}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>`;
+  };
+
+  // Week day thumbnails — i18n'd weekday initials
+  const weekdayInitials = t('cotdWeekdays');
+  const dayThumbs = weekdayInitials.map((dayLabel, i) => {
+    const dayDate = new Date(weekFrom + 'T00:00:00Z');
+    dayDate.setUTCDate(dayDate.getUTCDate() + i);
+    const dayISO = dayDate.toISOString().slice(0, 10);
+    const dayData = st.days[dayISO];
+    let bg = '#2B3139', fg = '#5E6673', border = '#3C434D';
+    if (dayData) {
+      if (dayData.hit) { bg = '#F0B90B'; fg = '#0B0E11'; border = '#F0B90B'; }
+      else { bg = '#2B3139'; fg = '#848E9C'; border = '#5E6673'; }
+    }
+    const isToday = dayISO === todayISO();
+    const todayRing = isToday ? 'box-shadow:0 0 0 2px #F0B90B;' : '';
+    return `<div style="width:36px;height:36px;border-radius:8px;background:${bg};border:1.5px solid ${border};display:flex;align-items:center;justify-content:center;font-family:Nunito;font-weight:800;font-size:12px;color:${fg};${todayRing}">${dayLabel}</div>`;
+  }).join('');
+
+  screen.innerHTML = `
+    <div style="position:relative;">
+      <!-- Top bar: help icon left, lang selector right -->
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:2px 0 4px;">
+        <button id="help-btn" style="width:30px;height:30px;border-radius:50%;border:1px solid #2B3139;background:#1E2026;color:#EAECEF;font-size:15px;font-weight:700;cursor:pointer;">?</button>
+        <div class="lang-group" style="background:#1E2026;border:1px solid #2B3139;border-radius:8px;padding:2px;">
+          ${langBtn('es', 'ES')}${langBtn('en', 'EN')}${langBtn('zh', '中文')}
+        </div>
+      </div>
+
+      <!-- Header: period + title + pool -->
+      <div style="text-align:center; padding-top: 10px;">
+        <div style="color:#848E9C; font-size:12px; margin-bottom:4px;">
+          ${t('cotdPeriod')(weekFrom, weekTo)}
+        </div>
+        <div class="display" style="font-size:30px; color:#FFFFFF; line-height:1.1;">
+          ${t('cotdName')}
+        </div>
+        <div style="color:#848E9C; font-size:13px; margin-top:4px;">
+          <span style="color:#EAECEF;">${t('cotdSharePool').split(' ')[0]}</span>
+          <span style="color:#F0B90B; font-weight:700;">500 pts</span>
+        </div>
+      </div>
+
+      <!-- Week day thumbnails -->
+      <div style="display:flex; justify-content:center; gap:5px; margin-top:14px;">
+        ${dayThumbs}
+      </div>
+
+      <!-- Stats card (compact) -->
+      <div class="card" style="margin-top:14px; padding: 14px;">
+        <div style="text-align:center;">
+          <div style="font-size:15px; font-weight:700; color:#FFFFFF;">${t('cotdPerformance')}</div>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px;">
+          <div style="background:#0B0E11; border-radius:8px; padding:10px; text-align:center;">
+            <div class="display" style="font-size:22px; color:#FFFFFF;">${played}</div>
+            <div style="font-size:11px; color:#848E9C; margin-top:2px;">${t('cotdPlay')}</div>
+          </div>
+          <div style="background:#0B0E11; border-radius:8px; padding:10px; text-align:center;">
+            <div class="display" style="font-size:22px; color:#FFFFFF;">${wins}</div>
+            <div style="font-size:11px; color:#848E9C; margin-top:2px;">${t('cotdObtain')}</div>
+          </div>
+        </div>
+        <div style="text-align:center; margin-top:10px; font-size:12px; color:#EAECEF;">
+          ${t('cotdWinsNeeded')}
+        </div>
+        <div style="display:flex; justify-content:center; gap:10px; margin-top:10px;">
+          ${badgeHTML(0)}${badgeHTML(1)}${badgeHTML(2)}
+        </div>
+      </div>
+
+      <!-- Two compact cards: participants + pool (side by side) -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:8px;">
+        <div class="card" style="padding: 10px;">
+          <div class="display" style="font-size:18px; color:#FFFFFF; text-align:center;">${fakeParticipants}</div>
+          <div style="font-size:10px; color:#848E9C; text-align:center; margin-top:2px;">
+            ${t('cotdParticipants')}
+          </div>
+        </div>
+        <div class="card" style="padding: 10px;">
+          <div class="display" style="font-size:18px; color:#F0B90B; text-align:center;">500 pts</div>
+          <div style="font-size:10px; color:#848E9C; text-align:center; margin-top:2px;">
+            ${t('cotdRewardPool')}
+          </div>
+        </div>
+      </div>
+
+      <!-- Main CTA -->
+      <button class="btn btn-primary" style="margin-top:14px; width:100%; padding:14px 0;" id="start-btn" ${alreadyToday ? 'disabled' : ''}>
+        ${alreadyToday ? t('cotdAlreadyPlayed') : t('cotdPlayNow')}
+      </button>
+
+      ${alreadyToday ? `
+        <div id="countdown-wrap" style="text-align:center; margin-top:8px; color:#848E9C; font-size:12px;">
+          ${t('cotdNextChart')} <span id="countdown-text" style="color:#FFFFFF; font-weight:700;"></span>
+        </div>
+      ` : ''}
+
+      <!-- Disclaimer (compact) -->
+      <div style="margin-top:12px; text-align:center; font-size:11px; color:#848E9C; line-height:1.4; padding: 0 10px;">
+        ${t('disclaimerHome')}
+      </div>
+
+      <!-- DEV BAR — remove before production -->
+      <div style="margin-top:18px; padding:10px; background:#2B1F05; border:1px dashed #F0B90B; border-radius:8px;">
+        <div style="font-size:10px; color:#F0B90B; font-weight:800; letter-spacing:0.1em; text-align:center; margin-bottom:8px;">
+          DEV · PRUEBA
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+          <button id="dev-next-day" style="background:#1E2026; border:1px solid #F0B90B; color:#F0B90B; font-size:11px; font-weight:700; padding:8px 0; border-radius:6px; cursor:pointer;">
+            Siguiente día
+          </button>
+          <button id="dev-replay" style="background:#1E2026; border:1px solid #F0B90B; color:#F0B90B; font-size:11px; font-weight:700; padding:8px 0; border-radius:6px; cursor:pointer;">
+            Jugar otra vez
+          </button>
+        </div>
+        <button id="dev-reset" style="width:100%; margin-top:6px; background:transparent; border:none; color:#848E9C; font-size:10px; cursor:pointer; text-decoration:underline;">
+          reset semana
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('start-btn').addEventListener('click', () => {
+    if (hasCOTDPlayedToday()) return;
+    startGame();
+  });
+  document.getElementById('help-btn').addEventListener('click', () => {
+    renderHowToPlay();
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const code = btn.dataset.lang;
+      if (code === state.lang) return;
+      setLang(code);
+      haptic(8);
+      renderHome();
+    });
+  });
+
+  // ── DEV buttons ────────────────────────────────────
+  // Siguiente día: fakes a played-day entry for today (or fills the next empty day
+  // of the week if today is already played), so weekly progress advances.
+  // Simpler than a full virtual-clock layer; good enough for tester demos.
+  const devNextDayBtn = document.getElementById('dev-next-day');
+  if (devNextDayBtn) {
+    devNextDayBtn.addEventListener('click', () => {
+      const st = getCOTDState();
+      // Find next empty day in the week
+      const weekStart = st.weekStart;
+      let targetISO = null;
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(weekStart + 'T00:00:00Z');
+        d.setUTCDate(d.getUTCDate() + i);
+        const iso = d.toISOString().slice(0, 10);
+        if (!st.days[iso]) { targetISO = iso; break; }
+      }
+      if (!targetISO) {
+        // week full already — reset and restart
+        try { localStorage.removeItem('candleeye_cotd'); } catch (e) {}
+        renderHome();
+        return;
+      }
+      // Alternate win/loss pattern: 70% win rate for believability
+      const didWin = Math.random() < 0.7;
+      st.days[targetISO] = { played: true, hit: didWin };
+      try { localStorage.setItem('candleeye_cotd', JSON.stringify(st)); } catch (e) {}
+      haptic(8);
+      renderHome();
+    });
+  }
+  // Jugar otra vez: clear today's played flag so user can play again without
+  // advancing the week.
+  const devReplayBtn = document.getElementById('dev-replay');
+  if (devReplayBtn) {
+    devReplayBtn.addEventListener('click', () => {
+      const st = getCOTDState();
+      delete st.days[todayISO()];
+      try { localStorage.setItem('candleeye_cotd', JSON.stringify(st)); } catch (e) {}
+      haptic(8);
+      renderHome();
+    });
+  }
+  // Reset semana: wipe weekly state entirely
+  const devResetBtn = document.getElementById('dev-reset');
+  if (devResetBtn) {
+    devResetBtn.addEventListener('click', () => {
+      try { localStorage.removeItem('candleeye_cotd'); } catch (e) {}
+      haptic(8);
+      renderHome();
+    });
+  }
+
+  // Live countdown if already played
+  if (alreadyToday) {
+    const updateCountdown = () => {
+      const el = document.getElementById('countdown-text');
+      if (!el) return;
+      const { h, m, s } = formatCountdown(msUntilNextDay());
+      el.textContent = `${h}h ${m}min ${s}s`;
+    };
+    updateCountdown();
+    const int = setInterval(() => {
+      if (!document.getElementById('countdown-text')) { clearInterval(int); return; }
+      updateCountdown();
+    }, 1000);
+  }
+}
+
+function renderLoading() {
+  screen.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      ${dotsHTML(state.round - 1)}
+      <div class="display" style="font-size:22px;">${state.score >= 0 ? '+' : ''}${state.score}</div>
+    </div>
+    <div id="chart-wrap" style="display:flex; align-items:center; justify-content:center;">
+      <div style="color:#848E9C; font-size:13px;">${t('loading')}</div>
+    </div>
+  `;
+}
+
+function renderPlay() {
+  const tf = state.tfActive;
+  const tfData = state.current.timeframes[tf];
+  // Use pre-rendered SVG from cache (built once at hydrateRound)
+  const chartSvg = (state.current._svgCache && state.current._svgCache[tf])
+    || renderChart(tfData.bars, tfData.warmup_count,
+                   tfData.bars.length - tfData.warmup_count,
+                   tfData.future_count, false);
+  const multLabel = state.streak >= 2 ? `${t('streakLabel')} ×${streakMult(state.streak)}` : '';
+  // Monkey sentiment lives per-TF (each TF is its own game)
+  const monkeyLong = tfData.monkey_sentiment_long_pct;
+  const monkeyShort = 100 - monkeyLong;
+
+  const tfBtn = (name) => {
+    const active = tf === name;
+    return `<button class="tf-btn ${active ? 'tf-active' : ''}" data-tf="${name}">${name}</button>`;
+  };
+
+  screen.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span class="display" style="font-size:18px; color:#EAECEF; letter-spacing:0.1em;">●●●/USDT</span>
+      </div>
+      <div style="text-align:right;">
+        <div id="score-display" class="display" style="font-size:20px; color:#EAECEF; line-height:1; display:inline-block;">${state.score >= 0 ? '+' : ''}${state.score}</div>
+        ${multLabel ? `<div style="font-size:11px; color:#F0B90B; font-weight:800;">${multLabel}</div>` : ''}
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      ${dotsHTML(state.round - 1)}
+      <div class="tf-group">
+        ${tfBtn('1h')}${tfBtn('4h')}${tfBtn('1d')}
+      </div>
+    </div>
+
+    <div id="chart-wrap">${chartSvg}</div>
+
+    <div style="margin:10px 2px 4px; display:flex; align-items:center; gap:8px; font-size:12px;">
+      <span style="font-size:18px;">🤖</span>
+      <span style="color:#848E9C;">${t('monkeySentiment')}</span>
+    </div>
+    <div style="display:flex; height:16px; border:1px solid #2B3139; border-radius:6px; overflow:hidden; margin-bottom:2px;">
+      <div id="monkey-long-bar" style="width:${monkeyLong}%; background:#0ECB81; color:#FFFFFF; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; min-width:30px;">
+        ${monkeyLong >= 15 ? monkeyLong + '%' : ''}
+      </div>
+      <div id="monkey-short-bar" style="width:${monkeyShort}%; background:#F6465D; color:#FFFFFF; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center; min-width:30px;">
+        ${monkeyShort >= 15 ? monkeyShort + '%' : ''}
+      </div>
+    </div>
+    <div style="display:flex; justify-content:space-between; font-size:10px; color:#848E9C; font-weight:700; margin-bottom:8px;">
+      <span>↑ ${t('long')}</span>
+      <span>${t('short')} ↓</span>
+    </div>
+
+    <div class="meta-row" style="margin:6px 2px 6px;">
+      <span>${t('round')} ${state.round}/${ROUNDS_PER_GAME}</span>
+      <span id="timer-txt" style="font-weight:800; color:#EAECEF;">10.0s</span>
+    </div>
+    <div class="timer-bar"><div class="timer-fill" id="timer-fill" style="width:100%;"></div></div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;">
+      <button class="btn btn-long" id="btn-long">${t('btnLong')}</button>
+      <button class="btn btn-short" id="btn-short">${t('btnShort')}</button>
+    </div>
+  `;
+  document.getElementById('btn-long').addEventListener('click', () => handleDecision('long'));
+  document.getElementById('btn-short').addEventListener('click', () => handleDecision('short'));
+  // TF switcher
+  document.querySelectorAll('.tf-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const newTf = btn.dataset.tf;
+      if (newTf === state.tfActive) return;
+      state.tfActive = newTf;
+      haptic(8);
+      // Use pre-rendered SVG from cache — instant swap, no re-render
+      const newSvg = (state.current._svgCache && state.current._svgCache[newTf])
+        || (() => {
+          const tfData2 = state.current.timeframes[newTf];
+          return renderChart(tfData2.bars, tfData2.warmup_count,
+                             tfData2.bars.length - tfData2.warmup_count,
+                             tfData2.future_count, false);
+        })();
+      const wrap = document.getElementById('chart-wrap');
+      if (wrap) wrap.innerHTML = newSvg;  // no fade — swap is instant
+      document.querySelectorAll('.tf-btn').forEach(b => {
+        if (b.dataset.tf === newTf) b.classList.add('tf-active');
+        else b.classList.remove('tf-active');
+      });
+      // Update monkey sentiment bar (each TF has its own monkeys)
+      const newTfData = state.current.timeframes[newTf];
+      const mLong = newTfData.monkey_sentiment_long_pct;
+      const mShort = 100 - mLong;
+      const mLongBar = document.getElementById('monkey-long-bar');
+      const mShortBar = document.getElementById('monkey-short-bar');
+      if (mLongBar) {
+        mLongBar.style.width = mLong + '%';
+        mLongBar.textContent = mLong >= 15 ? mLong + '%' : '';
+      }
+      if (mShortBar) {
+        mShortBar.style.width = mShort + '%';
+        mShortBar.textContent = mShort >= 15 ? mShort + '%' : '';
+      }
+    });
+  });
+}
+
+function renderReveal() {
+  const r = state.lastReveal;
+  const tf = r.tfBet;  // the TF of the actual bet — not changeable on reveal
+  const tfr = r.tfReveals[tf];
+  const chartSvg = renderChart(tfr.bars, tfr.warmup_count, tfr.context_count, tfr.future_count, true);
+  const animClass = r.hit ? 'pop' : 'shake';
+  const symbolShort = r.symbol.replace('USDT', '');
+
+  let outcomeIcon, outcomeColor;
+  if (r.timeout) { outcomeIcon = '·'; outcomeColor = '#848E9C'; }
+  else if (r.hit) { outcomeIcon = '✓'; outcomeColor = '#F0B90B'; }
+  else { outcomeIcon = '✗'; outcomeColor = '#848E9C'; }
+  const pointsStr = (r.points >= 0 ? '+' : '') + r.points;
+
+  // TF selector, but on reveal it's locked — only the bet TF is highlighted
+  const tfBtn = (name) => {
+    const active = tf === name;
+    return `<button class="tf-btn ${active ? 'tf-active' : 'tf-locked'}" disabled>${name}</button>`;
+  };
+
+  screen.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <div style="display:flex; align-items:baseline; gap:6px; min-width:0;">
+        <span class="display" style="font-size:18px; color:#EAECEF;">${symbolShort}/USDT</span>
+        <span style="font-size:11px; color:#848E9C; font-weight:700; white-space:nowrap;">${formatDate(r.decision_ts)}</span>
+      </div>
+      <div style="text-align:right;">
+        <div class="display ${r.hit ? 'score-bump' : 'score-bump-miss'}" style="font-size:20px; color:#EAECEF; display:inline-block;">${state.score >= 0 ? '+' : ''}${state.score}</div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      ${dotsHTML(-1)}
+      <div class="tf-group">
+        ${tfBtn('1h')}${tfBtn('4h')}${tfBtn('1d')}
+      </div>
+    </div>
+
+    <div id="chart-wrap" class="${animClass}">${chartSvg}</div>
+
+    <div style="margin-top:10px; padding:10px 12px; background:#1E2026; border:1px solid #2B3139; border-radius:10px; display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; align-items:baseline; gap:10px;">
+        <span class="display" style="font-size:22px; color:${outcomeColor};">${outcomeIcon}</span>
+        <span style="font-size:13px; font-weight:700; color:#EAECEF;">
+          ${parseFloat(r.pct_change) >= 0 ? '+' : ''}${parseFloat(r.pct_change).toFixed(2)}%
+        </span>
+        <span style="font-size:11px; color:#848E9C;">
+          🤖 ${r.monkey_hits_individual}/100
+        </span>
+      </div>
+      <div class="display" style="font-size:22px; color:${outcomeColor};">${pointsStr}</div>
+    </div>
+
+    <div style="text-align:center; margin-top:8px; font-size:12px; color:#848E9C;">
+      ${t('nextRound')}
+    </div>
+  `;
+}
+
+// Monte Carlo percentile (client-side, replicates scoring)
+function percentileVsMonkeys(userScore, trials) {
+  trials = trials || 3000;
+  const pLong = window.__LONG_BIAS__ || 0.5;
+  let beat = 0;
+  for (let t = 0; t < trials; t++) {
+    let s = 0, streak = 0;
+    for (let r = 0; r < ROUNDS_PER_GAME; r++) {
+      // Monkey: long with prob pLong; hit randomly with ~50% since its direction is uncorrelated with truth
+      const hit = Math.random() < 0.5;
+      if (hit) { streak++; s += Math.round(100 * streakMult(streak)); }
+      else { s -= 100; streak = 0; }
+    }
+    if (userScore > s) beat++;
+  }
+  return Math.round((beat / trials) * 100);
+}
+
+async function showSummary() {
+  clearInterval(state.timerHandle);
+  state.screen = 'summary';
+
+  // Persist session to analytics
+  try {
+    await apiSaveSession(state.history);
+  } catch (e) {
+    console.error('save failed', e);
+  }
+
+  const hits = state.history.filter(h => h.hit).length;
+  const misses = state.history.length - hits;
+
+  // COTD: record today's outcome. Winning the day = 3+ hits out of 5.
+  const wonTheDay = hits >= 3;
+  recordCOTDResult(wonTheDay);
+  const currentWins = countCOTDWins();
+  const longs = state.history.filter(h => h.decision === 'long');
+  const shorts = state.history.filter(h => h.decision === 'short');
+  const longHits = longs.filter(h => h.hit).length;
+  const shortHits = shorts.filter(h => h.hit).length;
+  const timeouts = state.history.filter(h => h.timeout).length;
+  const avgMs = Math.round(state.history.reduce((s, h) => s + h.ms_to_decide, 0) / state.history.length);
+
+  const pct = percentileVsMonkeys(state.score);
+  const vsMonkey = state.score - state.monkeyScore;
+
+  function profileLabel(hits, total) {
+    if (total === 0) return { label: '—', color: '#8A95A8' };
+    const r = hits / total;
+    if (r >= 0.7) return { label: t('profileStrong'), color: '#B8860B' };
+    if (r >= 0.5) return { label: t('profileMid'), color: '#5A6A85' };
+    return { label: t('profileWeak'), color: '#3E5270' };
+  }
+  const longP = profileLabel(longHits, longs.length);
+  const shortP = profileLabel(shortHits, shorts.length);
+
+  // Verdict keyed to margin vs monkey. Five tiers. Never mocking, always factual.
+  const margin = state.score - state.monkeyScore;
+  const verdict =
+      margin >= 300 ? t('verdictStrong')
+    : margin >= 100 ? t('verdictSlight')
+    : margin >= -99 ? t('verdictTied')
+    : margin >= -299 ? t('verdictWorse')
+    : t('verdictCrushed');
+
+  // Big session outcome. 5 rounds: show score X/5 and whether day was won (3+).
+  const outcomeIcon = wonTheDay ? '✓' : '✗';
+  const outcomeColor = wonTheDay ? '#F0B90B' : '#5E6673';
+  const outcomeLabel = wonTheDay ? t('cotdResultHit') : t('cotdResultMiss');
+
+  screen.innerHTML = `
+    <div style="position:relative; padding-bottom: 40px;">
+      <!-- Close/lang header -->
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0 8px;">
+        <button id="close-summary" style="width:28px;height:28px;border:none;background:transparent;color:#EAECEF;font-size:22px;cursor:pointer;">×</button>
+        <div></div>
+      </div>
+
+      <!-- Outcome hero: X/5 hits today -->
+      <div style="text-align:center; padding-top: 20px;">
+        <div style="width:96px; height:96px; border-radius:50%; background:${wonTheDay ? '#F0B90B' : '#2B3139'}; border: 2px solid ${outcomeColor}; display:inline-flex; align-items:center; justify-content:center; margin-bottom:14px;">
+          <span style="font-family:Georgia,serif; font-size:40px; font-weight:700; color:${wonTheDay ? '#0B0E11' : '#848E9C'};">${hits}/${ROUNDS_PER_GAME}</span>
+        </div>
+        <div class="display" style="font-size:30px; color:#FFFFFF; line-height:1.1;">
+          ${outcomeLabel}
+        </div>
+        <div style="font-size:13px; color:#848E9C; margin-top:6px;">
+          vs ${t('monkey')}: ${state.monkeyScore >= 0 ? '+' : ''}${state.monkeyScore} · ${t('you')}: ${state.score >= 0 ? '+' : ''}${state.score}
+        </div>
+      </div>
+
+      <!-- Weekly streak -->
+      <div class="card" style="margin-top:24px; text-align:center;">
+        <div style="font-size:14px; color:#EAECEF; margin-bottom:12px;">
+          ${t('cotdResultYourStreak')(currentWins)}
+        </div>
+        <div style="display:flex; justify-content:center; gap:14px;">
+          ${[0,1,2].map(i => {
+            const filled = i < currentWins;
+            return `<div style="width:44px;height:44px;border-radius:50%;background:${filled ? '#F0B90B' : '#2B3139'};display:flex;align-items:center;justify-content:center;${filled ? '' : 'opacity:0.5;'}">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 12L10 18L20 6" stroke="${filled ? '#0B0E11' : '#5E6673'}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>`;
+          }).join('')}
+        </div>
+        <div style="font-size:12px; color:#848E9C; margin-top:12px;">
+          ${t('cotdWinsNeeded')}
+        </div>
+      </div>
+
+      <!-- Verdict line -->
+      <div style="text-align:center; margin-top:16px; font-size:13px; color:#EAECEF; font-style:italic; padding: 0 12px;">
+        "${verdict}"
+      </div>
+
+      <!-- Share + home -->
+      <div style="display:grid; grid-template-columns:1fr; gap:10px; margin-top:22px;">
+        <button class="btn btn-primary" id="share-btn" style="padding:16px 0; font-size:16px;">
+          ${t('cotdShareButton')}
+        </button>
+        <button class="btn btn-ghost" id="home-btn" style="padding:14px 0;">
+          ${t('home')}
+        </button>
+      </div>
+
+      <!-- Countdown to next -->
+      <div id="countdown-wrap-summary" style="text-align:center; margin-top:16px; color:#848E9C; font-size:12px;">
+        ${t('cotdNextChart')} <span id="countdown-text-summary" style="color:#EAECEF; font-weight:700;"></span>
+      </div>
+
+      <!-- Disclaimer -->
+      <div style="margin-top:16px; padding: 0 10px; font-size:12px; color:#848E9C; line-height:1.55; text-align:center;">
+        ${t('disclaimerSummary1')}<br/>
+        ${t('disclaimerSummary2')}
+      </div>
+    </div>
+  `;
+  document.getElementById('share-btn').addEventListener('click', renderShareCard);
+  document.getElementById('home-btn').addEventListener('click', renderHome);
+  document.getElementById('close-summary').addEventListener('click', renderHome);
+
+  // Live countdown
+  const updateCountdownSum = () => {
+    const el = document.getElementById('countdown-text-summary');
+    if (!el) return;
+    const { h, m, s } = formatCountdown(msUntilNextDay());
+    el.textContent = `${h}h ${m}min ${s}s`;
+  };
+  updateCountdownSum();
+  const intSum = setInterval(() => {
+    if (!document.getElementById('countdown-text-summary')) { clearInterval(intSum); return; }
+    updateCountdownSum();
+  }, 1000);
+}
+
+// ──────────────────────────────────────────────────────────────
+// Share card — branded replica of Binance WOTD share screen
+// ──────────────────────────────────────────────────────────────
+// ──────────────────────────────────────────────────────────────
+// How to Play modal — explainer shown from home icon or first-ever visit
+// ──────────────────────────────────────────────────────────────
+function renderHowToPlay(onClose) {
+  // Example visual: 5 small thumbs showing possible outcomes (3 hits, 2 misses)
+  const exampleThumbs = [
+    { state: 'hit' },
+    { state: 'hit' },
+    { state: 'miss' },
+    { state: 'hit' },
+    { state: 'miss' },
+  ].map(it => {
+    const bg = it.state === 'hit' ? '#F0B90B' : '#2B3139';
+    const fg = it.state === 'hit' ? '#0B0E11' : '#848E9C';
+    const border = it.state === 'hit' ? '#F0B90B' : '#5E6673';
+    const sym = it.state === 'hit' ? '✓' : '✗';
+    return `<div style="width:42px;height:42px;border-radius:8px;background:${bg};border:1.5px solid ${border};display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-weight:700;font-size:20px;color:${fg};">${sym}</div>`;
+  }).join('');
+
+  // Create overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'howto-overlay';
+  overlay.style.cssText = `
+    position:fixed; inset:0; background:rgba(0,0,0,0.7);
+    display:flex; align-items:center; justify-content:center;
+    z-index:2000; padding: 20px;
+    backdrop-filter: blur(2px);
+  `;
+  overlay.innerHTML = `
+    <div style="background:#1E2026; border:1px solid #2B3139; border-radius:18px; padding: 22px 20px; max-width:420px; width:100%;">
+      <div style="text-align:center;">
+        <div style="font-size:20px; font-weight:800; color:#FFFFFF;">${t('cotdHowToPlay')}</div>
+      </div>
+
+      <div style="font-size:14px; color:#EAECEF; margin-top:16px; line-height:1.5;">
+        ${t('cotdHowInstruction')}
+      </div>
+
+      <!-- Example row -->
+      <div style="font-size:12px; color:#848E9C; margin-top:18px; font-weight:700;">Ejemplo</div>
+      <div style="display:flex; justify-content:center; gap:6px; margin-top:8px;">
+        ${exampleThumbs}
+      </div>
+      <div style="font-size:11px; color:#848E9C; text-align:center; margin-top:4px;">3/5 ✓</div>
+
+      <!-- Legend -->
+      <div style="margin-top:18px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:18px;height:18px;border-radius:4px;background:#F0B90B;"></div>
+          <div style="font-size:13px; color:#EAECEF;">${t('cotdHowCorrect')}</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="width:18px;height:18px;border-radius:4px;background:#2B3139;border:1.5px solid #5E6673;"></div>
+          <div style="font-size:13px; color:#EAECEF;">${t('cotdHowWrong')}</div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div style="height:1px; background:#2B3139; margin:20px 0;"></div>
+
+      <!-- Weekly reward rule -->
+      <div style="font-size:13px; color:#EAECEF; line-height:1.55;">
+        ${t('cotdHowStreak')}
+      </div>
+
+      <!-- Confirm -->
+      <button id="howto-confirm" class="btn btn-primary" style="width:100%; margin-top:18px; padding:14px 0; font-size:15px;">
+        ${t('cotdConfirm')}
+      </button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  const close = () => {
+    overlay.remove();
+    if (onClose) onClose();
+  };
+  document.getElementById('howto-confirm').addEventListener('click', close);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+  });
+}
+
+
+// ──────────────────────────────────────────────────────────────
+// ──────────────────────────────────────────────────────────────
+// Share card — simple Wordle-style text + native share sheet
+// ──────────────────────────────────────────────────────────────
+function buildShareText() {
+  const st = getCOTDState();
+  const todayData = st.days[todayISO()];
+  const lastSessionHits = state.history.filter(h => h.hit).length;
+  const total = state.history.length || 5;
+
+  // Emoji line: gold for hit, gray for miss
+  const emojis = state.history.map(h => h.hit ? '🟡' : '⬛').join('');
+  const score = state.history.length ? `${lastSessionHits}/${total}` : '—';
+
+  // Example output:
+  //   Charts of the Day · 21/04 · 3/5
+  //   🟡🟡⬛🟡⬛
+  //   Esta semana: ◼◼◻◻◻◻◻
+  const weekGrid = t('cotdWeekdays').map((_, i) => {
+    const d = new Date(st.weekStart + 'T00:00:00Z');
+    d.setUTCDate(d.getUTCDate() + i);
+    const iso = d.toISOString().slice(0, 10);
+    const dayData = st.days[iso];
+    if (!dayData) return '◻';
+    return dayData.hit ? '◼' : '◽';
+  }).join('');
+
+  const shortDate = todayISO().slice(5);  // MM-DD
+  const line1 = `${t('cotdName')} · ${shortDate} · ${score}`;
+  const line2 = emojis;
+  const line3 = `${t('cotdWeekdays').join(' ')}`;
+  const line4 = weekGrid;
+  return `${line1}\n${line2}\n\n${line3}\n${line4}`;
+}
+
+function renderShareCard() {
+  const shareText = buildShareText();
+
+  screen.innerHTML = `
+    <div style="position:relative; padding-bottom: 40px;">
+      <div style="padding:4px 0 8px;">
+        <button id="close-share" style="width:28px;height:28px;border:none;background:transparent;color:#EAECEF;font-size:22px;cursor:pointer;">×</button>
+      </div>
+
+      <div style="text-align:center; padding-top: 20px;">
+        <div class="display" style="font-size:26px; color:#FFFFFF; line-height:1.1;">
+          ${t('cotdShareButton')}
+        </div>
+        <div style="font-size:13px; color:#848E9C; margin-top:8px;">
+          ${t('cotdShareTitle')}
+        </div>
+      </div>
+
+      <!-- Share preview (the text that will be copied/shared) -->
+      <div class="card" style="margin-top:24px;">
+        <pre id="share-text-preview" style="font-family:'Nunito',sans-serif; font-size:14px; color:#EAECEF; white-space:pre-wrap; word-wrap:break-word; margin:0; line-height:1.7;">${shareText}</pre>
+      </div>
+
+      <!-- CTAs -->
+      <div style="display:grid; grid-template-columns:1fr; gap:10px; margin-top:20px;">
+        <button class="btn btn-primary" id="native-share-btn" style="padding:14px 0; font-size:15px;">
+          ${t('cotdShareButton')}
+        </button>
+        <button class="btn btn-ghost" id="copy-share-btn" style="padding:14px 0; font-size:14px;">
+          ${t('lang') === 'ES' ? 'Copiar' : t('lang') === 'ZH' ? '复制' : 'Copy'}
+        </button>
+        <button class="btn btn-ghost" id="back-home-btn" style="padding:12px 0; font-size:13px; opacity:0.7;">
+          ${t('home')}
+        </button>
+      </div>
+
+      <div id="copy-confirm" style="text-align:center; margin-top:12px; color:#F0B90B; font-size:12px; opacity:0; transition:opacity 0.3s;">
+        ✓
+      </div>
+    </div>
+  `;
+  document.getElementById('close-share').addEventListener('click', renderHome);
+  document.getElementById('back-home-btn').addEventListener('click', renderHome);
+
+  const showCopied = () => {
+    const el = document.getElementById('copy-confirm');
+    if (!el) return;
+    el.style.opacity = '1';
+    setTimeout(() => { el.style.opacity = '0'; }, 1500);
+  };
+
+  const copyToClipboard = async (text) => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        showCopied();
+      } else {
+        // Fallback: use a temporary textarea
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed'; ta.style.top = '-1000px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); showCopied(); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+    } catch (e) { console.error(e); }
+  };
+
+  document.getElementById('copy-share-btn').addEventListener('click', () => {
+    copyToClipboard(shareText);
+  });
+
+  // Native Web Share API (iOS, Android)
+  document.getElementById('native-share-btn').addEventListener('click', async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: t('cotdName'),
+          text: shareText,
+        });
+      } catch (e) {
+        // User cancelled or failed — fallback to copy
+        copyToClipboard(shareText);
+      }
+    } else {
+      // No native share API (desktop) — just copy
+      copyToClipboard(shareText);
+    }
+  });
+}
+
+// Boot
+// ──────────────────────────────────────────────────────────────
+fetch('/meta').then(r => r.json()).then(m => {
+  window.__LONG_BIAS__ = m.long_bias;
+});
+setLang(detectLang());
+renderHome();
+</script>
+</body>
+</html>

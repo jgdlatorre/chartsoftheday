@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+data_1h/
+data_4h/
+data_1d/
+sessions/
+.venv/
+venv/
+.DS_Store
+*.parquet
