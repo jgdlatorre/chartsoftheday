@@ -222,7 +222,7 @@ def build_round_from_section(section: dict, rng: random.Random) -> dict:
 
     return {
         "round_id": round_id,
-        "symbol_anonymized": "●●●/USDT",
+        "symbol_anonymized": "●●●/USDC",
         "warmup_bars": WARMUP_BARS,
         "future_bars": FUTURE_BARS,
         "context_bars": CONTEXT_BARS,
@@ -430,7 +430,7 @@ def _build_round(rng):
 
     return jsonify({
         "round_id": round_id,
-        "symbol_anonymized": "●●●/USDT",
+        "symbol_anonymized": "●●●/USDC",
         "warmup_bars": WARMUP_BARS,
         "future_bars": FUTURE_BARS,
         "context_bars": CONTEXT_BARS,
