@@ -168,7 +168,11 @@ def load_sections_pool() -> bool:
 
 def build_round_from_section(section: dict, rng: random.Random) -> dict:
     """Convert a pool section into the round payload format the client expects.
-    Computes bots votes fresh per call (they're cheap and need variance)."""
+    Computes bots votes fresh per call (they're cheap and need variance).
+
+    Output bar format: arrays [o,h,l,c,v] (same as bars_to_list) — the client's
+    hydrateBars() expects Array.isArray(bars[0]) to be true.
+    """
     tf_payloads = {}
     tf_cache = {}
 
@@ -191,13 +195,13 @@ def build_round_from_section(section: dict, rng: random.Random) -> dict:
             "truth": tfs["truth"],
             "decision_ts": tfs["decision_ts"],
             "exit_ts": tfs["exit_ts"],
-            "future_bars": [_bar_from_compact(b) for b in future_bars],
+            "future_bars": [_bar_compact_to_array(b) for b in future_bars],
             "monkey_votes": monkey_votes,
             "monkey_long_count": monkey_long,
         }
 
         tf_payloads[tf_name] = {
-            "bars": [_bar_from_compact(b) for b in context_bars],
+            "bars": [_bar_compact_to_array(b) for b in context_bars],
             "warmup_count": int(warmup),
             "future_count": FUTURE_BARS,
             "monkey_sentiment_long_pct": monkey_long,
@@ -226,16 +230,9 @@ def build_round_from_section(section: dict, rng: random.Random) -> dict:
     }
 
 
-def _bar_from_compact(b: dict) -> dict:
-    """Expand compact {ts,o,h,l,c,v} to the field names the client UI expects."""
-    return {
-        "timestamp": b["ts"],
-        "open": b["o"],
-        "high": b["h"],
-        "low": b["l"],
-        "close": b["c"],
-        "volume": b["v"],
-    }
+def _bar_compact_to_array(b: dict) -> list:
+    """Compact dict {ts,o,h,l,c,v} → [o,h,l,c,v] array (matches bars_to_list output)."""
+    return [b["o"], b["h"], b["l"], b["c"], b["v"]]
 
 
 # ──────────────────────────────────────────────────────────────────────────────
