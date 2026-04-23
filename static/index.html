@@ -618,7 +618,7 @@
 // ──────────────────────────────────────────────────────────────
 const CONTEXT_BARS = 80;
 const FUTURE_BARS = 48;
-const ROUND_SECONDS = 10;
+const ROUND_SECONDS = 30;
 const ROUNDS_PER_GAME = 5;  // COTD: 5 charts per day
 
 // ──────────────────────────────────────────────────────────────
@@ -627,7 +627,7 @@ const ROUNDS_PER_GAME = 5;  // COTD: 5 charts per day
 const I18N = {
   es: {
     langName: 'Español',
-    appTagline: 'Lee el mercado en 10 segundos',
+    appTagline: 'Lee el mercado en 30 segundos',
     // Charts of the Day (COTD) — adapted from Binance WOTD framework
     cotdName: 'Gráficos del día',
     cotdSharePool: 'Comparte 500 puntos',
@@ -648,7 +648,7 @@ const I18N = {
     cotdRewardPool: 'Pool de recompensas',
     cotdHistory: 'Historial de actividad',
     cotdHowToPlay: 'Cómo jugar',
-    cotdHowInstruction: 'Decide si suben o bajan los 5 gráficos del día. Tienes 10 segundos para cada uno.',
+    cotdHowInstruction: 'Decide si suben o bajan los 5 gráficos del día. Tienes 30 segundos para cada uno.',
     cotdHowCorrect: 'Acierto: el precio fue en tu dirección',
     cotdHowWrong: 'Fallo: el precio fue en la dirección opuesta',
     cotdHowStreak: 'Los usuarios que acierten 3 días podrán optar al reparto del pool de recompensas.',
@@ -664,11 +664,11 @@ const I18N = {
     cotdShareButton: 'Compartir',
     cotdReferralCode: 'Código de referido',
     cotdShareLink: 'Compartir enlace',
-    homeRules1Html: '<b>5 rondas</b> · <b>10 segundos</b> cada una',
+    homeRules1Html: '<b>5 rondas</b> · <b>30 segundos</b> cada una',
     homeRules2Html: 'Gráfico real. Decides <b style="color:#2D7D4E;">SUBE</b> o <b style="color:#A3352F;">BAJA</b>.',
     homeRules3Html: '¿Sube o baja en las próximas <b>48 velas</b>?',
     homeStart: 'Empezar',
-    homePitch: '10 segundos. El gráfico. Contra 100 bots.',
+    homePitch: '30 segundos. El gráfico. Tu lectura.',
     // TODO: replace with compliance-approved copy before public launch
     disclaimerHome: 'Aplicación educativa. Los resultados pasados no garantizan resultados futuros.',
     disclaimerSummary1: 'Aplicación educativa con datos históricos. Los resultados simulados no representan trading real.',
@@ -708,7 +708,7 @@ const I18N = {
     profileMid: 'medio',
     profileWeak: 'débil',
     // First-play tooltips
-    tooltipTimer: '10 segundos. Sin pausa, sin saltar.',
+    tooltipTimer: '30 segundos. Sin pausa, sin saltar.',
     tooltipButtons: '¿Sube o baja en las próximas 48 velas?',
     tooltipMonkey: '100 bots votan en la misma ronda. Gánales.',
     // date
@@ -720,7 +720,7 @@ const I18N = {
   },
   en: {
     langName: 'English',
-    appTagline: 'Read the market in 10 seconds',
+    appTagline: 'Read the market in 30 seconds',
     cotdName: 'Charts of the Day',
     cotdSharePool: 'Share 500 points',
     cotdPeriod: (from, to) => `From ${from} to ${to}`,
@@ -740,7 +740,7 @@ const I18N = {
     cotdRewardPool: 'Reward pool',
     cotdHistory: 'Activity history',
     cotdHowToPlay: 'How to play',
-    cotdHowInstruction: "Decide if today's 5 charts go up or down. 10 seconds each.",
+    cotdHowInstruction: "Decide if today's 5 charts go up or down. 30 seconds each.",
     cotdHowCorrect: 'Hit: price went your way',
     cotdHowWrong: 'Miss: price went the opposite way',
     cotdHowStreak: 'Users who win on 3 days become eligible to share the reward pool.',
@@ -756,11 +756,11 @@ const I18N = {
     cotdShareButton: 'Share',
     cotdReferralCode: 'Referral code',
     cotdShareLink: 'Share link',
-    homeRules1Html: '<b>5 rounds</b> · <b>10 seconds</b> each',
+    homeRules1Html: '<b>5 rounds</b> · <b>30 seconds</b> each',
     homeRules2Html: 'Real chart. Choose <b style="color:#2D7D4E;">UP</b> or <b style="color:#A3352F;">DOWN</b>.',
     homeRules3Html: 'Will it go up or down in the next <b>48 candles</b>?',
     homeStart: 'Start',
-    homePitch: '10 seconds. The chart. Against 100 bots.',
+    homePitch: '30 seconds. The chart. Your read.',
     disclaimerHome: 'Educational app. Past results do not guarantee future results.',
     disclaimerSummary1: 'Educational app using historical data. Simulated results do not represent actual trading.',
     disclaimerSummary2: 'Not financial advice. Past wins do not guarantee future wins.',
@@ -797,7 +797,7 @@ const I18N = {
     profileStrong: 'strong',
     profileMid: 'mid',
     profileWeak: 'weak',
-    tooltipTimer: '10 seconds. No pause, no skip.',
+    tooltipTimer: '30 seconds. No pause, no skip.',
     tooltipButtons: 'Up or down in the next 48 candles?',
     tooltipMonkey: '100 bots vote the same round. Beat them.',
     months: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
@@ -808,7 +808,7 @@ const I18N = {
   },
   zh: {
     langName: '简体中文',
-    appTagline: '10秒看懂市场',
+    appTagline: '30秒看懂市场',
     cotdName: '每日图表',
     cotdSharePool: '瓜分 500 积分',
     cotdPeriod: (from, to) => `${from} 至 ${to}`,
@@ -828,7 +828,7 @@ const I18N = {
     cotdRewardPool: '奖励池',
     cotdHistory: '活动历史',
     cotdHowToPlay: '如何游玩',
-    cotdHowInstruction: '判断今日 5 张图表是涨是跌。每张 10 秒。',
+    cotdHowInstruction: '判断今日 5 张图表是涨是跌。每张 30 秒。',
     cotdHowCorrect: '命中: 价格如你所料',
     cotdHowWrong: '错过: 价格反方向',
     cotdHowStreak: '本期间内答对 3 天的用户将可瓜分奖励池。',
@@ -844,11 +844,11 @@ const I18N = {
     cotdShareButton: '分享',
     cotdReferralCode: '推荐代码',
     cotdShareLink: '分享链接',
-    homeRules1Html: '<b>5 局</b> · 每局 <b>10 秒</b>',
+    homeRules1Html: '<b>5 局</b> · 每局 <b>30 秒</b>',
     homeRules2Html: '币安图表。选 <b style="color:#2D7D4E;">涨</b> 或 <b style="color:#A3352F;">跌</b>。',
     homeRules3Html: '接下来的 <b>48 根K线</b> 会涨还是跌？',
     homeStart: '开始',
-    homePitch: '10 秒。看图表。对战 100 个机器人。',
+    homePitch: '30 秒。看图表。你的判断。',
     disclaimerHome: '教育应用。过往表现不代表未来结果。',
     disclaimerSummary1: '基于历史数据的教育应用。模拟结果不代表真实交易。',
     disclaimerSummary2: '非投资建议。过去的成绩不保证未来的成绩。',
@@ -885,7 +885,7 @@ const I18N = {
     profileStrong: '强',
     profileMid: '中',
     profileWeak: '弱',
-    tooltipTimer: '10 秒。不能暂停，不能跳过。',
+    tooltipTimer: '30 秒。不能暂停，不能跳过。',
     tooltipButtons: '接下来 48 根K线，涨还是跌？',
     tooltipMonkey: '100 个机器人也在投票。打败它们。',
     months: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
