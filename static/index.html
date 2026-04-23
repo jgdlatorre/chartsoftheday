@@ -2,14 +2,19 @@
 <html lang="es">
 <head>
 <script>
-  // Initialize theme from localStorage before any render — prevents flash
+  // Initialize theme AND mode from localStorage before any render — prevents flash
   (function() {
     try {
-      var saved = localStorage.getItem('cotd_theme');
-      var theme = (saved === 'light' || saved === 'dark') ? saved : 'dark';
+      var savedTheme = localStorage.getItem('cotd_theme');
+      var theme = (savedTheme === 'light' || savedTheme === 'dark') ? savedTheme : 'dark';
       document.documentElement.setAttribute('data-theme', theme);
+
+      var savedMode = localStorage.getItem('cotd_mode');
+      var mode = (savedMode === 'lite' || savedMode === 'pro') ? savedMode : 'lite';
+      document.documentElement.setAttribute('data-mode', mode);
     } catch(e) {
       document.documentElement.setAttribute('data-theme', 'dark');
+      document.documentElement.setAttribute('data-mode', 'lite');
     }
   })();
 </script>
@@ -117,7 +122,7 @@
     font-family: inherit;
     font-weight: 700;
     font-size: 16px;
-    padding: 16px 0;
+    padding: 14px 0;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -339,14 +344,17 @@
   .timer-bar { height: 4px; border-radius: 100px; background: var(--bg-3); overflow: hidden; }
   .timer-fill { height: 100%; background: var(--amber); transition: width 0.1s linear, background 0.2s; border-radius: 100px; }
 
-  /* Chart wrap — adapts to theme */
+  /* Chart wrap — adapts to theme AND mode
+     Lite = full height (tall, room to breathe, no extra panels)
+     Pro  = compressed 82% (because Pro has MA legend + volume panel absorbing vertical space)
+  */
+  /* Chart wrap — SVG inside sets its own aspect-ratio (varies by mode: Lite=420/520, Pro=420/440) */
   #chart-wrap {
     background: var(--chart-bg);
     border-radius: 10px;
     border: 1px solid var(--border);
     overflow: hidden;
     position: relative;
-    aspect-ratio: 420 / 520;
     width: 100%;
   }
 
@@ -364,7 +372,7 @@
   /* Top bar with centered round label */
   .v5-topbar {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 8px 0 10px;
+    padding: 4px 0 6px;
     gap: 10px;
   }
   .v5-back {
@@ -403,7 +411,7 @@
   }
   .v5-tf-group { display: flex; }
   .v5-tf {
-    padding: 10px 14px;
+    padding: 8px 12px;
     font-size: 12px; font-weight: 600;
     color: var(--text-dim); cursor: pointer;
     position: relative;
@@ -413,7 +421,7 @@
   .v5-tf.active { color: var(--amber); }
   .v5-tf.active::after {
     content: ""; position: absolute;
-    bottom: -1px; left: 14px; right: 14px;
+    bottom: -1px; left: 12px; right: 12px;
     height: 2px; background: var(--amber);
   }
   .v5-indicators-btn {
@@ -981,6 +989,7 @@ function detectMode() {
 function setMode(m) {
   if (m !== 'lite' && m !== 'pro') return;
   state.mode = m;
+  document.documentElement.setAttribute('data-mode', m);
   try { localStorage.setItem('cotd_mode', m); } catch (e) {}
   // Re-render chart instantly (no animation)
   if (state.current && (state.screen === 'play' || state.screen === 'reveal')) {
@@ -1087,7 +1096,10 @@ function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
   const visibleFrom = warmupCount;
   const visibleTo = showAll ? allBars.length : contextEnd;
 
-  const W = 420, H = 520;
+  // Variable height: Pro has more vertical content (volume panel), compress slightly
+  // Lite keeps original height for elegance
+  const W = 420;
+  const H = mode === 'pro' ? 440 : 520;
   const padL = 8, padR = 8;
 
   // Volume panel: only in Pro mode AND if any bar has v>0
@@ -1098,9 +1110,10 @@ function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
     }
   }
 
+  // Price/volume zones — scale with H
   const priceTop = 14;
-  const priceBot = hasVolume ? 420 : 500;
-  const volTop = 434, volBot = 500;
+  const priceBot = hasVolume ? (H - 100) : (H - 20);
+  const volTop = H - 86, volBot = H - 20;
 
   // Compute MAs only in pro mode (avoid waste)
   const ma7  = (mode === 'pro') ? sma(allBars, 7)  : null;
@@ -1270,15 +1283,18 @@ function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
     if (bodyUpD) svg += `<path d="${bodyUpD}" fill="${C.up}"/>`;
     if (bodyDnD) svg += `<path d="${bodyDnD}" fill="${C.down}"/>`;
 
-    // MA legend (top-left)
-    svg += `<g font-family="Arial" font-size="9" font-weight="700">`;
-    svg += `<rect x="${padL}" y="${priceTop}" width="74" height="42" fill="${C.legendBg}" rx="3"/>`;
-    svg += `<line x1="${padL + 4}" y1="${priceTop + 9}" x2="${padL + 16}" y2="${priceTop + 9}" stroke="${C.sma7}" stroke-width="2"/>`;
-    svg += `<text x="${padL + 20}" y="${priceTop + 12}" fill="${C.legendText}">MA 7</text>`;
-    svg += `<line x1="${padL + 4}" y1="${priceTop + 22}" x2="${padL + 16}" y2="${priceTop + 22}" stroke="${C.sma25}" stroke-width="2"/>`;
-    svg += `<text x="${padL + 20}" y="${priceTop + 25}" fill="${C.legendText}">MA 25</text>`;
-    svg += `<line x1="${padL + 4}" y1="${priceTop + 35}" x2="${padL + 16}" y2="${priceTop + 35}" stroke="${C.sma99}" stroke-width="2"/>`;
-    svg += `<text x="${padL + 20}" y="${priceTop + 38}" fill="${C.legendText}">MA 99</text>`;
+    // MA legend (top-left, single row, label-only — no numeric values)
+    svg += `<g font-family="Arial" font-size="10" font-weight="700">`;
+    svg += `<rect x="${padL}" y="${priceTop - 2}" width="186" height="16" fill="${C.legendBg}" rx="2"/>`;
+    // MA(7)
+    svg += `<line x1="${padL + 4}" y1="${priceTop + 6}" x2="${padL + 14}" y2="${priceTop + 6}" stroke="${C.sma7}" stroke-width="2"/>`;
+    svg += `<text x="${padL + 18}" y="${priceTop + 9}" fill="${C.sma7}">MA(7)</text>`;
+    // MA(25)
+    svg += `<line x1="${padL + 62}" y1="${priceTop + 6}" x2="${padL + 72}" y2="${priceTop + 6}" stroke="${C.sma25}" stroke-width="2"/>`;
+    svg += `<text x="${padL + 76}" y="${priceTop + 9}" fill="${C.sma25}">MA(25)</text>`;
+    // MA(99)
+    svg += `<line x1="${padL + 126}" y1="${priceTop + 6}" x2="${padL + 136}" y2="${priceTop + 6}" stroke="${C.sma99}" stroke-width="2"/>`;
+    svg += `<text x="${padL + 140}" y="${priceTop + 9}" fill="${C.sma99}">MA(99)</text>`;
     svg += `</g>`;
 
     // Vol label
@@ -2098,22 +2114,6 @@ function renderPlay() {
     return `<button class="mode-btn ${active ? 'mode-active' : ''}" data-mode="${m}">${label}</button>`;
   };
 
-  // MA legend (only in pro mode) — compact, fits into the toolbar row
-  let maLegend = '';
-  if (state.mode === 'pro') {
-    const decisionIdx = tfData.warmup_count + (tfData.bars.length - tfData.warmup_count) - 1;
-    const m7 = sma(tfData.bars, 7)[decisionIdx];
-    const m25 = sma(tfData.bars, 25)[decisionIdx];
-    const m99 = sma(tfData.bars, 99)[decisionIdx];
-    const fmt = (v) => v != null ? v.toFixed(2) : '—';
-    maLegend = `
-      <div class="v5-ma-legend">
-        <span class="ma-pair"><b class="ma-7-lbl">MA(7):</b> <span class="ma-val">${fmt(m7)}</span></span>
-        <span class="ma-pair"><b class="ma-25-lbl">MA(25):</b> <span class="ma-val">${fmt(m25)}</span></span>
-        <span class="ma-pair"><b class="ma-99-lbl">MA(99):</b> <span class="ma-val">${fmt(m99)}</span></span>
-      </div>`;
-  }
-
   screen.innerHTML = `
     <!-- Topbar: × · Round 02/05 centered · theme toggle discreet right -->
     <div class="v5-topbar">
@@ -2134,7 +2134,7 @@ function renderPlay() {
     </div>
 
     <!-- Pair name, no duplicate meta row -->
-    <div class="v5-pair-header" style="padding:10px 2px 8px;">
+    <div class="v5-pair-header" style="padding:6px 2px 4px;">
       <div class="v5-pair-name">● ● ●<span class="sub"> / USDC</span></div>
     </div>
 
@@ -2148,13 +2148,11 @@ function renderPlay() {
       </div>
     </div>
 
-    ${maLegend}
-
     <!-- Chart -->
-    <div id="chart-wrap" style="margin-top:10px;">${chartSvg}</div>
+    <div id="chart-wrap" style="margin-top:6px;">${chartSvg}</div>
 
     <!-- Timer + indicator -->
-    <div class="meta-row" style="margin:12px 2px 6px;">
+    <div class="meta-row" style="margin:10px 2px 4px;">
       <span style="color: var(--text-dim);">${t('round')} ${state.round}/${ROUNDS_PER_GAME}</span>
       <span id="timer-txt" style="font-weight:700; color:var(--text);">10.0s</span>
     </div>
@@ -2259,22 +2257,6 @@ function renderReveal() {
     return `<button class="mode-btn ${active ? 'mode-active' : ''}" data-mode="${m}">${label}</button>`;
   };
 
-  // MA legend in reveal (Pro mode only, same as play) — based on reveal bars
-  let maLegend = '';
-  if (state.mode === 'pro') {
-    const decisionIdx = tfr.warmup_count + tfr.context_count - 1;
-    const m7 = sma(tfr.bars, 7)[decisionIdx];
-    const m25 = sma(tfr.bars, 25)[decisionIdx];
-    const m99 = sma(tfr.bars, 99)[decisionIdx];
-    const fmt = (v) => v != null ? v.toFixed(2) : '—';
-    maLegend = `
-      <div class="v5-ma-legend">
-        <span class="ma-pair"><b class="ma-7-lbl">MA(7):</b> <span class="ma-val">${fmt(m7)}</span></span>
-        <span class="ma-pair"><b class="ma-25-lbl">MA(25):</b> <span class="ma-val">${fmt(m25)}</span></span>
-        <span class="ma-pair"><b class="ma-99-lbl">MA(99):</b> <span class="ma-val">${fmt(m99)}</span></span>
-      </div>`;
-  }
-
   screen.innerHTML = `
     <!-- Topbar — SAME structure as play (× · Round N/5 · Revealed · theme) -->
     <div class="v5-topbar">
@@ -2295,7 +2277,7 @@ function renderReveal() {
     </div>
 
     <!-- Pair name (same as play) -->
-    <div class="v5-pair-header" style="padding:10px 2px 8px;">
+    <div class="v5-pair-header" style="padding:6px 2px 4px;">
       <div class="v5-pair-name">● ● ●<span class="sub"> / USDC</span></div>
     </div>
 
@@ -2309,10 +2291,8 @@ function renderReveal() {
       </div>
     </div>
 
-    ${maLegend}
-
     <!-- Chart (showing full reveal) -->
-    <div id="chart-wrap" class="${animClass}" style="margin-top:10px;">${chartSvg}</div>
+    <div id="chart-wrap" class="${animClass}" style="margin-top:6px;">${chartSvg}</div>
 
     <!-- Compact verdict banner — replaces timer+buttons zone of play screen -->
     <div class="v5-verdict ${verdict.cls}" id="verdict-banner">
@@ -2723,6 +2703,7 @@ fetch('/meta').then(r => r.json()).then(m => {
 setLang(detectLang());
 setTheme(detectTheme());
 state.mode = detectMode();
+document.documentElement.setAttribute('data-mode', state.mode);
 
 // Onboarding: show mandatory how-to first time, then home
 function hasSeenOnboarding() {
