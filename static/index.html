@@ -98,7 +98,7 @@
     transition: background 0.15s ease, color 0.15s ease;
   }
   body {
-    padding: max(12px, env(safe-area-inset-top)) 10px max(20px, env(safe-area-inset-bottom)) 10px;
+    padding: max(20px, calc(env(safe-area-inset-top) + 4px)) 10px max(20px, env(safe-area-inset-bottom)) 10px;
     position: relative;
     overflow-x: hidden;
   }
@@ -383,7 +383,7 @@
     font-weight: 400;
   }
   .v5-round-label {
-    font-size: 13px; color: var(--text-dim); font-weight: 400;
+    font-size: 15px; color: var(--text-dim); font-weight: 400;
     flex: 1; text-align: center;
   }
   .v5-round-label b { color: var(--text); font-weight: 700; }
@@ -433,20 +433,6 @@
     font-family: inherit;
     font-weight: 500;
   }
-
-  /* MA legend row (below TF tabs, only in Pro mode) */
-  .v5-ma-legend {
-    padding: 8px 2px 10px;
-    display: flex; gap: 14px;
-    font-size: 10px; color: var(--text-dim);
-    border-bottom: 1px solid var(--border);
-    font-weight: 600;
-  }
-  .v5-ma-legend .ma-pair { display: inline-flex; gap: 4px; }
-  .v5-ma-legend .ma-7-lbl { color: var(--sma7); }
-  .v5-ma-legend .ma-25-lbl { color: var(--sma25); }
-  .v5-ma-legend .ma-99-lbl { color: var(--sma99); }
-  .v5-ma-legend .ma-val { color: var(--text-dim); }
 
   /* Verdict banner (reveal — compact, replaces timer+buttons zone) */
   .v5-verdict {
@@ -689,6 +675,7 @@ const I18N = {
     disclaimerSummary2: 'No es asesoramiento financiero. Los aciertos pasados no garantizan aciertos futuros.',
     loading: 'cargando vela aleatoria...',
     round: 'ronda',
+    revealed: 'Revelado',
     anonymousAsset: 'activo anónimo',
     streakLabel: 'racha',
     monkeySentiment: '100 bots opinan:',
@@ -779,6 +766,7 @@ const I18N = {
     disclaimerSummary2: 'Not financial advice. Past wins do not guarantee future wins.',
     loading: 'loading random candle...',
     round: 'round',
+    revealed: 'Revealed',
     anonymousAsset: 'anonymous asset',
     streakLabel: 'streak',
     monkeySentiment: '100 bots think:',
@@ -866,6 +854,7 @@ const I18N = {
     disclaimerSummary2: '非投资建议。过去的成绩不保证未来的成绩。',
     loading: '加载随机K线中...',
     round: '局',
+    revealed: '揭晓',
     anonymousAsset: '匿名标的',
     streakLabel: '连胜',
     monkeySentiment: '100 个机器人的看法:',
@@ -927,6 +916,12 @@ function t(key) {
   const dict = I18N[state.lang] || I18N.es;
   const fallback = I18N.es;
   return dict[key] !== undefined ? dict[key] : fallback[key];
+}
+// Title case: capitalize first letter (for i18n strings that are lowercase)
+function tCap(key) {
+  const s = t(key);
+  if (!s || typeof s !== 'string') return s;
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }
 function formatDate(iso) {
   const d = new Date(iso);
@@ -1096,10 +1091,10 @@ function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
   const visibleFrom = warmupCount;
   const visibleTo = showAll ? allBars.length : contextEnd;
 
-  // Variable height: Pro has more vertical content (volume panel), compress slightly
-  // Lite keeps original height for elegance
+  // Variable height: Pro is slightly shorter (more content to fit), but only
+  // marginally — compressing too much makes the chart feel cramped.
   const W = 420;
-  const H = mode === 'pro' ? 440 : 520;
+  const H = mode === 'pro' ? 494 : 520;
   const padL = 8, padR = 8;
 
   // Volume panel: only in Pro mode AND if any bar has v>0
@@ -2118,7 +2113,7 @@ function renderPlay() {
     <!-- Topbar: × · Round 02/05 centered · theme toggle discreet right -->
     <div class="v5-topbar">
       <button class="v5-back" id="back-home">×</button>
-      <div class="v5-round-label">Round <b>${roundStr}/${totalStr}</b></div>
+      <div class="v5-round-label">${tCap('round')} <b>${roundStr}/${totalStr}</b></div>
       <button id="theme-btn" class="theme-btn" aria-label="Toggle theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
@@ -2244,6 +2239,18 @@ function renderReveal() {
   const pctStr = (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
   const arrow = pct >= 0 ? '↑' : '↓';
 
+  // Reveal the symbol + period (was censored as ●●● during play)
+  const fullSymbol = r.symbol || 'BTCUSDC';
+  const base = fullSymbol.replace(/USDC$|USDT$/, '');
+  const quote = fullSymbol.endsWith('USDT') ? 'USDT' : 'USDC';
+  // Format the decision timestamp nicely
+  let decisionTimeStr = '';
+  try {
+    const d = new Date(r.decision_ts);
+    const iso = d.toISOString();
+    decisionTimeStr = iso.slice(0, 10) + ' · ' + iso.slice(11, 16) + ' UTC';
+  } catch (e) {}
+
   // Round label
   const roundStr = String(state.round);
 
@@ -2261,7 +2268,7 @@ function renderReveal() {
     <!-- Topbar — SAME structure as play (× · Round N/5 · Revealed · theme) -->
     <div class="v5-topbar">
       <button class="v5-back" id="back-reveal">×</button>
-      <div class="v5-round-label">Round <b>${roundStr}/${ROUNDS_PER_GAME}</b> · Revealed</div>
+      <div class="v5-round-label">${tCap('round')} <b>${roundStr}/${ROUNDS_PER_GAME}</b> · ${t('revealed')}</div>
       <button id="theme-btn" class="theme-btn" aria-label="Toggle theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
@@ -2276,9 +2283,10 @@ function renderReveal() {
       </button>
     </div>
 
-    <!-- Pair name (same as play) -->
+    <!-- Pair name REVEALED (ticker + date/time) -->
     <div class="v5-pair-header" style="padding:6px 2px 4px;">
-      <div class="v5-pair-name">● ● ●<span class="sub"> / USDC</span></div>
+      <div class="v5-pair-name">${base}<span class="sub"> / ${quote}</span></div>
+      ${decisionTimeStr ? `<div style="font-size:11px; color:var(--text-dim); margin-top:2px; font-weight:500;">${decisionTimeStr}</div>` : ''}
     </div>
 
     <!-- Toolbar: TF tabs (locked) + Lite/Pro -->
