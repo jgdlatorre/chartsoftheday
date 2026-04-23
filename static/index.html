@@ -1060,6 +1060,46 @@ function sma(bars, period, field) {
   return out;
 }
 
+// RSI (Wilder's 14-period by default)
+// Returns array aligned to bars: null until index >= period, then RSI values 0-100
+function rsi(bars, period) {
+  period = period || 14;
+  const out = new Array(bars.length).fill(null);
+  if (bars.length < period + 1) return out;
+
+  let avgGain = 0, avgLoss = 0;
+  // First period: simple average of gains/losses
+  for (let i = 1; i <= period; i++) {
+    const change = bars[i].c - bars[i - 1].c;
+    if (change > 0) avgGain += change;
+    else avgLoss += -change;
+  }
+  avgGain /= period;
+  avgLoss /= period;
+
+  // First RSI value at index = period
+  if (avgLoss === 0) out[period] = 100;
+  else {
+    const rs = avgGain / avgLoss;
+    out[period] = 100 - (100 / (1 + rs));
+  }
+
+  // Subsequent: Wilder's smoothing
+  for (let i = period + 1; i < bars.length; i++) {
+    const change = bars[i].c - bars[i - 1].c;
+    const gain = change > 0 ? change : 0;
+    const loss = change < 0 ? -change : 0;
+    avgGain = (avgGain * (period - 1) + gain) / period;
+    avgLoss = (avgLoss * (period - 1) + loss) / period;
+    if (avgLoss === 0) out[i] = 100;
+    else {
+      const rs = avgGain / avgLoss;
+      out[i] = 100 - (100 / (1 + rs));
+    }
+  }
+  return out;
+}
+
 // ──────────────────────────────────────────────────────────────
 // Chart (supports light+dark themes, Lite+Pro modes)
 //
@@ -1091,10 +1131,10 @@ function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
   const visibleFrom = warmupCount;
   const visibleTo = showAll ? allBars.length : contextEnd;
 
-  // Variable height: Pro is slightly shorter (more content to fit), but only
-  // marginally — compressing too much makes the chart feel cramped.
+  // Variable height: Pro needs extra room for volume + RSI panels
+  // Lite keeps original compact height (just price line)
   const W = 420;
-  const H = mode === 'pro' ? 494 : 520;
+  const H = mode === 'pro' ? 560 : 520;
   const padL = 8, padR = 8;
 
   // Volume panel: only in Pro mode AND if any bar has v>0
@@ -1104,11 +1144,22 @@ function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
       if (allBars[i] && allBars[i].v > 0) { hasVolume = true; break; }
     }
   }
+  const hasRSI = (mode === 'pro');
 
-  // Price/volume zones — scale with H
-  const priceTop = 14;
-  const priceBot = hasVolume ? (H - 100) : (H - 20);
-  const volTop = H - 86, volBot = H - 20;
+  // Zone layout for Pro (H=560): price 14-400 (386px), vol 410-460 (50px), rsi 470-540 (70px)
+  // Zone layout for Lite (H=520): price 14-500 (486px), nothing below
+  let priceTop, priceBot, volTop, volBot, rsiTop, rsiBot;
+  if (mode === 'pro') {
+    priceTop = 14;
+    priceBot = hasVolume ? 400 : 440;
+    volTop = 410; volBot = 460;
+    rsiTop = 470; rsiBot = 540;
+  } else {
+    priceTop = 14;
+    priceBot = 500;
+    volTop = 0; volBot = 0;  // unused
+    rsiTop = 0; rsiBot = 0;  // unused
+  }
 
   // Compute MAs only in pro mode (avoid waste)
   const ma7  = (mode === 'pro') ? sma(allBars, 7)  : null;
@@ -1158,8 +1209,11 @@ function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
   if (hasVolume) {
     svg += `<rect x="0" y="${volTop-2}" width="${W}" height="${volBot-volTop+4}" fill="${C.volBg}"/>`;
   }
+  if (hasRSI) {
+    svg += `<rect x="0" y="${rsiTop-2}" width="${W}" height="${rsiBot-rsiTop+4}" fill="${C.volBg}"/>`;
+  }
 
-  // Subtle horizontal grid
+  // Subtle horizontal grid in price zone
   for (let i = 1; i < 4; i++) {
     const y = priceTop + (priceBot - priceTop) * i / 4;
     svg += `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${W - padR}" y2="${y.toFixed(1)}" stroke="${C.grid}" stroke-width="0.5"/>`;
@@ -1296,22 +1350,61 @@ function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
     if (hasVolume) {
       svg += `<text x="${padL}" y="${volTop + 12}" fill="${C.textDim}" font-family="Arial" font-size="9" font-weight="700">VOL</text>`;
     }
+
+    // ─────── RSI panel ───────
+    if (hasRSI) {
+      const rsiData = rsi(allBars, 14);
+      // Y-axis: 0 (bottom) to 100 (top). Reference lines at 70 and 30.
+      const yRSI = v => rsiBot - (rsiBot - rsiTop) * (v / 100);
+
+      // Overbought (70) and oversold (30) reference lines
+      const y70 = yRSI(70);
+      const y30 = yRSI(30);
+      const y50 = yRSI(50);
+      // 70 line (overbought) — dashed
+      svg += `<line x1="${padL}" y1="${y70.toFixed(1)}" x2="${W - padR}" y2="${y70.toFixed(1)}" stroke="${C.textDim}" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.5"/>`;
+      // 30 line (oversold) — dashed
+      svg += `<line x1="${padL}" y1="${y30.toFixed(1)}" x2="${W - padR}" y2="${y30.toFixed(1)}" stroke="${C.textDim}" stroke-width="0.5" stroke-dasharray="2,2" opacity="0.5"/>`;
+      // 50 center line — very subtle
+      svg += `<line x1="${padL}" y1="${y50.toFixed(1)}" x2="${W - padR}" y2="${y50.toFixed(1)}" stroke="${C.grid}" stroke-width="0.3" opacity="0.5"/>`;
+
+      // RSI line path (skip nulls at start)
+      let rsiPath = '';
+      for (let i = visibleFrom; i < visibleTo; i++) {
+        const v = rsiData[i];
+        if (v === null || v === undefined) continue;
+        const x = xAt(i);
+        const y = yRSI(v);
+        rsiPath += (rsiPath === '' ? 'M' : 'L') + x.toFixed(1) + ' ' + y.toFixed(1) + ' ';
+      }
+      if (rsiPath) {
+        svg += `<path d="${rsiPath}" stroke="${C.sma99}" stroke-width="1.3" fill="none" opacity="0.95" stroke-linejoin="round"/>`;
+      }
+
+      // RSI label (left side)
+      svg += `<text x="${padL}" y="${rsiTop + 11}" fill="${C.textDim}" font-family="Arial" font-size="9" font-weight="700">RSI(14)</text>`;
+      // "70" and "30" small labels near reference lines
+      svg += `<text x="${W - padR - 14}" y="${(y70 - 2).toFixed(1)}" fill="${C.textDim}" font-family="Arial" font-size="8" font-weight="600" opacity="0.7">70</text>`;
+      svg += `<text x="${W - padR - 14}" y="${(y30 + 8).toFixed(1)}" fill="${C.textDim}" font-family="Arial" font-size="8" font-weight="600" opacity="0.7">30</text>`;
+    }
   }
 
   // ─────── Decision marker + future zone ───────
   const decisionGlobalIdx = contextEnd - 1;
   const decisionX = xAt(decisionGlobalIdx) + barW / 2;
+  // Bottom of chart activity (includes RSI if present)
+  const chartBottom = hasRSI ? rsiBot : (hasVolume ? volBot : priceBot);
 
   if (showAll) {
-    // Dotted vertical line at decision point
-    svg += `<line x1="${decisionX.toFixed(1)}" y1="${priceTop}" x2="${decisionX.toFixed(1)}" y2="${(hasVolume ? volBot : priceBot)}" stroke="${C.textDim}" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>`;
+    // Dotted vertical line at decision point — spans all panels
+    svg += `<line x1="${decisionX.toFixed(1)}" y1="${priceTop}" x2="${decisionX.toFixed(1)}" y2="${chartBottom}" stroke="${C.textDim}" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>`;
     // Entry price horizontal guide
     const entryY = yPrice(allBars[decisionGlobalIdx].c);
     svg += `<line x1="${padL}" y1="${entryY.toFixed(1)}" x2="${W - padR}" y2="${entryY.toFixed(1)}" stroke="${C.amber}" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.7"/>`;
   } else {
-    // Reserved future zone
+    // Reserved future zone — spans all panels
     svg += `<rect x="${decisionX.toFixed(1)}" y="0" width="${(W - decisionX).toFixed(1)}" height="${H}" fill="${C.futureBg}" opacity="0.85"/>`;
-    svg += `<line x1="${decisionX.toFixed(1)}" y1="${priceTop}" x2="${decisionX.toFixed(1)}" y2="${(hasVolume ? volBot : priceBot)}" stroke="${C.futureLine}" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>`;
+    svg += `<line x1="${decisionX.toFixed(1)}" y1="${priceTop}" x2="${decisionX.toFixed(1)}" y2="${chartBottom}" stroke="${C.futureLine}" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>`;
     const midX = decisionX + (W - decisionX) / 2;
     const midY = (priceTop + priceBot) / 2;
     svg += `<text x="${midX.toFixed(1)}" y="${(midY + 10).toFixed(1)}" text-anchor="middle" fill="${C.question}" font-family="Arial" font-size="36" font-weight="800">?</text>`;
@@ -2283,10 +2376,12 @@ function renderReveal() {
       </button>
     </div>
 
-    <!-- Pair name REVEALED (ticker + date/time) -->
+    <!-- Pair name REVEALED (ticker + date/time) — same line -->
     <div class="v5-pair-header" style="padding:6px 2px 4px;">
-      <div class="v5-pair-name">${base}<span class="sub"> / ${quote}</span></div>
-      ${decisionTimeStr ? `<div style="font-size:11px; color:var(--text-dim); margin-top:2px; font-weight:500;">${decisionTimeStr}</div>` : ''}
+      <div class="v5-pair-name" style="display:flex; align-items:baseline; flex-wrap:wrap; gap:8px;">
+        <span>${base}<span class="sub"> / ${quote}</span></span>
+        ${decisionTimeStr ? `<span style="font-size:11px; color:var(--text-dim); font-weight:500;">${decisionTimeStr}</span>` : ''}
+      </div>
     </div>
 
     <!-- Toolbar: TF tabs (locked) + Lite/Pro -->
