@@ -208,17 +208,19 @@
     font-weight: 700;
   }
 
-  /* Theme toggle — new */
+  /* Theme toggle — discreet icon, no border at rest */
   .theme-btn {
-    width: 30px; height: 30px;
+    width: 28px; height: 28px;
     display: inline-flex; align-items: center; justify-content: center;
-    background: var(--bg-2); border: 1px solid var(--border);
+    background: transparent; border: none;
     border-radius: 6px; cursor: pointer;
-    color: var(--text-2); padding: 0;
-    transition: all 0.15s;
+    color: var(--text-dim); padding: 0;
+    transition: color 0.15s, background 0.15s;
+    opacity: 0.7;
   }
-  .theme-btn:hover { color: var(--amber); border-color: var(--amber); }
-  .theme-btn svg { width: 15px; height: 15px; }
+  .theme-btn:hover { color: var(--amber); opacity: 1; background: var(--bg-2); }
+  .theme-btn:active { opacity: 1; }
+  .theme-btn svg { width: 14px; height: 14px; }
   [data-theme="light"] .icon-moon { display: block; }
   [data-theme="light"] .icon-sun { display: none; }
   [data-theme="dark"] .icon-moon { display: none; }
@@ -438,12 +440,12 @@
   .v5-ma-legend .ma-99-lbl { color: var(--sma99); }
   .v5-ma-legend .ma-val { color: var(--text-dim); }
 
-  /* Verdict banner (reveal big emotional moment) */
+  /* Verdict banner (reveal — compact, replaces timer+buttons zone) */
   .v5-verdict {
-    padding: 16px 14px;
+    padding: 14px 14px;
     border-radius: 10px;
     display: flex; align-items: center; gap: 12px;
-    margin-top: 10px;
+    margin-top: 12px;
   }
   .v5-verdict.hit {
     background: var(--up-bg);
@@ -454,28 +456,28 @@
     border: 1px solid var(--border);
   }
   .v5-verdict-icon {
-    width: 44px; height: 44px;
+    width: 40px; height: 40px;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 22px; font-weight: 700;
+    font-size: 20px; font-weight: 700;
     flex-shrink: 0;
   }
   .v5-verdict.hit .v5-verdict-icon { background: var(--up); color: #FFFFFF; }
   .v5-verdict.miss .v5-verdict-icon { background: var(--text-mute); color: #FFFFFF; }
   .v5-verdict-content { flex: 1; min-width: 0; }
-  .v5-verdict-label {
-    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-    font-weight: 700; margin-bottom: 2px;
-  }
-  .v5-verdict.hit .v5-verdict-label { color: var(--up); }
-  .v5-verdict.miss .v5-verdict-label { color: var(--text-dim); }
   .v5-verdict-title {
-    font-size: 16px; font-weight: 700; color: var(--text);
-    margin-bottom: 2px;
+    font-size: 18px; font-weight: 700; color: var(--text);
+    letter-spacing: 0.02em;
   }
-  .v5-verdict-sub { font-size: 12px; color: var(--text-dim); }
+  .v5-verdict.hit .v5-verdict-title { color: var(--up); }
+  .v5-verdict.miss .v5-verdict-title { color: var(--text-dim); }
+  .v5-verdict-sub {
+    font-size: 13px; color: var(--text-dim);
+    font-variant-numeric: tabular-nums;
+    margin-top: 2px;
+  }
   .v5-verdict-points {
-    font-size: 22px; font-weight: 700;
+    font-size: 24px; font-weight: 700;
     font-variant-numeric: tabular-nums;
     flex-shrink: 0;
   }
@@ -694,11 +696,11 @@ const I18N = {
     summaryMisses: (m) => `${m}F`,
     summaryTimeouts: (t) => `${t}T`,
     summaryAvgDecision: (s) => `Ø ${s}s`,
-    verdictStrong: 'Tienes ojo. Los bots ni se acercaron.',
-    verdictSlight: 'Buen ojo. Les ganaste a los bots con claridad.',
-    verdictTied: 'Los bots te miraron a los ojos. Empate.',
-    verdictWorse: 'Los bots ganaron esta vez. Por poco.',
-    verdictCrushed: 'Los bots te ganaron. Por mucho.',
+    verdictStrong: 'Lectura limpia. Lees el mercado con claridad.',
+    verdictSlight: 'Buen ojo. Vas por buen camino.',
+    verdictTied: 'Sesión equilibrada. Sigue así.',
+    verdictWorse: 'Día difícil. Mañana otro intento.',
+    verdictCrushed: 'No fue tu día. Vuelve mañana.',
     vsMonkey: 'VS BOTS · PERCENTIL',
     you: 'tú',
     monkey: 'bots',
@@ -783,11 +785,11 @@ const I18N = {
     summaryMisses: (m) => `${m}M`,
     summaryTimeouts: (t) => `${t}T`,
     summaryAvgDecision: (s) => `Ø ${s}s`,
-    verdictStrong: "You've got the eye. The bots weren't close.",
-    verdictSlight: 'Good eye. You beat the bots clearly.',
-    verdictTied: 'The bots looked you in the eye. Tie.',
-    verdictWorse: 'The bots won this time. Barely.',
-    verdictCrushed: 'The bots won. By a lot.',
+    verdictStrong: "Clean read. You see the market clearly.",
+    verdictSlight: 'Good eye. You are on the right track.',
+    verdictTied: 'Balanced session. Keep it up.',
+    verdictWorse: 'Tough day. Try again tomorrow.',
+    verdictCrushed: 'Not your day. Come back tomorrow.',
     vsMonkey: 'VS BOTS · PERCENTILE',
     you: 'you',
     monkey: 'bots',
@@ -870,11 +872,11 @@ const I18N = {
     summaryMisses: (m) => `错${m}`,
     summaryTimeouts: (t) => `超时${t}`,
     summaryAvgDecision: (s) => `平均 ${s}秒`,
-    verdictStrong: '你有眼光。机器人根本追不上。',
-    verdictSlight: '眼光不错。明显赢过机器人。',
-    verdictTied: '机器人和你打成平手。',
-    verdictWorse: '这次机器人赢了。差一点。',
-    verdictCrushed: '机器人大胜。',
+    verdictStrong: '读图清晰。市场尽在掌握。',
+    verdictSlight: '眼光不错。方向正确。',
+    verdictTied: '势均力敌。继续加油。',
+    verdictWorse: '今天不顺。明天再战。',
+    verdictCrushed: '今天不是你的日子。明天见。',
     vsMonkey: '对比机器人 · 百分位',
     you: '你',
     monkey: '机器人',
@@ -1508,8 +1510,7 @@ function runFirstPlayTooltips() {
   };
   schedule(500, () => showTooltip(t('tooltipTimer'), 'timer-txt', 'above'));
   schedule(3500, () => showTooltip(t('tooltipButtons'), 'btn-long', 'above'));
-  schedule(6500, () => showTooltip(t('tooltipMonkey'), 'monkey-long-bar', 'above'));
-  schedule(9500, clearAllTooltips);
+  schedule(6500, clearAllTooltips);
 }
 
 function startTimer() {
@@ -2080,29 +2081,26 @@ function renderPlay() {
   const chartSvg = renderChart(tfData.bars, tfData.warmup_count,
                  tfData.bars.length - tfData.warmup_count,
                  tfData.future_count, false);
-  const monkeyLong = tfData.monkey_sentiment_long_pct;
-  const monkeyShort = 100 - monkeyLong;
   const symbolShort = (state.current.symbol || '').replace('USDT', '').replace('USDC', '') || '●●●';
 
-  // Round label (centered, "Round NN/05" format)
+  // Round label for top (centered, "Round NN/05" format)
   const roundStr = String(state.round).padStart(2, '0');
   const totalStr = String(ROUNDS_PER_GAME).padStart(2, '0');
 
-  // TF button — v5 style (underline tabs)
+  // TF button — v5 style
   const tfBtn = (name) => {
     const active = tf === name;
     return `<button class="v5-tf ${active ? 'active' : ''}" data-tf="${name}">${name.toUpperCase()}</button>`;
   };
-  // Mode button — v5 style (pill)
+  // Mode button — v5 style
   const modeBtn = (m, label) => {
     const active = state.mode === m;
     return `<button class="mode-btn ${active ? 'mode-active' : ''}" data-mode="${m}">${label}</button>`;
   };
 
-  // MA legend (only in pro mode) — shows current values of MA7/MA25/MA99
+  // MA legend (only in pro mode) — compact, fits into the toolbar row
   let maLegend = '';
   if (state.mode === 'pro') {
-    // Compute MA values at decision bar
     const decisionIdx = tfData.warmup_count + (tfData.bars.length - tfData.warmup_count) - 1;
     const m7 = sma(tfData.bars, 7)[decisionIdx];
     const m25 = sma(tfData.bars, 25)[decisionIdx];
@@ -2117,44 +2115,37 @@ function renderPlay() {
   }
 
   screen.innerHTML = `
-    <!-- v5 Topbar: close · Round 02/05 · theme · Lite|Pro -->
+    <!-- Topbar: × · Round 02/05 centered · theme toggle discreet right -->
     <div class="v5-topbar">
       <button class="v5-back" id="back-home">×</button>
       <div class="v5-round-label">Round <b>${roundStr}/${totalStr}</b></div>
-      <div class="header-actions">
-        <button id="theme-btn" class="theme-btn" aria-label="Toggle theme">
-          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="4"/>
-            <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
-            <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>
-            <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
-            <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>
-          </svg>
-        </button>
-        <div class="mode-group">
-          ${modeBtn('lite', 'Lite')}${modeBtn('pro', 'Pro')}
-        </div>
-      </div>
+      <button id="theme-btn" class="theme-btn" aria-label="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+          <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>
+          <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
+          <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>
+        </svg>
+      </button>
     </div>
 
-    <!-- Pair header: ticker + meta (Timeframe · Round N of 5) -->
-    <div class="v5-pair-header">
+    <!-- Pair name, no duplicate meta row -->
+    <div class="v5-pair-header" style="padding:10px 2px 8px;">
       <div class="v5-pair-name">● ● ●<span class="sub"> / USDC</span></div>
-      <div class="v5-pair-meta">
-        <span>Timeframe<b>${tf.toUpperCase()}</b></span>
-        <span>Round<b>${state.round} of ${ROUNDS_PER_GAME}</b></span>
-      </div>
     </div>
 
-    <!-- Chart toolbar: TF tabs + MA·Vol indicator button (Pro only) -->
+    <!-- Toolbar: TF tabs LEFT + Lite/Pro RIGHT -->
     <div class="v5-chart-toolbar">
       <div class="v5-tf-group">
         ${tfBtn('1h')}${tfBtn('4h')}${tfBtn('1d')}
       </div>
-      ${state.mode === 'pro' ? '<button class="v5-indicators-btn">MA · Vol</button>' : ''}
+      <div class="mode-group">
+        ${modeBtn('lite', 'Lite')}${modeBtn('pro', 'Pro')}
+      </div>
     </div>
 
     ${maLegend}
@@ -2162,30 +2153,15 @@ function renderPlay() {
     <!-- Chart -->
     <div id="chart-wrap" style="margin-top:10px;">${chartSvg}</div>
 
-    <!-- Bots sentiment (bots only) -->
-    <div class="sentiment-panel" style="margin-top:10px;">
-      <div class="sent-head">
-        <div class="sent-head-label"><b>100 bots</b> · ${t('monkeySentiment')}</div>
-      </div>
-      <div class="sent-bar-container">
-        <div class="sent-up" id="monkey-long-bar" style="width:${monkeyLong}%;"></div>
-        <div class="sent-dn" id="monkey-short-bar" style="width:${monkeyShort}%;"></div>
-      </div>
-      <div class="sent-vals">
-        <span class="u" id="sent-long-lbl">↑ ${monkeyLong}%</span>
-        <span class="d" id="sent-short-lbl">${monkeyShort}% ↓</span>
-      </div>
-    </div>
-
     <!-- Timer + indicator -->
-    <div class="meta-row" style="margin:10px 2px 4px;">
+    <div class="meta-row" style="margin:12px 2px 6px;">
       <span style="color: var(--text-dim);">${t('round')} ${state.round}/${ROUNDS_PER_GAME}</span>
-      <span id="timer-txt" style="font-weight:800; color:var(--text);">10.0s</span>
+      <span id="timer-txt" style="font-weight:700; color:var(--text);">10.0s</span>
     </div>
     <div class="timer-bar"><div class="timer-fill" id="timer-fill" style="width:100%;"></div></div>
 
-    <!-- Up / Down buttons -->
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;">
+    <!-- Action buttons -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px;" id="action-buttons">
       <button class="btn btn-long" id="btn-long">${t('btnLong')}</button>
       <button class="btn btn-short" id="btn-short">${t('btnShort')}</button>
     </div>
@@ -2195,7 +2171,7 @@ function renderPlay() {
   document.getElementById('btn-long').addEventListener('click', () => handleDecision('long'));
   document.getElementById('btn-short').addEventListener('click', () => handleDecision('short'));
 
-  // Back to home (close button in topbar)
+  // Back to home with confirmation (prevent accidental exits mid-round)
   const backBtn = document.getElementById('back-home');
   if (backBtn) backBtn.addEventListener('click', () => {
     if (confirm(t('confirmExit') || 'Salir de la partida?')) {
@@ -2210,18 +2186,15 @@ function renderPlay() {
     haptic(8);
   });
 
-  // Mode toggle (Lite / Pro)
+  // Mode toggle — re-renders play to show/hide MA legend (mode change = layout change)
   document.querySelectorAll('.mode-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const m = btn.dataset.mode;
       if (m === state.mode) return;
       setMode(m);
       haptic(8);
-      // Mode change re-renders the whole play screen to show/hide MA legend
-      // but preserve timer state
       const remainingMs = Math.max(0, (ROUND_SECONDS * 1000) - (Date.now() - state.timerStart));
       renderPlay();
-      // Resume timer display (timerHandle keeps running — handleDecision also)
       const fill = document.getElementById('timer-fill');
       const txt = document.getElementById('timer-txt');
       if (fill && txt) {
@@ -2239,7 +2212,6 @@ function renderPlay() {
       if (newTf === state.tfActive) return;
       state.tfActive = newTf;
       haptic(8);
-      // Full re-render to update pair-meta + TF tabs + MA legend
       const remainingMs = Math.max(0, (ROUND_SECONDS * 1000) - (Date.now() - state.timerStart));
       renderPlay();
       const fill = document.getElementById('timer-fill');
@@ -2253,19 +2225,11 @@ function renderPlay() {
   });
 }
 
-// Per-round verdict tier label based on hit/miss + bot consensus
+// Per-round verdict tier label — minimal (no bot-based tiers, no subtitle)
 function roundVerdictTier(r) {
-  if (r.timeout) return { label: 'NO CALL', title: 'Time ran out', sub: 'No points this round' };
-  const botsPct = r.monkey_hits_individual; // 0-100
-  if (r.hit) {
-    if (botsPct < 40) return { label: 'HIT · CLEAN READ', title: 'You beat the bots', sub: `Only ${botsPct} of 100 bots got it right` };
-    if (botsPct < 60) return { label: 'HIT · TIGHT WIN', title: 'You read it right', sub: `${botsPct} of 100 bots also got it` };
-    return { label: 'HIT · SAFE BET', title: 'You got it', sub: `Most bots did too (${botsPct}/100)` };
-  } else {
-    if (botsPct > 60) return { label: 'MISS · OUTPLAYED', title: 'The bots saw it', sub: `${botsPct} of 100 bots got it right` };
-    if (botsPct > 40) return { label: 'MISS · CLOSE CALL', title: 'Coin flip territory', sub: `Bots split: ${botsPct}/100 right` };
-    return { label: 'MISS · TOUGH ONE', title: 'Tricky chart', sub: `Only ${botsPct} of 100 bots got it — not just you` };
-  }
+  if (r.timeout) return { label: 'NO CALL', icon: '·', cls: 'miss' };
+  if (r.hit) return { label: 'HIT', icon: '✓', cls: 'hit' };
+  return { label: 'MISS', icon: '✗', cls: 'miss' };
 }
 
 function renderReveal() {
@@ -2274,91 +2238,90 @@ function renderReveal() {
   const tfr = r.tfReveals[tf];
   const chartSvg = renderChart(tfr.bars, tfr.warmup_count, tfr.context_count, tfr.future_count, true);
   const animClass = r.hit ? 'pop' : 'shake';
-  const symbolShort = r.symbol.replace('USDT', '').replace('USDC', '');
 
   const verdict = roundVerdictTier(r);
   const pointsStr = (r.points >= 0 ? '+' : '') + r.points;
-  const verdictIcon = r.timeout ? '·' : (r.hit ? '✓' : '✗');
-  const verdictClass = r.hit ? 'hit' : 'miss';
 
   const pct = parseFloat(r.pct_change);
   const pctStr = (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
-  const pctClass = pct >= 0 ? 'up' : 'dn';
-  // Reveal arrow direction matches move sign
-  const arrowPrefix = ''; // CSS handles this via ::before
+  const arrow = pct >= 0 ? '↑' : '↓';
 
-  // Round label format: "Round 2/5 · Revealed"
+  // Round label
   const roundStr = String(state.round);
 
+  // TF tabs LOCKED in reveal (can only see the bet TF active)
+  const tfBtn = (name) => {
+    const active = tf === name;
+    return `<button class="v5-tf ${active ? 'active' : ''}" disabled style="opacity:${active ? 1 : 0.4};">${name.toUpperCase()}</button>`;
+  };
   const modeBtn = (m, label) => {
     const active = state.mode === m;
     return `<button class="mode-btn ${active ? 'mode-active' : ''}" data-mode="${m}">${label}</button>`;
   };
 
-  // Format date like "2024-03-14 · 14:32 UTC"
-  const d = new Date(r.decision_ts);
-  const isoDate = d.toISOString().slice(0, 10);
-  const timeStr = d.toISOString().slice(11, 16) + ' UTC';
-  const fullDate = `${isoDate} · ${timeStr}`;
+  // MA legend in reveal (Pro mode only, same as play) — based on reveal bars
+  let maLegend = '';
+  if (state.mode === 'pro') {
+    const decisionIdx = tfr.warmup_count + tfr.context_count - 1;
+    const m7 = sma(tfr.bars, 7)[decisionIdx];
+    const m25 = sma(tfr.bars, 25)[decisionIdx];
+    const m99 = sma(tfr.bars, 99)[decisionIdx];
+    const fmt = (v) => v != null ? v.toFixed(2) : '—';
+    maLegend = `
+      <div class="v5-ma-legend">
+        <span class="ma-pair"><b class="ma-7-lbl">MA(7):</b> <span class="ma-val">${fmt(m7)}</span></span>
+        <span class="ma-pair"><b class="ma-25-lbl">MA(25):</b> <span class="ma-val">${fmt(m25)}</span></span>
+        <span class="ma-pair"><b class="ma-99-lbl">MA(99):</b> <span class="ma-val">${fmt(m99)}</span></span>
+      </div>`;
+  }
 
   screen.innerHTML = `
-    <!-- v5 Topbar: close · "Round 2/5 · Revealed" · theme -->
+    <!-- Topbar — SAME structure as play (× · Round N/5 · Revealed · theme) -->
     <div class="v5-topbar">
       <button class="v5-back" id="back-reveal">×</button>
       <div class="v5-round-label">Round <b>${roundStr}/${ROUNDS_PER_GAME}</b> · Revealed</div>
-      <div class="header-actions">
-        <button id="theme-btn" class="theme-btn" aria-label="Toggle theme">
-          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="4"/>
-            <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
-            <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>
-            <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
-            <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>
-          </svg>
-        </button>
-      </div>
+      <button id="theme-btn" class="theme-btn" aria-label="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+          <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>
+          <line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
+          <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>
+        </svg>
+      </button>
     </div>
 
-    <!-- Big verdict banner -->
-    <div class="v5-verdict ${verdictClass}">
-      <div class="v5-verdict-icon">${verdictIcon}</div>
-      <div class="v5-verdict-content">
-        <div class="v5-verdict-label">${verdict.label}</div>
-        <div class="v5-verdict-title">${verdict.title}</div>
-        <div class="v5-verdict-sub">${verdict.sub}</div>
-      </div>
-      <div class="v5-verdict-points">${pointsStr}</div>
+    <!-- Pair name (same as play) -->
+    <div class="v5-pair-header" style="padding:10px 2px 8px;">
+      <div class="v5-pair-name">● ● ●<span class="sub"> / USDC</span></div>
     </div>
 
-    <!-- Pair meta: ticker+date LEFT, TF·bars+move RIGHT -->
-    <div class="v5-reveal-pair">
-      <div class="v5-reveal-pair-left">
-        <div class="rp-name">● ● ●<span class="sub"> / USDC</span></div>
-        <div class="rp-date">${fullDate}</div>
+    <!-- Toolbar: TF tabs (locked) + Lite/Pro -->
+    <div class="v5-chart-toolbar">
+      <div class="v5-tf-group">
+        ${tfBtn('1h')}${tfBtn('4h')}${tfBtn('1d')}
       </div>
-      <div class="v5-reveal-pair-right">
-        <div class="rp-tf">${tf.toUpperCase()} · 48 BARS</div>
-        <div class="rp-move ${pctClass}">${pct >= 0 ? '↑ ' : '↓ '}${pctStr}</div>
-      </div>
-    </div>
-
-    <!-- Lite/Pro toggle (after pair row) -->
-    <div style="display:flex; justify-content:flex-end; padding:8px 2px;">
       <div class="mode-group">
         ${modeBtn('lite', 'Lite')}${modeBtn('pro', 'Pro')}
       </div>
     </div>
 
-    <!-- Chart showing the full reveal -->
-    <div id="chart-wrap" class="${animClass}">${chartSvg}</div>
+    ${maLegend}
 
-    <!-- Round dots + score -->
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px;">
-      ${dotsHTML(-1)}
-      <div class="display ${r.hit ? 'score-bump' : 'score-bump-miss'}" style="font-size:20px; color:var(--text);">${state.score >= 0 ? '+' : ''}${state.score}</div>
+    <!-- Chart (showing full reveal) -->
+    <div id="chart-wrap" class="${animClass}" style="margin-top:10px;">${chartSvg}</div>
+
+    <!-- Compact verdict banner — replaces timer+buttons zone of play screen -->
+    <div class="v5-verdict ${verdict.cls}" id="verdict-banner">
+      <div class="v5-verdict-icon">${verdict.icon}</div>
+      <div class="v5-verdict-content">
+        <div class="v5-verdict-title">${verdict.label}</div>
+        <div class="v5-verdict-sub">${arrow} ${pctStr}</div>
+      </div>
+      <div class="v5-verdict-points">${pointsStr}</div>
     </div>
 
     <!-- Next round hint -->
@@ -2378,6 +2341,7 @@ function renderReveal() {
       if (m === state.mode) return;
       setMode(m);
       haptic(8);
+      renderReveal();
     });
   });
 
@@ -2475,7 +2439,7 @@ async function showSummary() {
           ${outcomeLabel}
         </div>
         <div style="font-size:13px; color:var(--text-dim); margin-top:6px;">
-          vs ${t('monkey')}: ${state.monkeyScore >= 0 ? '+' : ''}${state.monkeyScore} · ${t('you')}: ${state.score >= 0 ? '+' : ''}${state.score}
+          ${t('you')}: ${state.score >= 0 ? '+' : ''}${state.score}
         </div>
       </div>
 
