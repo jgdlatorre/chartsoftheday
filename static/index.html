@@ -147,11 +147,15 @@
   .dot {
     width: 10px; height: 10px; border-radius: 50%;
     background: var(--bg-3); border: 1.5px solid var(--border-strong);
-    transition: background 0.25s, transform 0.25s;
+    transition: background 0.25s, border-color 0.25s, transform 0.25s;
   }
-  .dot.hit { background: var(--amber); border-color: var(--amber); }
-  .dot.miss { background: var(--text-mute); border-color: var(--text-mute); }
-  .dot.active { background: var(--amber); opacity: 0.5; box-shadow: 0 0 0 3px var(--amber-bg); }
+  .dot.hit { background: var(--up); border-color: var(--up); }
+  .dot.miss { background: var(--down); border-color: var(--down); }
+  .dot.active {
+    background: var(--text-mute);
+    border-color: var(--text-dim);
+    box-shadow: 0 0 0 2px var(--amber-bg);
+  }
 
   .chip {
     display: inline-block; font-size: 12px; font-weight: 700;
@@ -373,7 +377,7 @@
   .v5-topbar {
     display: flex; justify-content: space-between; align-items: center;
     padding: 4px 0 6px;
-    gap: 10px;
+    gap: 8px;
   }
   .v5-back {
     width: 30px; height: 30px;
@@ -387,6 +391,35 @@
     flex: 1; text-align: center;
   }
   .v5-round-label b { color: var(--text); font-weight: 700; }
+
+  /* Compact round counter (left side of topbar) — just "02/05" */
+  .v5-round-compact {
+    font-size: 14px; font-weight: 700;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .v5-round-compact .slash {
+    color: var(--text-dim);
+    font-weight: 400;
+    margin: 0 2px;
+  }
+
+  /* Progress dots container (inline in topbar) */
+  .v5-dots {
+    flex: 1;
+    display: flex; justify-content: center;
+    min-width: 0;
+  }
+
+  /* Score display (right side of topbar, left of theme toggle) */
+  .v5-score {
+    font-size: 14px; font-weight: 700;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
 
   /* Pair header (below topbar, before chart) */
   .v5-pair-header {
@@ -2209,10 +2242,12 @@ function renderPlay() {
   };
 
   screen.innerHTML = `
-    <!-- Topbar: × · Round 02/05 centered · theme toggle discreet right -->
+    <!-- Topbar: × · Round NN/05 (left) · dots · score · theme (right) -->
     <div class="v5-topbar">
       <button class="v5-back" id="back-home">×</button>
-      <div class="v5-round-label">${tCap('round')} <b>${roundStr}/${totalStr}</b></div>
+      <div class="v5-round-compact">${roundStr}<span class="slash">/</span>${totalStr}</div>
+      <div class="v5-dots">${dotsHTML(state.round - 1)}</div>
+      <div class="v5-score">${state.score >= 0 ? '+' : ''}${state.score}</div>
       <button id="theme-btn" class="theme-btn" aria-label="Toggle theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
@@ -2225,6 +2260,12 @@ function renderPlay() {
           <line x1="4.93" y1="19.07" x2="6.34" y2="17.66"/><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"/>
         </svg>
       </button>
+    </div>
+
+    <!-- Progress row: dots show per-round results, score on right -->
+    <div style="display:flex; justify-content:space-between; align-items:center; padding: 6px 2px 4px;">
+      ${dotsHTML(state.round - 1)}
+      <div class="display" style="font-size:16px; font-weight:700; color:var(--text); font-variant-numeric:tabular-nums;">${state.score >= 0 ? '+' : ''}${state.score}</div>
     </div>
 
     <!-- Pair name, no duplicate meta row -->
@@ -2365,10 +2406,12 @@ function renderReveal() {
   };
 
   screen.innerHTML = `
-    <!-- Topbar — SAME structure as play (× · Round N/5 · Revealed · theme) -->
+    <!-- Topbar — SAME structure as play -->
     <div class="v5-topbar">
       <button class="v5-back" id="back-reveal">×</button>
-      <div class="v5-round-label">${tCap('round')} <b>${roundStr}/${ROUNDS_PER_GAME}</b> · ${t('revealed')}</div>
+      <div class="v5-round-compact">${roundStr}<span class="slash">/</span>${ROUNDS_PER_GAME}</div>
+      <div class="v5-dots">${dotsHTML(-1)}</div>
+      <div class="v5-score ${r.hit ? 'score-bump' : 'score-bump-miss'}">${state.score >= 0 ? '+' : ''}${state.score}</div>
       <button id="theme-btn" class="theme-btn" aria-label="Toggle theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
