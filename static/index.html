@@ -965,13 +965,8 @@ function setTheme(t) {
 }
 function toggleTheme() {
   setTheme(state.theme === 'dark' ? 'light' : 'dark');
-  // Re-render chart if visible (SVG uses var(--) but some colors may be baked)
-  if (state.current && (state.screen === 'play' || state.screen === 'reveal')) {
-    const chartWrap = document.getElementById('chart-wrap');
-    if (chartWrap) {
-      chartWrap.innerHTML = renderChartSvg(state.current, state.lastReveal);
-    }
-  }
+  // Re-render chart if visible — SVG uses hardcoded colors per theme, must redraw
+  rerenderCurrentChart();
 }
 
 function detectMode() {
@@ -987,16 +982,11 @@ function setMode(m) {
   document.documentElement.setAttribute('data-mode', m);
   try { localStorage.setItem('cotd_mode', m); } catch (e) {}
   // Re-render chart instantly (no animation)
-  if (state.current && (state.screen === 'play' || state.screen === 'reveal')) {
-    const chartWrap = document.getElementById('chart-wrap');
-    if (chartWrap) {
-      chartWrap.innerHTML = renderChartSvg(state.current, state.lastReveal);
-    }
-    // Update active mode button in header
-    document.querySelectorAll('.mode-btn').forEach(btn => {
-      btn.classList.toggle('mode-active', btn.dataset.mode === m);
-    });
-  }
+  rerenderCurrentChart();
+  // Update active mode button in header
+  document.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.classList.toggle('mode-active', btn.dataset.mode === m);
+  });
 }
 
 function streakMult(s) {
@@ -1415,12 +1405,26 @@ function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
 }
 
 // Wrapper: re-render current chart using stored state (for theme/mode toggle)
-function renderChartSvg(current, showAll) {
-  if (!current) return '';
-  const tfData = current.timeframes[state.tfActive];
-  if (!tfData) return '';
-  const bars = showAll ? tfData.bars : tfData.bars;
-  return renderChart(bars, tfData.warmup_count, tfData.context_count, tfData.future_count, !!showAll);
+// Helper: re-render the chart for the CURRENT screen state (play or reveal).
+// Used by toggleTheme/setMode to update the chart in place without full re-render.
+function rerenderCurrentChart() {
+  const chartWrap = document.getElementById('chart-wrap');
+  if (!chartWrap) return;
+
+  if (state.screen === 'reveal' && state.lastReveal) {
+    const r = state.lastReveal;
+    const tf = r.tfBet;
+    const tfr = r.tfReveals && r.tfReveals[tf];
+    if (!tfr) return;
+    chartWrap.innerHTML = renderChart(tfr.bars, tfr.warmup_count, tfr.context_count, tfr.future_count, true);
+  } else if (state.screen === 'play' && state.current) {
+    const tf = state.tfActive;
+    const tfData = state.current.timeframes[tf];
+    if (!tfData) return;
+    chartWrap.innerHTML = renderChart(tfData.bars, tfData.warmup_count,
+                                      tfData.bars.length - tfData.warmup_count,
+                                      tfData.future_count, false);
+  }
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -1918,6 +1922,7 @@ function formatCountdown(ms) {
 }
 
 function renderHome() {
+  state.screen = 'home';
   const langBtn = (code, label) => {
     const active = state.lang === code;
     return `<button class="lang-btn ${active ? 'lang-active' : ''}" data-lang="${code}">${label}</button>`;
@@ -2180,6 +2185,7 @@ function renderLoading() {
 }
 
 function renderPlay() {
+  state.screen = 'play';
   const tf = state.tfActive;
   const tfData = state.current.timeframes[tf];
   const chartSvg = renderChart(tfData.bars, tfData.warmup_count,
@@ -2319,6 +2325,7 @@ function roundVerdictTier(r) {
 }
 
 function renderReveal() {
+  state.screen = 'reveal';
   const r = state.lastReveal;
   const tf = r.tfBet;
   const tfr = r.tfReveals[tf];
