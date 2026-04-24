@@ -20,7 +20,7 @@ import random
 import secrets
 import sys
 import time
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from functools import wraps
 from pathlib import Path
 from threading import Lock
@@ -189,13 +189,15 @@ def load_edu_pool() -> bool:
         return False
 
 
-def edu_section_for_today(chart_index: int) -> dict | None:
+def edu_section_for_today(chart_index: int, day_offset: int = 0) -> dict | None:
     """Pick the edu section for today's N-th round using a 7-day cyclic rotation.
     Day 0 of the cycle serves setups 1..5, day 1 serves 6..10, ..., day 6 serves 31..35.
+    `day_offset` lets the dev "Next day" button preview future days without changing the clock.
     """
     if not EDU_POOL:
         return None
-    days_since = (datetime.utcnow().date() - EDU_EPOCH).days
+    simulated_date = datetime.utcnow().date() + timedelta(days=day_offset)
+    days_since = (simulated_date - EDU_EPOCH).days
     day_in_cycle = days_since % 7
     start = day_in_cycle * 5
     idx = start + (chart_index - 1)
@@ -498,16 +500,26 @@ def get_daily(chart_index):
     if chart_index < 1 or chart_index > 5:
         return jsonify({"error": "chart_index must be 1-5"}), 400
 
+    # Optional dev-only day_offset: shifts the simulated UTC date forward by N days
+    # so the "Next day" dev button can preview future rotations without touching the clock.
+    try:
+        day_offset = int(request.args.get("day_offset", "0"))
+    except ValueError:
+        day_offset = 0
+
     # Edu branch: curated pool with pedagogical notes.
     if request.args.get("edu", "") == "1":
         if not EDU_POOL:
             return jsonify({"error": "edu pool not loaded"}), 503
-        section = edu_section_for_today(chart_index)
+        section = edu_section_for_today(chart_index, day_offset=day_offset)
         if section is None:
             return jsonify({"error": "no edu section for this slot"}), 500
-        return jsonify(build_round_from_section(section, random.Random()))
+        resp = jsonify(build_round_from_section(section, random.Random()))
+        resp.headers["Cache-Control"] = "no-store"
+        return resp
 
-    today = datetime.utcnow().strftime("%Y-%m-%d")
+    simulated_date = datetime.utcnow().date() + timedelta(days=day_offset)
+    today = simulated_date.strftime("%Y-%m-%d")
 
     if SECTIONS_POOL:
         # Pool mode: sample 5 sections for today, deterministically
@@ -517,12 +529,17 @@ def get_daily(chart_index):
         section = SECTIONS_POOL[section_idx]
         # Per-round RNG for bots (fresh each call, not deterministic — bots have variance)
         bot_rng = random.Random()
-        return jsonify(build_round_from_section(section, bot_rng))
+        resp = jsonify(build_round_from_section(section, bot_rng))
+        resp.headers["Cache-Control"] = "no-store"
+        return resp
 
     # CSV fallback mode (legacy, local dev only)
     seed = f"candleeye:{today}:{chart_index}"
     daily_rng = random.Random(seed)
-    return _build_round(daily_rng)
+    resp = _build_round(daily_rng)
+    if hasattr(resp, "headers"):
+        resp.headers["Cache-Control"] = "no-store"
+    return resp
 
 
 @app.route("/decide", methods=["POST"])

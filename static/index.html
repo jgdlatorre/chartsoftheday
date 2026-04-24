@@ -62,6 +62,8 @@
     --btn-text-down: #FFFFFF;
     --chart-bg: #181A20;
     --shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --tooltip-bg: rgba(24, 26, 32, 0.82);
+    --tooltip-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
   }
 
   [data-theme="light"] {
@@ -90,6 +92,8 @@
     --btn-text-down: #FFFFFF;
     --chart-bg: #FFFFFF;
     --shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --tooltip-bg: rgba(255, 255, 255, 0.92);
+    --tooltip-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -293,7 +297,7 @@
     right: 8px;
     bottom: 8px;
     padding: 9px 11px;
-    background: rgba(24, 26, 32, 0.82);
+    background: var(--tooltip-bg);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     border: 1px solid var(--amber);
@@ -304,7 +308,7 @@
     display: flex;
     align-items: flex-start;
     gap: 7px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    box-shadow: var(--tooltip-shadow);
     z-index: 3;
   }
   .edu-tooltip-icon {
@@ -313,6 +317,21 @@
     flex-shrink: 0;
     margin-top: 2px;
   }
+  .edu-tooltip-text { flex: 1; min-width: 0; }
+  .edu-tooltip-close {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    margin: -2px -4px -2px 2px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent; border: none;
+    color: var(--text-dim);
+    font-size: 18px; line-height: 1;
+    cursor: pointer; padding: 0;
+    opacity: 0.6;
+    transition: opacity 120ms, color 120ms;
+  }
+  .edu-tooltip-close:hover,
+  .edu-tooltip-close:focus { opacity: 1; color: var(--text); outline: none; }
 
   /* Holistic readout en reveal */
   .edu-holistic {
@@ -899,7 +918,7 @@ const I18N = {
     diff: 'diff',
     history: 'HISTORIAL',
     replay: 'Empezar',
-    home: 'inicio',
+    home: 'Inicio',
     profileStrong: 'fuerte',
     profileMid: 'medio',
     profileWeak: 'débil',
@@ -996,7 +1015,7 @@ const I18N = {
     diff: 'diff',
     history: 'HISTORY',
     replay: 'Start',
-    home: 'home',
+    home: 'Home',
     profileStrong: 'strong',
     profileMid: 'mid',
     profileWeak: 'weak',
@@ -1156,6 +1175,8 @@ const state = {
   theme: 'dark',  // 'dark' | 'light' — set from localStorage at boot
   mode: 'lite',   // 'lite' | 'pro' — set from localStorage at boot
   edu: 'off',     // 'on' | 'off' — set per session at home
+  tooltipVisible: true,  // edu tooltip visibility for current round; resets to true on new round and on DYOR toggle
+  devDayOffset: 0,  // dev-only: shifts the simulated UTC date forward by N days; resets on page reload
 };
 
 // ──────────────────────────────────────────────────────────────
@@ -1715,8 +1736,11 @@ async function apiGetRound(overrideIndex) {
   const idx = overrideIndex != null ? overrideIndex : state.round;
   const clamped = Math.max(1, Math.min(5, idx));
   // In Edu mode, signal to backend so it serves the Edu pool (35 setups with notes)
-  const eduQs = state.edu === 'on' ? '?edu=1' : '';
-  const r = await fetch(`/daily/${clamped}${eduQs}`);
+  const params = [];
+  if (state.edu === 'on') params.push('edu=1');
+  if (state.devDayOffset && state.devDayOffset > 0) params.push(`day_offset=${state.devDayOffset}`);
+  const qs = params.length ? `?${params.join('&')}` : '';
+  const r = await fetch(`/daily/${clamped}${qs}`);
   if (!r.ok) throw new Error('round fetch failed');
   return r.json();
 }
@@ -1823,6 +1847,8 @@ async function nextRound() {
   if (state.edu === 'on' && state.current.anchor_tf) {
     state.tfActive = state.current.anchor_tf;
   }
+  // Fresh round → tooltip visible by default
+  state.tooltipVisible = true;
   state.currentStart = Date.now();
   renderPlay();
   startTimer();
@@ -2418,6 +2444,8 @@ function renderHome() {
   const devNextDayBtn = document.getElementById('dev-next-day');
   if (devNextDayBtn) {
     devNextDayBtn.addEventListener('click', () => {
+      // Always advance the simulated UTC date so /daily/N rotates one day forward
+      state.devDayOffset = (state.devDayOffset || 0) + 1;
       const st = getCOTDState();
       // Find next empty day in the week
       const weekStart = st.weekStart;
@@ -2459,6 +2487,7 @@ function renderHome() {
   if (devResetBtn) {
     devResetBtn.addEventListener('click', () => {
       try { localStorage.removeItem('candleeye_cotd'); } catch (e) {}
+      state.devDayOffset = 0;
       haptic(8);
       renderHome();
     });
@@ -2579,14 +2608,15 @@ function renderPlay() {
     <!-- Chart (chart-wrap is relative so Edu tooltip can float inside) -->
     <div id="chart-wrap" style="margin-top:6px; position:relative;">${chartSvg}${(function(){
       const notes = getPedagogicalNotes();
-      if (state.edu !== 'on' || !notes.tooltip) return '';
+      if (state.edu !== 'on' || !notes.tooltip || state.tooltipVisible === false) return '';
       return `
         <div class="edu-tooltip">
           <svg class="edu-tooltip-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/>
             <path d="M8 4.5v4M8 11.2v.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
           </svg>
-          <span>${escapeHtml(notes.tooltip)}</span>
+          <span class="edu-tooltip-text">${escapeHtml(notes.tooltip)}</span>
+          <button type="button" class="edu-tooltip-close" id="edu-tooltip-close" aria-label="Close tooltip">×</button>
         </div>
       `;
     })()}</div>
@@ -2616,12 +2646,22 @@ function renderPlay() {
   document.getElementById('btn-long').addEventListener('click', () => handleDecision('long'));
   document.getElementById('btn-short').addEventListener('click', () => handleDecision('short'));
 
-  // DYOR toggle (Edu mode) — switches lite ↔ pro view
+  // DYOR toggle (Edu mode) — switches lite ↔ pro view; also re-shows tooltip
   const btnDyor = document.getElementById('btn-dyor');
   if (btnDyor) {
     btnDyor.addEventListener('click', () => {
       setMode(state.mode === 'pro' ? 'lite' : 'pro');
+      state.tooltipVisible = true;
       haptic(8);
+      renderPlay();
+    });
+  }
+
+  // Edu tooltip close button — hides until next round or DYOR toggle
+  const btnTooltipClose = document.getElementById('edu-tooltip-close');
+  if (btnTooltipClose) {
+    btnTooltipClose.addEventListener('click', () => {
+      state.tooltipVisible = false;
       renderPlay();
     });
   }
