@@ -293,6 +293,28 @@
   }
   .fade-in { animation: fadeIn 0.28s ease-out both; }
 
+  /* Lite mode reveal — animated line drawing from left to right.
+     pathLength="1" normalizes the path so dashoffset goes from 1 → 0 */
+  @keyframes liteDraw {
+    from { stroke-dashoffset: 1; }
+    to { stroke-dashoffset: 0; }
+  }
+  .lite-reveal-anim .lite-future-path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: liteDraw 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+  }
+  @keyframes liteEndpointPop {
+    0% { opacity: 0; transform: scale(0.3); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  .lite-reveal-anim .lite-endpoint {
+    transform-origin: center;
+    transform-box: fill-box;
+    opacity: 0;
+    animation: liteEndpointPop 0.3s ease-out 0.9s forwards;
+  }
+
   @keyframes chosenPulse {
     0% { transform: scale(1); }
     40% { transform: scale(1.04); box-shadow: 0 0 0 6px var(--amber-bg); }
@@ -697,6 +719,7 @@ const I18N = {
     cotdAlreadyPlayed: 'Ya has jugado hoy',
     cotdComeBackTomorrow: 'Vuelve mañana para el siguiente gráfico',
     cotdPlayNow: 'Jugar hoy',
+    cotdAcademyCta: 'Aprende más sobre trading en Binance Academy',
     cotdResultHit: '¡Acierto!',
     cotdResultMiss: 'Fallo',
     cotdResultYourStreak: (n) => `Tu racha esta semana: ${n}/3`,
@@ -789,6 +812,7 @@ const I18N = {
     cotdAlreadyPlayed: 'Already played today',
     cotdComeBackTomorrow: 'Come back tomorrow for the next chart',
     cotdPlayNow: 'Play today',
+    cotdAcademyCta: 'Learn more about trading on Binance Academy',
     cotdResultHit: 'Hit!',
     cotdResultMiss: 'Miss',
     cotdResultYourStreak: (n) => `Your streak this week: ${n}/3`,
@@ -877,6 +901,7 @@ const I18N = {
     cotdAlreadyPlayed: '今天已完成',
     cotdComeBackTomorrow: '明天再来看下一个图表',
     cotdPlayNow: '今日游玩',
+    cotdAcademyCta: '在 Binance Academy 学习更多交易知识',
     cotdResultHit: '命中!',
     cotdResultMiss: '错过',
     cotdResultYourStreak: (n) => `本周连胜: ${n}/3`,
@@ -1147,7 +1172,7 @@ function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
   // Theme colors resolved (SVG needs explicit colors, CSS vars inside SVG are flaky)
   const C = theme === 'light'
     ? { bg:'#FFFFFF', volBg:'#FAFAF5', grid:'#EEEEEE', up:'#03A66D', down:'#CF304A',
-        amber:'#F0B90B', amberLine:'#F0B90B', amberFade:'rgba(240,185,11,0.18)',
+        amber:'#F0B90B', amberLine:'#C08D00', amberFade:'rgba(192,141,0,0.20)',
         sma7:'#F0B90B', sma25:'#F7A600', sma99:'#8B5CF6',
         textDim:'#848E9C', futureBg:'#F5F5F5', futureLine:'#CFD5DC', question:'#B7BDC6',
         legendBg:'rgba(255,255,255,0.9)', legendText:'#474D57' }
@@ -1251,39 +1276,73 @@ function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
 
   // ─────── LITE MODE: single close-price line with amber fade ───────
   if (mode === 'lite') {
-    // Build path for line + fill
-    let linePath = '';
-    let areaPath = '';
+    // Build TWO paths: context (always visible, no animation) + future (animated in reveal).
+    // This way in play we just get the context path, and in reveal the future animates in.
+    let contextPath = '';
+    let futurePath = '';
     let firstX = null, lastX = null;
-    for (let i = visibleFrom; i < visibleTo; i++) {
+    // Context: visibleFrom → contextEnd-1 (includes the last context bar)
+    for (let i = visibleFrom; i < contextEnd; i++) {
       const b = allBars[i]; if (!b) continue;
       const x = xAt(i);
       const y = yPrice(b.c);
-      if (linePath === '') {
-        linePath = `M${x.toFixed(1)} ${y.toFixed(1)}`;
+      if (contextPath === '') {
+        contextPath = `M${x.toFixed(1)} ${y.toFixed(1)}`;
         firstX = x;
       } else {
-        linePath += ` L${x.toFixed(1)} ${y.toFixed(1)}`;
+        contextPath += ` L${x.toFixed(1)} ${y.toFixed(1)}`;
       }
       lastX = x;
     }
-    if (linePath && firstX != null && lastX != null) {
-      // Area under line with amber fade gradient
+    // Future: from last context bar (to make the paths connect) through the future
+    let lastContextX = lastX;
+    let lastContextY = null;
+    if (showAll && contextEnd > 0) {
+      const lastCtx = allBars[contextEnd - 1];
+      if (lastCtx) lastContextY = yPrice(lastCtx.c);
+      for (let i = contextEnd; i < visibleTo; i++) {
+        const b = allBars[i]; if (!b) continue;
+        const x = xAt(i);
+        const y = yPrice(b.c);
+        if (futurePath === '') {
+          // Start from last context point so line continues seamlessly
+          if (lastContextX != null && lastContextY != null) {
+            futurePath = `M${lastContextX.toFixed(1)} ${lastContextY.toFixed(1)} L${x.toFixed(1)} ${y.toFixed(1)}`;
+          } else {
+            futurePath = `M${x.toFixed(1)} ${y.toFixed(1)}`;
+          }
+        } else {
+          futurePath += ` L${x.toFixed(1)} ${y.toFixed(1)}`;
+        }
+        lastX = x;
+      }
+    }
+
+    if (contextPath && firstX != null && lastX != null) {
+      // Area under line with amber fade gradient (covers both context + future)
       const fadeId = `fade-${Math.random().toString(36).slice(2,8)}`;
       svg += `<defs><linearGradient id="${fadeId}" x1="0" x2="0" y1="0" y2="1">
         <stop offset="0%" stop-color="${C.amber}" stop-opacity="0.25"/>
         <stop offset="100%" stop-color="${C.amber}" stop-opacity="0"/>
       </linearGradient></defs>`;
-      areaPath = linePath + ` L${lastX.toFixed(1)} ${priceBot.toFixed(1)} L${firstX.toFixed(1)} ${priceBot.toFixed(1)} Z`;
+      // Area path combines context + future seamlessly (for the fill)
+      const combinedLine = contextPath + (futurePath ? futurePath.replace(/^M[^L]*L/, ' L') : '');
+      const areaPath = combinedLine + ` L${lastX.toFixed(1)} ${priceBot.toFixed(1)} L${firstX.toFixed(1)} ${priceBot.toFixed(1)} Z`;
       svg += `<path d="${areaPath}" fill="url(#${fadeId})"/>`;
-      svg += `<path d="${linePath}" fill="none" stroke="${C.amberLine}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>`;
+      // Context line: always rendered normally
+      svg += `<path d="${contextPath}" fill="none" stroke="${C.amberLine}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>`;
+      // Future line: rendered with class for CSS-based reveal animation.
+      // pathLength="1" normalizes so stroke-dasharray/dashoffset work independently of actual path length.
+      if (futurePath) {
+        svg += `<path class="lite-future-path" pathLength="1" d="${futurePath}" fill="none" stroke="${C.amberLine}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>`;
+      }
 
       // Endpoint circle at last visible point
       const lastBar = allBars[visibleTo - 1];
       if (lastBar) {
         const lastY = yPrice(lastBar.c);
-        svg += `<circle cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="3.5" fill="${C.amber}"/>`;
-        svg += `<circle cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="7" fill="none" stroke="${C.amber}" stroke-width="0.7" opacity="0.4"/>`;
+        svg += `<circle class="lite-endpoint" cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="3.5" fill="${C.amber}"/>`;
+        svg += `<circle class="lite-endpoint" cx="${lastX.toFixed(1)}" cy="${lastY.toFixed(1)}" r="7" fill="none" stroke="${C.amber}" stroke-width="0.7" opacity="0.4"/>`;
       }
     }
   }
@@ -2371,7 +2430,11 @@ function renderReveal() {
   const tf = r.tfBet;
   const tfr = r.tfReveals[tf];
   const chartSvg = renderChart(tfr.bars, tfr.warmup_count, tfr.context_count, tfr.future_count, true);
-  const animClass = r.hit ? 'pop' : 'shake';
+  // In Lite mode: skip pop/shake (the line drawing IS the animation).
+  // In Pro mode: use pop (hit) or shake (miss) on the whole chart-wrap.
+  const animClass = state.mode === 'lite'
+    ? 'lite-reveal-anim'
+    : (r.hit ? 'pop' : 'shake');
 
   const verdict = roundVerdictTier(r);
   const pointsStr = (r.points >= 0 ? '+' : '') + r.points;
@@ -2384,13 +2447,36 @@ function renderReveal() {
   const fullSymbol = r.symbol || 'BTCUSDC';
   const base = fullSymbol.replace(/USDC$|USDT$/, '');
   const quote = fullSymbol.endsWith('USDT') ? 'USDT' : 'USDC';
-  // Format the decision timestamp nicely
-  let decisionTimeStr = '';
+
+  // Format timestamps for entry and exit. Show both dates if they differ;
+  // if same day, collapse to single date + two times.
+  let periodStr = '';
   try {
-    const d = new Date(r.decision_ts);
-    const iso = d.toISOString();
-    decisionTimeStr = iso.slice(0, 10) + ' · ' + iso.slice(11, 16) + ' UTC';
+    const dEntry = new Date(r.decision_ts);
+    const dExit = new Date(r.exit_ts);
+    const isoEntry = dEntry.toISOString();
+    const isoExit = dExit.toISOString();
+    const dateEntry = isoEntry.slice(0, 10);
+    const dateExit = isoExit.slice(0, 10);
+    const timeEntry = isoEntry.slice(11, 16);
+    const timeExit = isoExit.slice(11, 16);
+    if (dateEntry === dateExit) {
+      periodStr = `${dateEntry} · ${timeEntry} → ${timeExit} UTC`;
+    } else {
+      periodStr = `${dateEntry} ${timeEntry} → ${dateExit} ${timeExit} UTC`;
+    }
   } catch (e) {}
+
+  // Smart price formatting — variable precision based on magnitude
+  const fmtPrice = (v) => {
+    if (v == null || isNaN(v)) return '';
+    if (v >= 1000) return v.toFixed(2);
+    if (v >= 10) return v.toFixed(3);
+    if (v >= 1) return v.toFixed(4);
+    return v.toFixed(6);
+  };
+  const entryPriceStr = fmtPrice(r.entry_price);
+  const exitPriceStr = fmtPrice(r.exit_price);
 
   // Round label
   const roundStr = String(state.round);
@@ -2430,7 +2516,7 @@ function renderReveal() {
     <div class="v5-pair-header" style="padding:6px 2px 4px;">
       <div class="v5-pair-name" style="display:flex; align-items:baseline; flex-wrap:wrap; gap:8px;">
         <span>${base}<span class="sub"> / ${quote}</span></span>
-        ${decisionTimeStr ? `<span style="font-size:11px; color:var(--text-dim); font-weight:500;">${decisionTimeStr}</span>` : ''}
+        ${periodStr ? `<span style="font-size:11px; color:var(--text-dim); font-weight:500;">${periodStr}</span>` : ''}
       </div>
     </div>
 
@@ -2452,7 +2538,9 @@ function renderReveal() {
       <div class="v5-verdict-icon">${verdict.icon}</div>
       <div class="v5-verdict-content">
         <div class="v5-verdict-title">${verdict.label}</div>
-        <div class="v5-verdict-sub">${arrow} ${pctStr}</div>
+        <div class="v5-verdict-sub">
+          ${entryPriceStr && exitPriceStr ? `${entryPriceStr} → ${exitPriceStr} · ` : ''}${arrow} ${pctStr}
+        </div>
       </div>
       <div class="v5-verdict-points">${pointsStr}</div>
     </div>
@@ -2612,6 +2700,13 @@ async function showSummary() {
       <!-- Countdown to next -->
       <div id="countdown-wrap-summary" style="text-align:center; margin-top:16px; color:var(--text-dim); font-size:12px;">
         ${t('cotdNextChart')} <span id="countdown-text-summary" style="color:var(--text); font-weight:700;"></span>
+      </div>
+
+      <!-- Academy CTA -->
+      <div style="text-align:center; margin-top:18px;">
+        <a href="https://academy.binance.com" target="_blank" rel="noopener" style="color:var(--amber); font-size:13px; font-weight:600; text-decoration:none; border-bottom:1px dashed var(--amber); padding-bottom:2px;">
+          ${t('cotdAcademyCta')} →
+        </a>
       </div>
 
       <!-- Disclaimer -->
