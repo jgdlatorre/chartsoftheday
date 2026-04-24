@@ -1,0 +1,95 @@
+{
+  "id": "setup_24_contrarian_bear_fails",
+  "profile": "contrarian_bearish_falla",
+  "symbol": "BNBUSDT",
+  "timeframe": "1h",
+  "decision_ts": "2022-06-15T16:00:00",
+  "exit_ts": "2022-06-16T04:00:00",
+  "entry_price": 207.09,
+  "exit_price": 227.75,
+  "outcome_pct": 9.98,
+  "signals": {
+    "trend_direction": {
+      "state": "bearish_strong",
+      "confidence": "strong",
+      "detail": {
+        "slope_pct_per_candle": -0.3029,
+        "lookback": 20
+      }
+    },
+    "recent_momentum": {
+      "state": "mixed",
+      "confidence": "moderate",
+      "detail": {
+        "bullish_candles": 2,
+        "bearish_candles": 2,
+        "body_ratio_vs_hist": 0.89,
+        "body_trend": "rising"
+      }
+    },
+    "volume_relative": {
+      "state": "normal",
+      "confidence": "moderate",
+      "detail": {
+        "ratio": 1.1,
+        "recent_avg": 176912.53,
+        "hist_avg": 160297.47204999998
+      }
+    },
+    "price_vs_ma25": {
+      "state": "below",
+      "confidence": "strong",
+      "detail": {
+        "z_score": -1.36,
+        "pct_distance": -3.62
+      }
+    },
+    "ma_cross_7_25": {
+      "state": "ma7_below_stable",
+      "confidence": "moderate",
+      "detail": {
+        "bars_since_cross": null,
+        "lookback": 10
+      }
+    },
+    "rsi_zone": {
+      "state": "neutral_low",
+      "confidence": "weak",
+      "detail": {
+        "rsi_value": 41.3
+      }
+    },
+    "support_resistance": {
+      "state": "mid_range",
+      "confidence": "weak",
+      "detail": {
+        "high": 232.95,
+        "low": 198.14,
+        "position": 0.26
+      }
+    }
+  },
+  "bias": {
+    "direction": "bearish",
+    "strength": "strong"
+  },
+  "outcome": {
+    "direction": "up",
+    "pct_change": 9.98,
+    "whipsaw": false
+  },
+  "edu_score": 85,
+  "coherence": "contrarian",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "Tendencia bajista con agotamiento visible.",
+      "en": "Downtrend with visible exhaustion.",
+      "zh": "趋势下跌,显现衰竭。"
+    },
+    "holistic": {
+      "es": "La tendencia bajista se agotó ahí. El precio subió +9.98%.",
+      "en": "Downtrend exhausted at that point. Price rose +9.98%.",
+      "zh": "跌势在此耗尽。价格上涨 +9.98%。"
+    }
+  }
+}

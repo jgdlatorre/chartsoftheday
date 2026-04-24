@@ -1,0 +1,95 @@
+{
+  "id": "setup_12_confirmed_bearish",
+  "profile": "confirmed_bearish_bluechip",
+  "symbol": "BTCUSDT",
+  "timeframe": "4h",
+  "decision_ts": "2021-11-17T08:00:00",
+  "exit_ts": "2021-11-19T08:00:00",
+  "entry_price": 60769.012,
+  "exit_price": 57018.828,
+  "outcome_pct": -6.17,
+  "signals": {
+    "trend_direction": {
+      "state": "bearish_strong",
+      "confidence": "strong",
+      "detail": {
+        "slope_pct_per_candle": -0.5498,
+        "lookback": 20
+      }
+    },
+    "recent_momentum": {
+      "state": "mixed",
+      "confidence": "moderate",
+      "detail": {
+        "bullish_candles": 2,
+        "bearish_candles": 3,
+        "body_ratio_vs_hist": 1.21,
+        "body_trend": "rising"
+      }
+    },
+    "volume_relative": {
+      "state": "rising",
+      "confidence": "moderate",
+      "detail": {
+        "ratio": 1.32,
+        "recent_avg": 55007.727399999996,
+        "hist_avg": 41692.209350000005
+      }
+    },
+    "price_vs_ma25": {
+      "state": "below",
+      "confidence": "strong",
+      "detail": {
+        "z_score": -1.42,
+        "pct_distance": -3.66
+      }
+    },
+    "ma_cross_7_25": {
+      "state": "recent_bearish_cross",
+      "confidence": "moderate",
+      "detail": {
+        "bars_since_cross": "7",
+        "lookback": 10
+      }
+    },
+    "rsi_zone": {
+      "state": "neutral_low",
+      "confidence": "weak",
+      "detail": {
+        "rsi_value": 38.5
+      }
+    },
+    "support_resistance": {
+      "state": "mid_range",
+      "confidence": "weak",
+      "detail": {
+        "high": 69198.703,
+        "low": 58336.68,
+        "position": 0.22
+      }
+    }
+  },
+  "bias": {
+    "direction": "bearish",
+    "strength": "strong"
+  },
+  "outcome": {
+    "direction": "down",
+    "pct_change": -6.17,
+    "whipsaw": false
+  },
+  "edu_score": 90,
+  "coherence": "confirmed",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "Tendencia bajista sostenida.",
+      "en": "Sustained downtrend.",
+      "zh": "趋势持续下跌。"
+    },
+    "holistic": {
+      "es": "Dirección bajista confirmada por el contexto. El precio cayó -6.17%.",
+      "en": "Bearish direction confirmed by context. Price fell -6.17%.",
+      "zh": "背景确认看跌方向。价格下跌 -6.17%。"
+    }
+  }
+}

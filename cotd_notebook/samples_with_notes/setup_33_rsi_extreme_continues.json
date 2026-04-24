@@ -1,0 +1,95 @@
+{
+  "id": "setup_33_rsi_extreme_continues",
+  "profile": "rsi_extremo_continua",
+  "symbol": "LINKUSDT",
+  "timeframe": "1h",
+  "decision_ts": "2020-08-08T16:00:00",
+  "exit_ts": "2020-08-09T04:00:00",
+  "entry_price": 11.55,
+  "exit_price": 12.608,
+  "outcome_pct": 9.16,
+  "signals": {
+    "trend_direction": {
+      "state": "bullish_strong",
+      "confidence": "strong",
+      "detail": {
+        "slope_pct_per_candle": 0.5447,
+        "lookback": 20
+      }
+    },
+    "recent_momentum": {
+      "state": "accelerating_up",
+      "confidence": "strong",
+      "detail": {
+        "bullish_candles": 4,
+        "bearish_candles": 1,
+        "body_ratio_vs_hist": 1.65,
+        "body_trend": "rising"
+      }
+    },
+    "volume_relative": {
+      "state": "rising",
+      "confidence": "moderate",
+      "detail": {
+        "ratio": 1.96,
+        "recent_avg": 3005670.284,
+        "hist_avg": 1535092.9780000001
+      }
+    },
+    "price_vs_ma25": {
+      "state": "far_above",
+      "confidence": "strong",
+      "detail": {
+        "z_score": 3.59,
+        "pct_distance": 11.47
+      }
+    },
+    "ma_cross_7_25": {
+      "state": "ma7_above_stable",
+      "confidence": "moderate",
+      "detail": {
+        "bars_since_cross": null,
+        "lookback": 10
+      }
+    },
+    "rsi_zone": {
+      "state": "overbought_extreme",
+      "confidence": "strong",
+      "detail": {
+        "rsi_value": 82.5
+      }
+    },
+    "support_resistance": {
+      "state": "mid_range",
+      "confidence": "weak",
+      "detail": {
+        "high": 12.218,
+        "low": 8.9840002,
+        "position": 0.79
+      }
+    }
+  },
+  "bias": {
+    "direction": "bullish",
+    "strength": "moderate"
+  },
+  "outcome": {
+    "direction": "up",
+    "pct_change": 9.16,
+    "whipsaw": false
+  },
+  "edu_score": 85,
+  "coherence": "confirmed",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "Tendencia alcista con RSI en extremo alto.",
+      "en": "Uptrend with RSI at extreme high.",
+      "zh": "趋势上涨,RSI 极度超买。"
+    },
+    "holistic": {
+      "es": "Sobrecompra no detuvo la subida. El precio subió +9.16%.",
+      "en": "Overbought did not stop the rise. Price rose +9.16%.",
+      "zh": "超买未能阻止上涨。价格上涨 +9.16%。"
+    }
+  }
+}

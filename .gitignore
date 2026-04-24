@@ -8,3 +8,5 @@ sessions/
 venv/
 .DS_Store
 *.parquet
+static/index.html.PRE_EDU_BACKUP.html
+static/index.html.ORIGINAL_BACKUP.html

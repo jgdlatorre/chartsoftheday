@@ -1,0 +1,705 @@
+{
+  "generated_at": "2026-04-24T21:35:58.311926+00:00",
+  "setups": [
+    {
+      "setup_num": 1,
+      "setup_id": "confirmed_bullish",
+      "symbol": "XRPUSDT",
+      "profile": "confirmed_bullish_obvio",
+      "direction": "up",
+      "outcome_pct": 4.48,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia alcista con cruce reciente de medias.",
+          "en": "Uptrend with recent MA bullish cross.",
+          "zh": "趋势上涨,均线金叉。"
+        },
+        "holistic": {
+          "es": "Señal alcista limpia y contexto a favor. El precio subió +4.48%.",
+          "en": "Clean bullish signal with context aligned. Price rose +4.48%.",
+          "zh": "看涨信号清晰,背景支持。价格上涨 +4.48%。"
+        }
+      }
+    },
+    {
+      "setup_num": 2,
+      "setup_id": "confirmed_bearish",
+      "symbol": "ETHUSDT",
+      "profile": "confirmed_bearish_bluechip",
+      "direction": "down",
+      "outcome_pct": -4.29,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia bajista tras cruce de medias.",
+          "en": "Downtrend after MA bearish cross.",
+          "zh": "均线死叉后趋势下跌。"
+        },
+        "holistic": {
+          "es": "Contexto bajista consistente con la caída. El precio cayó -4.29%.",
+          "en": "Bearish context consistent with drop. Price fell -4.29%.",
+          "zh": "看跌背景与跌幅一致。价格下跌 -4.29%。"
+        }
+      }
+    },
+    {
+      "setup_num": 3,
+      "setup_id": "contrarian_star",
+      "symbol": "ETHUSDT",
+      "profile": "contrarian_pedagogico_estrella",
+      "direction": "down",
+      "outcome_pct": -4.21,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Señal alcista visible, pero lectura profunda advierte.",
+          "en": "Visible bullish signal, deep read warns.",
+          "zh": "表面看涨信号,但深层读法示警。"
+        },
+        "holistic": {
+          "es": "Señal superficial alcista, contexto profundo bajista. El precio cayó -4.21%.",
+          "en": "Surface bullish, deep context bearish. Price fell -4.21%.",
+          "zh": "表面看涨,深层背景看跌。价格下跌 -4.21%。"
+        }
+      }
+    },
+    {
+      "setup_num": 4,
+      "setup_id": "contrarian_second",
+      "symbol": "BNBUSDT",
+      "profile": "contrarian_segundo_directo",
+      "direction": "down",
+      "outcome_pct": -8.38,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Contexto alcista, pero señal de retroceso clara.",
+          "en": "Bullish context, clear pullback signal.",
+          "zh": "背景看涨,但回落信号清晰。"
+        },
+        "holistic": {
+          "es": "Contexto alcista con retroceso técnico. El precio cayó -8.38%.",
+          "en": "Bullish context with technical pullback. Price fell -8.38%.",
+          "zh": "背景看涨,但技术性回落。价格下跌 -8.38%。"
+        }
+      }
+    },
+    {
+      "setup_num": 5,
+      "setup_id": "rsi_extreme_continues",
+      "symbol": "SOLUSDT",
+      "profile": "rsi_extremo_continua",
+      "direction": "down",
+      "outcome_pct": -4.13,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "RSI extremo bajo, momentum bajista persistente.",
+          "en": "Extreme low RSI, momentum persists down.",
+          "zh": "RSI 极低,动量持续下跌。"
+        },
+        "holistic": {
+          "es": "El extremo de RSI continuó a la baja. El precio cayó -4.13%.",
+          "en": "RSI extreme continued lower. Price fell -4.13%.",
+          "zh": "RSI 极值继续下跌。价格下跌 -4.13%。"
+        }
+      }
+    },
+    {
+      "setup_num": 6,
+      "setup_id": "confirmed_bullish",
+      "symbol": "XRPUSDT",
+      "profile": "confirmed_bullish_obvio",
+      "direction": "up",
+      "outcome_pct": 8.0,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia alcista, estructura sostenida.",
+          "en": "Uptrend, structure sustained.",
+          "zh": "趋势上涨,结构稳固。"
+        },
+        "holistic": {
+          "es": "Dirección alcista sostenida por el contexto. El precio subió +8.00%.",
+          "en": "Bullish direction sustained by context. Price rose +8.00%.",
+          "zh": "背景支撑看涨方向。价格上涨 +8.00%。"
+        }
+      }
+    },
+    {
+      "setup_num": 7,
+      "setup_id": "confirmed_bullish",
+      "symbol": "DOGEUSDT",
+      "profile": "confirmed_bullish_obvio",
+      "direction": "up",
+      "outcome_pct": 7.99,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Precio y medias alineados al alza.",
+          "en": "Price and MAs aligned upward.",
+          "zh": "价格与均线向上对齐。"
+        },
+        "holistic": {
+          "es": "Señal alcista limpia y contexto a favor. El precio subió +7.99%.",
+          "en": "Clean bullish signal with context aligned. Price rose +7.99%.",
+          "zh": "看涨信号清晰,背景支持。价格上涨 +7.99%。"
+        }
+      }
+    },
+    {
+      "setup_num": 8,
+      "setup_id": "confirmed_bullish",
+      "symbol": "SOLUSDT",
+      "profile": "confirmed_bullish_obvio",
+      "direction": "up",
+      "outcome_pct": 7.94,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia alcista sin sobrecompra aún.",
+          "en": "Uptrend not yet overbought.",
+          "zh": "趋势上涨,尚未超买。"
+        },
+        "holistic": {
+          "es": "Contexto alcista coherente con la acción del precio. El precio subió +7.94%.",
+          "en": "Bullish context coherent with price action. Price rose +7.94%.",
+          "zh": "看涨背景与价格一致。价格上涨 +7.94%。"
+        }
+      }
+    },
+    {
+      "setup_num": 9,
+      "setup_id": "confirmed_bullish",
+      "symbol": "LINKUSDT",
+      "profile": "confirmed_bullish_obvio",
+      "direction": "up",
+      "outcome_pct": 7.94,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia alcista sin sobrecompra aún.",
+          "en": "Uptrend not yet overbought.",
+          "zh": "趋势上涨,尚未超买。"
+        },
+        "holistic": {
+          "es": "Dirección alcista sostenida por el contexto. El precio subió +7.94%.",
+          "en": "Bullish direction sustained by context. Price rose +7.94%.",
+          "zh": "背景支撑看涨方向。价格上涨 +7.94%。"
+        }
+      }
+    },
+    {
+      "setup_num": 10,
+      "setup_id": "confirmed_bullish",
+      "symbol": "LINKUSDT",
+      "profile": "confirmed_bullish_obvio",
+      "direction": "up",
+      "outcome_pct": 7.93,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Precio y medias alineados al alza.",
+          "en": "Price and MAs aligned upward.",
+          "zh": "价格与均线向上对齐。"
+        },
+        "holistic": {
+          "es": "Señal alcista limpia y contexto a favor. El precio subió +7.93%.",
+          "en": "Clean bullish signal with context aligned. Price rose +7.93%.",
+          "zh": "看涨信号清晰,背景支持。价格上涨 +7.93%。"
+        }
+      }
+    },
+    {
+      "setup_num": 11,
+      "setup_id": "confirmed_bullish",
+      "symbol": "SOLUSDT",
+      "profile": "confirmed_bullish_obvio",
+      "direction": "up",
+      "outcome_pct": 7.9,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia alcista sin sobrecompra aún.",
+          "en": "Uptrend not yet overbought.",
+          "zh": "趋势上涨,尚未超买。"
+        },
+        "holistic": {
+          "es": "Contexto alcista coherente con la acción del precio. El precio subió +7.90%.",
+          "en": "Bullish context coherent with price action. Price rose +7.90%.",
+          "zh": "看涨背景与价格一致。价格上涨 +7.90%。"
+        }
+      }
+    },
+    {
+      "setup_num": 12,
+      "setup_id": "confirmed_bearish",
+      "symbol": "BTCUSDT",
+      "profile": "confirmed_bearish_bluechip",
+      "direction": "down",
+      "outcome_pct": -6.17,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia bajista sostenida.",
+          "en": "Sustained downtrend.",
+          "zh": "趋势持续下跌。"
+        },
+        "holistic": {
+          "es": "Dirección bajista confirmada por el contexto. El precio cayó -6.17%.",
+          "en": "Bearish direction confirmed by context. Price fell -6.17%.",
+          "zh": "背景确认看跌方向。价格下跌 -6.17%。"
+        }
+      }
+    },
+    {
+      "setup_num": 13,
+      "setup_id": "confirmed_bearish",
+      "symbol": "BTCUSDT",
+      "profile": "confirmed_bearish_bluechip",
+      "direction": "down",
+      "outcome_pct": -6.31,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia bajista con volumen al alza.",
+          "en": "Downtrend with rising volume.",
+          "zh": "趋势下跌,成交量上升。"
+        },
+        "holistic": {
+          "es": "Señal bajista firme y contexto coherente. El precio cayó -6.31%.",
+          "en": "Firm bearish signal with coherent context. Price fell -6.31%.",
+          "zh": "看跌信号稳固,背景一致。价格下跌 -6.31%。"
+        }
+      }
+    },
+    {
+      "setup_num": 14,
+      "setup_id": "confirmed_bearish",
+      "symbol": "ETHUSDT",
+      "profile": "confirmed_bearish_bluechip",
+      "direction": "down",
+      "outcome_pct": -7.17,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Precio y medias alineados a la baja.",
+          "en": "Price and MAs aligned downward.",
+          "zh": "价格与均线向下对齐。"
+        },
+        "holistic": {
+          "es": "Contexto bajista consistente con la caída. El precio cayó -7.17%.",
+          "en": "Bearish context consistent with drop. Price fell -7.17%.",
+          "zh": "看跌背景与跌幅一致。价格下跌 -7.17%。"
+        }
+      }
+    },
+    {
+      "setup_num": 15,
+      "setup_id": "confirmed_bearish",
+      "symbol": "ETHUSDT",
+      "profile": "confirmed_bearish_bluechip",
+      "direction": "down",
+      "outcome_pct": -7.36,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia bajista sin sobreventa aún.",
+          "en": "Downtrend not yet oversold.",
+          "zh": "趋势下跌,尚未超卖。"
+        },
+        "holistic": {
+          "es": "Dirección bajista confirmada por el contexto. El precio cayó -7.36%.",
+          "en": "Bearish direction confirmed by context. Price fell -7.36%.",
+          "zh": "背景确认看跌方向。价格下跌 -7.36%。"
+        }
+      }
+    },
+    {
+      "setup_num": 16,
+      "setup_id": "confirmed_bearish",
+      "symbol": "ETHUSDT",
+      "profile": "confirmed_bearish_bluechip",
+      "direction": "down",
+      "outcome_pct": -7.67,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia bajista sostenida.",
+          "en": "Sustained downtrend.",
+          "zh": "趋势持续下跌。"
+        },
+        "holistic": {
+          "es": "Señal bajista firme y contexto coherente. El precio cayó -7.67%.",
+          "en": "Firm bearish signal with coherent context. Price fell -7.67%.",
+          "zh": "看跌信号稳固,背景一致。价格下跌 -7.67%。"
+        }
+      }
+    },
+    {
+      "setup_num": 17,
+      "setup_id": "confirmed_bearish",
+      "symbol": "BTCUSDT",
+      "profile": "confirmed_bearish_bluechip",
+      "direction": "down",
+      "outcome_pct": -7.76,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia bajista tras cruce de medias.",
+          "en": "Downtrend after MA bearish cross.",
+          "zh": "均线死叉后趋势下跌。"
+        },
+        "holistic": {
+          "es": "Contexto bajista consistente con la caída. El precio cayó -7.76%.",
+          "en": "Bearish context consistent with drop. Price fell -7.76%.",
+          "zh": "看跌背景与跌幅一致。价格下跌 -7.76%。"
+        }
+      }
+    },
+    {
+      "setup_num": 18,
+      "setup_id": "contrarian_bull_fails",
+      "symbol": "DOGEUSDT",
+      "profile": "contrarian_bullish_falla",
+      "direction": "down",
+      "outcome_pct": -9.88,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia alcista, pero contexto se agota.",
+          "en": "Uptrend, but context wearing thin.",
+          "zh": "趋势上涨,但背景正在耗尽。"
+        },
+        "holistic": {
+          "es": "La tendencia alcista no sostuvo el contexto. El precio cayó -9.88%.",
+          "en": "Uptrend did not sustain context. Price fell -9.88%.",
+          "zh": "涨势未能维持背景。价格下跌 -9.88%。"
+        }
+      }
+    },
+    {
+      "setup_num": 19,
+      "setup_id": "contrarian_bull_fails",
+      "symbol": "LINKUSDT",
+      "profile": "contrarian_bullish_falla",
+      "direction": "down",
+      "outcome_pct": -7.19,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia alcista, pero momentum no acompaña.",
+          "en": "Uptrend, but momentum not following.",
+          "zh": "趋势上涨,但动量不跟进。"
+        },
+        "holistic": {
+          "es": "Dirección alcista aparente, contexto en contra. El precio cayó -7.19%.",
+          "en": "Apparent bullish direction, context against. Price fell -7.19%.",
+          "zh": "方向看似上涨,背景相反。价格下跌 -7.19%。"
+        }
+      }
+    },
+    {
+      "setup_num": 20,
+      "setup_id": "contrarian_bull_fails",
+      "symbol": "LINKUSDT",
+      "profile": "contrarian_bullish_falla",
+      "direction": "down",
+      "outcome_pct": -9.94,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia alcista, pero contexto se agota.",
+          "en": "Uptrend, but context wearing thin.",
+          "zh": "趋势上涨,但背景正在耗尽。"
+        },
+        "holistic": {
+          "es": "Señal alcista superficial, el fondo cedió. El precio cayó -9.94%.",
+          "en": "Surface bullish signal, underlying gave. Price fell -9.94%.",
+          "zh": "表面看涨,但基础让步。价格下跌 -9.94%。"
+        }
+      }
+    },
+    {
+      "setup_num": 21,
+      "setup_id": "contrarian_bull_fails",
+      "symbol": "LINKUSDT",
+      "profile": "contrarian_bullish_falla",
+      "direction": "down",
+      "outcome_pct": -9.97,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia alcista, pero contexto se agota.",
+          "en": "Uptrend, but context wearing thin.",
+          "zh": "趋势上涨,但背景正在耗尽。"
+        },
+        "holistic": {
+          "es": "La tendencia alcista no sostuvo el contexto. El precio cayó -9.97%.",
+          "en": "Uptrend did not sustain context. Price fell -9.97%.",
+          "zh": "涨势未能维持背景。价格下跌 -9.97%。"
+        }
+      }
+    },
+    {
+      "setup_num": 22,
+      "setup_id": "contrarian_bull_fails",
+      "symbol": "ETHUSDT",
+      "profile": "contrarian_bullish_falla",
+      "direction": "down",
+      "outcome_pct": -10.0,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia alcista, pero momentum no acompaña.",
+          "en": "Uptrend, but momentum not following.",
+          "zh": "趋势上涨,但动量不跟进。"
+        },
+        "holistic": {
+          "es": "Dirección alcista aparente, contexto en contra. El precio cayó -10.00%.",
+          "en": "Apparent bullish direction, context against. Price fell -10.00%.",
+          "zh": "方向看似上涨,背景相反。价格下跌 -10.00%。"
+        }
+      }
+    },
+    {
+      "setup_num": 23,
+      "setup_id": "contrarian_bear_fails",
+      "symbol": "XRPUSDT",
+      "profile": "contrarian_bearish_falla",
+      "direction": "up",
+      "outcome_pct": 9.99,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia bajista, pero momentum no acompaña.",
+          "en": "Downtrend, but momentum not following.",
+          "zh": "趋势下跌,但动量不跟进。"
+        },
+        "holistic": {
+          "es": "Señal bajista sin respaldo, rebote técnico. El precio subió +9.99%.",
+          "en": "Bearish signal without support, technical bounce. Price rose +9.99%.",
+          "zh": "看跌信号无支撑,技术反弹。价格上涨 +9.99%。"
+        }
+      }
+    },
+    {
+      "setup_num": 24,
+      "setup_id": "contrarian_bear_fails",
+      "symbol": "BNBUSDT",
+      "profile": "contrarian_bearish_falla",
+      "direction": "up",
+      "outcome_pct": 9.98,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia bajista con agotamiento visible.",
+          "en": "Downtrend with visible exhaustion.",
+          "zh": "趋势下跌,显现衰竭。"
+        },
+        "holistic": {
+          "es": "La tendencia bajista se agotó ahí. El precio subió +9.98%.",
+          "en": "Downtrend exhausted at that point. Price rose +9.98%.",
+          "zh": "跌势在此耗尽。价格上涨 +9.98%。"
+        }
+      }
+    },
+    {
+      "setup_num": 25,
+      "setup_id": "contrarian_bear_fails",
+      "symbol": "DOTUSDT",
+      "profile": "contrarian_bearish_falla",
+      "direction": "up",
+      "outcome_pct": 9.98,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia bajista con RSI estirado abajo.",
+          "en": "Downtrend with RSI stretched down.",
+          "zh": "趋势下跌,但 RSI 过度超卖。"
+        },
+        "holistic": {
+          "es": "Dirección bajista aparente, contexto agotado. El precio subió +9.98%.",
+          "en": "Apparent bearish direction, context exhausted. Price rose +9.98%.",
+          "zh": "方向看似下跌,背景耗尽。价格上涨 +9.98%。"
+        }
+      }
+    },
+    {
+      "setup_num": 26,
+      "setup_id": "contrarian_bear_fails",
+      "symbol": "LINKUSDT",
+      "profile": "contrarian_bearish_falla",
+      "direction": "up",
+      "outcome_pct": 4.4,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia bajista con agotamiento visible.",
+          "en": "Downtrend with visible exhaustion.",
+          "zh": "趋势下跌,显现衰竭。"
+        },
+        "holistic": {
+          "es": "Señal bajista sin respaldo, rebote técnico. El precio subió +4.40%.",
+          "en": "Bearish signal without support, technical bounce. Price rose +4.40%.",
+          "zh": "看跌信号无支撑,技术反弹。价格上涨 +4.40%。"
+        }
+      }
+    },
+    {
+      "setup_num": 27,
+      "setup_id": "contrarian_bear_fails",
+      "symbol": "DOTUSDT",
+      "profile": "contrarian_bearish_falla",
+      "direction": "up",
+      "outcome_pct": 9.98,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia bajista, pero momentum no acompaña.",
+          "en": "Downtrend, but momentum not following.",
+          "zh": "趋势下跌,但动量不跟进。"
+        },
+        "holistic": {
+          "es": "La tendencia bajista se agotó ahí. El precio subió +9.98%.",
+          "en": "Downtrend exhausted at that point. Price rose +9.98%.",
+          "zh": "跌势在此耗尽。价格上涨 +9.98%。"
+        }
+      }
+    },
+    {
+      "setup_num": 28,
+      "setup_id": "contrarian_bear_fails",
+      "symbol": "DOGEUSDT",
+      "profile": "contrarian_bearish_falla",
+      "direction": "up",
+      "outcome_pct": 9.8,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia bajista, pero presión vendedora se agota.",
+          "en": "Downtrend, but selling pressure exhausting.",
+          "zh": "趋势下跌,但卖压耗尽。"
+        },
+        "holistic": {
+          "es": "Dirección bajista aparente, contexto agotado. El precio subió +9.80%.",
+          "en": "Apparent bearish direction, context exhausted. Price rose +9.80%.",
+          "zh": "方向看似下跌,背景耗尽。价格上涨 +9.80%。"
+        }
+      }
+    },
+    {
+      "setup_num": 29,
+      "setup_id": "contrarian_bear_fails",
+      "symbol": "DOGEUSDT",
+      "profile": "contrarian_bearish_falla",
+      "direction": "up",
+      "outcome_pct": 9.44,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Precio muy estirado bajo MA25, rebote posible.",
+          "en": "Price stretched below MA25, bounce possible.",
+          "zh": "价格过度低于 MA25,可能反弹。"
+        },
+        "holistic": {
+          "es": "Señal bajista sin respaldo, rebote técnico. El precio subió +9.44%.",
+          "en": "Bearish signal without support, technical bounce. Price rose +9.44%.",
+          "zh": "看跌信号无支撑,技术反弹。价格上涨 +9.44%。"
+        }
+      }
+    },
+    {
+      "setup_num": 30,
+      "setup_id": "rsi_extreme_continues",
+      "symbol": "BNBUSDT",
+      "profile": "rsi_extremo_continua",
+      "direction": "up",
+      "outcome_pct": 4.88,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia alcista con RSI estirado, continúa.",
+          "en": "Uptrend with stretched RSI, continues.",
+          "zh": "趋势上涨,RSI 延伸,继续。"
+        },
+        "holistic": {
+          "es": "Sobrecompra no detuvo la subida. El precio subió +4.88%.",
+          "en": "Overbought did not stop the rise. Price rose +4.88%.",
+          "zh": "超买未能阻止上涨。价格上涨 +4.88%。"
+        }
+      }
+    },
+    {
+      "setup_num": 31,
+      "setup_id": "rsi_extreme_continues",
+      "symbol": "LTCUSDT",
+      "profile": "rsi_extremo_continua",
+      "direction": "down",
+      "outcome_pct": -4.24,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia bajista con RSI en extremo bajo.",
+          "en": "Downtrend with RSI at extreme low.",
+          "zh": "趋势下跌,RSI 极度超卖。"
+        },
+        "holistic": {
+          "es": "RSI estirado no revirtió la tendencia. El precio cayó -4.24%.",
+          "en": "Stretched RSI did not flip trend. Price fell -4.24%.",
+          "zh": "RSI 延伸未扭转趋势。价格下跌 -4.24%。"
+        }
+      }
+    },
+    {
+      "setup_num": 32,
+      "setup_id": "rsi_extreme_continues",
+      "symbol": "SOLUSDT",
+      "profile": "rsi_extremo_continua",
+      "direction": "up",
+      "outcome_pct": 9.61,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia alcista con RSI estirado, continúa.",
+          "en": "Uptrend with stretched RSI, continues.",
+          "zh": "趋势上涨,RSI 延伸,继续。"
+        },
+        "holistic": {
+          "es": "El extremo de RSI continuó al alza. El precio subió +9.61%.",
+          "en": "RSI extreme continued higher. Price rose +9.61%.",
+          "zh": "RSI 极值继续上涨。价格上涨 +9.61%。"
+        }
+      }
+    },
+    {
+      "setup_num": 33,
+      "setup_id": "rsi_extreme_continues",
+      "symbol": "LINKUSDT",
+      "profile": "rsi_extremo_continua",
+      "direction": "up",
+      "outcome_pct": 9.16,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia alcista con RSI en extremo alto.",
+          "en": "Uptrend with RSI at extreme high.",
+          "zh": "趋势上涨,RSI 极度超买。"
+        },
+        "holistic": {
+          "es": "Sobrecompra no detuvo la subida. El precio subió +9.16%.",
+          "en": "Overbought did not stop the rise. Price rose +9.16%.",
+          "zh": "超买未能阻止上涨。价格上涨 +9.16%。"
+        }
+      }
+    },
+    {
+      "setup_num": 34,
+      "setup_id": "rsi_extreme_continues",
+      "symbol": "DOGEUSDT",
+      "profile": "rsi_extremo_continua",
+      "direction": "up",
+      "outcome_pct": 3.56,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "Tendencia alcista con RSI en extremo alto.",
+          "en": "Uptrend with RSI at extreme high.",
+          "zh": "趋势上涨,RSI 极度超买。"
+        },
+        "holistic": {
+          "es": "RSI estirado no revirtió la tendencia. El precio subió +3.56%.",
+          "en": "Stretched RSI did not flip trend. Price rose +3.56%.",
+          "zh": "RSI 延伸未扭转趋势。价格上涨 +3.56%。"
+        }
+      }
+    },
+    {
+      "setup_num": 35,
+      "setup_id": "rsi_extreme_continues",
+      "symbol": "DOGEUSDT",
+      "profile": "rsi_extremo_continua",
+      "direction": "down",
+      "outcome_pct": -8.91,
+      "pedagogical_notes": {
+        "tooltip": {
+          "es": "RSI extremo bajo, momentum bajista persistente.",
+          "en": "Extreme low RSI, momentum persists down.",
+          "zh": "RSI 极低,动量持续下跌。"
+        },
+        "holistic": {
+          "es": "El extremo de RSI continuó a la baja. El precio cayó -8.91%.",
+          "en": "RSI extreme continued lower. Price fell -8.91%.",
+          "zh": "RSI 极值继续下跌。价格下跌 -8.91%。"
+        }
+      }
+    }
+  ]
+}

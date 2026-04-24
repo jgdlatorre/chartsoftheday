@@ -1,0 +1,95 @@
+{
+  "id": "setup_32_rsi_extreme_continues",
+  "profile": "rsi_extremo_continua",
+  "symbol": "SOLUSDT",
+  "timeframe": "1h",
+  "decision_ts": "2023-04-11T03:00:00",
+  "exit_ts": "2023-04-11T15:00:00",
+  "entry_price": 21.263,
+  "exit_price": 23.306,
+  "outcome_pct": 9.61,
+  "signals": {
+    "trend_direction": {
+      "state": "bullish_strong",
+      "confidence": "strong",
+      "detail": {
+        "slope_pct_per_candle": 0.2802,
+        "lookback": 20
+      }
+    },
+    "recent_momentum": {
+      "state": "accelerating_up",
+      "confidence": "strong",
+      "detail": {
+        "bullish_candles": 5,
+        "bearish_candles": 0,
+        "body_ratio_vs_hist": 1.26,
+        "body_trend": "rising"
+      }
+    },
+    "volume_relative": {
+      "state": "rising",
+      "confidence": "moderate",
+      "detail": {
+        "ratio": 1.87,
+        "recent_avg": 753893.8,
+        "hist_avg": 402671.85
+      }
+    },
+    "price_vs_ma25": {
+      "state": "far_above",
+      "confidence": "strong",
+      "detail": {
+        "z_score": 3.02,
+        "pct_distance": 3.63
+      }
+    },
+    "ma_cross_7_25": {
+      "state": "ma7_above_stable",
+      "confidence": "moderate",
+      "detail": {
+        "bars_since_cross": null,
+        "lookback": 10
+      }
+    },
+    "rsi_zone": {
+      "state": "overbought_extreme",
+      "confidence": "strong",
+      "detail": {
+        "rsi_value": 81.2
+      }
+    },
+    "support_resistance": {
+      "state": "near_resistance",
+      "confidence": "moderate",
+      "detail": {
+        "high": 21.299,
+        "low": 19.847,
+        "position": 0.98
+      }
+    }
+  },
+  "bias": {
+    "direction": "bullish",
+    "strength": "moderate"
+  },
+  "outcome": {
+    "direction": "up",
+    "pct_change": 9.61,
+    "whipsaw": false
+  },
+  "edu_score": 85,
+  "coherence": "confirmed",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "Tendencia alcista con RSI estirado, continúa.",
+      "en": "Uptrend with stretched RSI, continues.",
+      "zh": "趋势上涨,RSI 延伸,继续。"
+    },
+    "holistic": {
+      "es": "El extremo de RSI continuó al alza. El precio subió +9.61%.",
+      "en": "RSI extreme continued higher. Price rose +9.61%.",
+      "zh": "RSI 极值继续上涨。价格上涨 +9.61%。"
+    }
+  }
+}

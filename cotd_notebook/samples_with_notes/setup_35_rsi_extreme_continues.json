@@ -1,0 +1,95 @@
+{
+  "id": "setup_35_rsi_extreme_continues",
+  "profile": "rsi_extremo_continua",
+  "symbol": "DOGEUSDT",
+  "timeframe": "4h",
+  "decision_ts": "2023-08-16T16:00:00",
+  "exit_ts": "2023-08-18T16:00:00",
+  "entry_price": 0.069020003,
+  "exit_price": 0.062870003,
+  "outcome_pct": -8.91,
+  "signals": {
+    "trend_direction": {
+      "state": "bearish_strong",
+      "confidence": "strong",
+      "detail": {
+        "slope_pct_per_candle": -0.4928,
+        "lookback": 20
+      }
+    },
+    "recent_momentum": {
+      "state": "accelerating_down",
+      "confidence": "strong",
+      "detail": {
+        "bullish_candles": 1,
+        "bearish_candles": 4,
+        "body_ratio_vs_hist": 1.09,
+        "body_trend": "rising"
+      }
+    },
+    "volume_relative": {
+      "state": "normal",
+      "confidence": "moderate",
+      "detail": {
+        "ratio": 1.03,
+        "recent_avg": 929284618.0,
+        "hist_avg": 901599856.0
+      }
+    },
+    "price_vs_ma25": {
+      "state": "far_below",
+      "confidence": "strong",
+      "detail": {
+        "z_score": -2.38,
+        "pct_distance": -6.49
+      }
+    },
+    "ma_cross_7_25": {
+      "state": "ma7_below_stable",
+      "confidence": "moderate",
+      "detail": {
+        "bars_since_cross": null,
+        "lookback": 10
+      }
+    },
+    "rsi_zone": {
+      "state": "oversold_extreme",
+      "confidence": "strong",
+      "detail": {
+        "rsi_value": 15.9
+      }
+    },
+    "support_resistance": {
+      "state": "mid_range",
+      "confidence": "weak",
+      "detail": {
+        "high": 0.077459998,
+        "low": 0.067599997,
+        "position": 0.14
+      }
+    }
+  },
+  "bias": {
+    "direction": "bearish",
+    "strength": "moderate"
+  },
+  "outcome": {
+    "direction": "down",
+    "pct_change": -8.91,
+    "whipsaw": false
+  },
+  "edu_score": 85,
+  "coherence": "confirmed",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "RSI extremo bajo, momentum bajista persistente.",
+      "en": "Extreme low RSI, momentum persists down.",
+      "zh": "RSI 极低,动量持续下跌。"
+    },
+    "holistic": {
+      "es": "El extremo de RSI continuó a la baja. El precio cayó -8.91%.",
+      "en": "RSI extreme continued lower. Price fell -8.91%.",
+      "zh": "RSI 极值继续下跌。价格下跌 -8.91%。"
+    }
+  }
+}

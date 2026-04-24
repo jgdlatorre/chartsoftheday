@@ -1,0 +1,95 @@
+{
+  "id": "setup_10_confirmed_bullish",
+  "profile": "confirmed_bullish_obvio",
+  "symbol": "LINKUSDT",
+  "timeframe": "4h",
+  "decision_ts": "2024-02-03T16:00:00",
+  "exit_ts": "2024-02-05T16:00:00",
+  "entry_price": 17.749001,
+  "exit_price": 19.156,
+  "outcome_pct": 7.93,
+  "signals": {
+    "trend_direction": {
+      "state": "bullish_strong",
+      "confidence": "strong",
+      "detail": {
+        "slope_pct_per_candle": 0.9284,
+        "lookback": 20
+      }
+    },
+    "recent_momentum": {
+      "state": "mixed",
+      "confidence": "moderate",
+      "detail": {
+        "bullish_candles": 3,
+        "bearish_candles": 2,
+        "body_ratio_vs_hist": 0.71,
+        "body_trend": "flat"
+      }
+    },
+    "volume_relative": {
+      "state": "falling",
+      "confidence": "moderate",
+      "detail": {
+        "ratio": 0.61,
+        "recent_avg": 5799535.2,
+        "hist_avg": 9530427.665000001
+      }
+    },
+    "price_vs_ma25": {
+      "state": "above",
+      "confidence": "strong",
+      "detail": {
+        "z_score": 1.47,
+        "pct_distance": 5.54
+      }
+    },
+    "ma_cross_7_25": {
+      "state": "ma7_above_stable",
+      "confidence": "moderate",
+      "detail": {
+        "bars_since_cross": null,
+        "lookback": 10
+      }
+    },
+    "rsi_zone": {
+      "state": "neutral_high",
+      "confidence": "weak",
+      "detail": {
+        "rsi_value": 60.8
+      }
+    },
+    "support_resistance": {
+      "state": "mid_range",
+      "confidence": "weak",
+      "detail": {
+        "high": 18.886999,
+        "low": 13.946,
+        "position": 0.77
+      }
+    }
+  },
+  "bias": {
+    "direction": "bullish",
+    "strength": "strong"
+  },
+  "outcome": {
+    "direction": "up",
+    "pct_change": 7.93,
+    "whipsaw": false
+  },
+  "edu_score": 90,
+  "coherence": "confirmed",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "Precio y medias alineados al alza.",
+      "en": "Price and MAs aligned upward.",
+      "zh": "价格与均线向上对齐。"
+    },
+    "holistic": {
+      "es": "Señal alcista limpia y contexto a favor. El precio subió +7.93%.",
+      "en": "Clean bullish signal with context aligned. Price rose +7.93%.",
+      "zh": "看涨信号清晰,背景支持。价格上涨 +7.93%。"
+    }
+  }
+}

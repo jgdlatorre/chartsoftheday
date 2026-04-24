@@ -1,0 +1,71 @@
+{
+  "id": "setup_02_confirmed_bearish",
+  "profile": "confirmed_bearish_bluechip",
+  "symbol": "ETHUSDT",
+  "timeframe": "1d",
+  "decision_ts": "2022-11-12T00:00:00",
+  "exit_ts": "2022-11-24T00:00:00",
+  "entry_price": 1256.82,
+  "exit_price": 1202.92,
+  "outcome_pct": -4.29,
+  "signals": {
+    "trend_direction": {
+      "state": "bearish_strong",
+      "confidence": "strong",
+      "detail": {}
+    },
+    "recent_momentum": {
+      "state": "accelerating_down",
+      "confidence": "strong",
+      "detail": {}
+    },
+    "volume_relative": {
+      "state": "rising",
+      "confidence": "moderate",
+      "detail": {}
+    },
+    "price_vs_ma25": {
+      "state": "below",
+      "confidence": "moderate",
+      "detail": {}
+    },
+    "ma_cross_7_25": {
+      "state": "fresh_bearish_cross",
+      "confidence": "strong",
+      "detail": {}
+    },
+    "rsi_zone": {
+      "state": "neutral_low",
+      "confidence": "weak",
+      "detail": {}
+    },
+    "support_resistance": {
+      "state": "mid_range",
+      "confidence": "weak",
+      "detail": {}
+    }
+  },
+  "bias": {
+    "direction": "bearish",
+    "strength": "strong"
+  },
+  "outcome": {
+    "direction": "down",
+    "pct_change": -4.29,
+    "whipsaw": false
+  },
+  "edu_score": 90,
+  "coherence": "confirmed",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "Tendencia bajista tras cruce de medias.",
+      "en": "Downtrend after MA bearish cross.",
+      "zh": "均线死叉后趋势下跌。"
+    },
+    "holistic": {
+      "es": "Contexto bajista consistente con la caída. El precio cayó -4.29%.",
+      "en": "Bearish context consistent with drop. Price fell -4.29%.",
+      "zh": "看跌背景与跌幅一致。价格下跌 -4.29%。"
+    }
+  }
+}

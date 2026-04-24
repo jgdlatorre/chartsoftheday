@@ -1,0 +1,2297 @@
+[
+  {
+    "symbol": "DOGEUSDT",
+    "timeframe": "1h",
+    "start_ts": "2024-07-24T03:00:00",
+    "decision_ts": "2024-07-30T05:00:00",
+    "exit_ts": "2024-07-30T17:00:00",
+    "entry_price": 0.1288,
+    "exit_price": 0.1258,
+    "sig_trend_direction": "bearish_strong",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "falling",
+    "sig_price_vs_ma25": "below",
+    "sig_ma_cross_7_25": "ma7_below_stable",
+    "sig_rsi_zone": "neutral_low",
+    "sig_support_resistance": "mid_range",
+    "bias_score": -5,
+    "bias_direction": "bearish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -2.33,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bearish_strong",
+        "detail": {
+          "slope_pct_per_candle": -0.1819,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 3,
+          "bearish_candles": 2,
+          "body_ratio_vs_hist": 0.71,
+          "body_trend": "flat"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "falling",
+        "detail": {
+          "ratio": 0.61,
+          "recent_avg": 91350451.2,
+          "hist_avg": 148736167.8
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "below",
+        "detail": {
+          "z_score": -0.78,
+          "pct_distance": -1.58
+        },
+        "confidence": "moderate"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_below_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_low",
+        "detail": {
+          "rsi_value": 41.3
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 0.13505,
+          "low": 0.12701,
+          "position": 0.22
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "SOLUSDT",
+    "timeframe": "1h",
+    "start_ts": "2023-04-13T13:00:00",
+    "decision_ts": "2023-04-19T15:00:00",
+    "exit_ts": "2023-04-20T03:00:00",
+    "entry_price": 23.325001,
+    "exit_price": 22.851999,
+    "sig_trend_direction": "bearish_strong",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "normal",
+    "sig_price_vs_ma25": "below",
+    "sig_ma_cross_7_25": "ma7_below_stable",
+    "sig_rsi_zone": "neutral_low",
+    "sig_support_resistance": "mid_range",
+    "bias_score": -5,
+    "bias_direction": "bearish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -2.03,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bearish_strong",
+        "detail": {
+          "slope_pct_per_candle": -0.4825,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 3,
+          "bearish_candles": 2,
+          "body_ratio_vs_hist": 0.77,
+          "body_trend": "rising"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "normal",
+        "detail": {
+          "ratio": 1.01,
+          "recent_avg": 1366947.4,
+          "hist_avg": 1357047.55
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "below",
+        "detail": {
+          "z_score": -1.29,
+          "pct_distance": -3.55
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_below_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_low",
+        "detail": {
+          "rsi_value": 35.7
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 25.459999,
+          "low": 21.517,
+          "position": 0.46
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "XRPUSDT",
+    "timeframe": "1h",
+    "start_ts": "2022-10-07T20:00:00",
+    "decision_ts": "2022-10-13T22:00:00",
+    "exit_ts": "2022-10-14T10:00:00",
+    "entry_price": 0.486,
+    "exit_price": 0.49990001,
+    "sig_trend_direction": "bullish_strong",
+    "sig_recent_momentum": "indecisive",
+    "sig_volume_relative": "falling",
+    "sig_price_vs_ma25": "above",
+    "sig_ma_cross_7_25": "recent_bullish_cross",
+    "sig_rsi_zone": "neutral_high",
+    "sig_support_resistance": "mid_range",
+    "bias_score": 5,
+    "bias_direction": "bullish",
+    "bias_strength": "strong",
+    "outcome_direction": "up",
+    "outcome_pct": 2.86,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bullish_strong",
+        "detail": {
+          "slope_pct_per_candle": 0.3222,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "indecisive",
+        "detail": {
+          "bullish_candles": 2,
+          "bearish_candles": 2,
+          "body_ratio_vs_hist": 0.31,
+          "body_trend": "falling"
+        },
+        "confidence": "strong"
+      },
+      "volume_relative": {
+        "state": "falling",
+        "detail": {
+          "ratio": 0.46,
+          "recent_avg": 106571416.0,
+          "hist_avg": 233943814.9
+        },
+        "confidence": "strong"
+      },
+      "price_vs_ma25": {
+        "state": "above",
+        "detail": {
+          "z_score": 0.96,
+          "pct_distance": 2.73
+        },
+        "confidence": "moderate"
+      },
+      "ma_cross_7_25": {
+        "state": "recent_bullish_cross",
+        "detail": {
+          "bars_since_cross": "4",
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_high",
+        "detail": {
+          "rsi_value": 60.2
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 0.49590001,
+          "low": 0.43979999,
+          "position": 0.82
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "DOTUSDT",
+    "timeframe": "1h",
+    "start_ts": "2022-02-22T19:00:00",
+    "decision_ts": "2022-02-28T21:00:00",
+    "exit_ts": "2022-03-01T09:00:00",
+    "entry_price": 18.023001,
+    "exit_price": 18.677,
+    "sig_trend_direction": "bullish_strong",
+    "sig_recent_momentum": "accelerating_up",
+    "sig_volume_relative": "normal",
+    "sig_price_vs_ma25": "above",
+    "sig_ma_cross_7_25": "recent_bullish_cross",
+    "sig_rsi_zone": "neutral_high",
+    "sig_support_resistance": "mid_range",
+    "bias_score": 7,
+    "bias_direction": "bullish",
+    "bias_strength": "strong",
+    "outcome_direction": "up",
+    "outcome_pct": 3.63,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bullish_strong",
+        "detail": {
+          "slope_pct_per_candle": 0.277,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "accelerating_up",
+        "detail": {
+          "bullish_candles": 4,
+          "bearish_candles": 1,
+          "body_ratio_vs_hist": 0.5,
+          "body_trend": "rising"
+        },
+        "confidence": "strong"
+      },
+      "volume_relative": {
+        "state": "normal",
+        "detail": {
+          "ratio": 1.0,
+          "recent_avg": 1285352.8760000002,
+          "hist_avg": 1286214.8584999999
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "above",
+        "detail": {
+          "z_score": 1.33,
+          "pct_distance": 3.79
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "recent_bullish_cross",
+        "detail": {
+          "bars_since_cross": "4",
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_high",
+        "detail": {
+          "rsi_value": 60.8
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 18.726,
+          "low": 16.589001,
+          "position": 0.67
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "DOGEUSDT",
+    "timeframe": "1h",
+    "start_ts": "2021-05-22T21:00:00",
+    "decision_ts": "2021-05-28T23:00:00",
+    "exit_ts": "2021-05-29T11:00:00",
+    "entry_price": 0.31128001,
+    "exit_price": 0.30500999,
+    "sig_trend_direction": "bearish_strong",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "falling",
+    "sig_price_vs_ma25": "below",
+    "sig_ma_cross_7_25": "ma7_below_stable",
+    "sig_rsi_zone": "neutral_low",
+    "sig_support_resistance": "mid_range",
+    "bias_score": -5,
+    "bias_direction": "bearish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -2.01,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bearish_strong",
+        "detail": {
+          "slope_pct_per_candle": -0.2195,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 3,
+          "bearish_candles": 2,
+          "body_ratio_vs_hist": 0.7,
+          "body_trend": "rising"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "falling",
+        "detail": {
+          "ratio": 0.67,
+          "recent_avg": 122655980.0,
+          "hist_avg": 182918965.7
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "below",
+        "detail": {
+          "z_score": -1.24,
+          "pct_distance": -2.25
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_below_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_low",
+        "detail": {
+          "rsi_value": 43.1
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 0.35438001,
+          "low": 0.30015999,
+          "position": 0.21
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "ETHUSDT",
+    "timeframe": "1h",
+    "start_ts": "2020-05-15T00:00:00",
+    "decision_ts": "2020-05-21T02:00:00",
+    "exit_ts": "2020-05-21T14:00:00",
+    "entry_price": 209.69,
+    "exit_price": 200.34,
+    "sig_trend_direction": "bearish",
+    "sig_recent_momentum": "accelerating_down",
+    "sig_volume_relative": "falling",
+    "sig_price_vs_ma25": "below",
+    "sig_ma_cross_7_25": "ma7_below_stable",
+    "sig_rsi_zone": "neutral_low",
+    "sig_support_resistance": "mid_range",
+    "bias_score": -6,
+    "bias_direction": "bearish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -4.46,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bearish",
+        "detail": {
+          "slope_pct_per_candle": -0.116,
+          "lookback": 20
+        },
+        "confidence": "moderate"
+      },
+      "recent_momentum": {
+        "state": "accelerating_down",
+        "detail": {
+          "bullish_candles": 1,
+          "bearish_candles": 4,
+          "body_ratio_vs_hist": 0.82,
+          "body_trend": "rising"
+        },
+        "confidence": "strong"
+      },
+      "volume_relative": {
+        "state": "falling",
+        "detail": {
+          "ratio": 0.69,
+          "recent_avg": 40241.0348,
+          "hist_avg": 58700.48395
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "below",
+        "detail": {
+          "z_score": -1.13,
+          "pct_distance": -0.98
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_below_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_low",
+        "detail": {
+          "rsi_value": 42.1
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 215.99001,
+          "low": 206.02,
+          "position": 0.37
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "ETHUSDT",
+    "timeframe": "1h",
+    "start_ts": "2020-05-15T06:00:00",
+    "decision_ts": "2020-05-21T08:00:00",
+    "exit_ts": "2020-05-21T20:00:00",
+    "entry_price": 206.47,
+    "exit_price": 198.85001,
+    "sig_trend_direction": "bearish",
+    "sig_recent_momentum": "accelerating_down",
+    "sig_volume_relative": "normal",
+    "sig_price_vs_ma25": "far_below",
+    "sig_ma_cross_7_25": "ma7_below_stable",
+    "sig_rsi_zone": "neutral_low",
+    "sig_support_resistance": "mid_range",
+    "bias_score": -6,
+    "bias_direction": "bearish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -3.69,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bearish",
+        "detail": {
+          "slope_pct_per_candle": -0.0818,
+          "lookback": 20
+        },
+        "confidence": "moderate"
+      },
+      "recent_momentum": {
+        "state": "accelerating_down",
+        "detail": {
+          "bullish_candles": 1,
+          "bearish_candles": 4,
+          "body_ratio_vs_hist": 0.86,
+          "body_trend": "rising"
+        },
+        "confidence": "strong"
+      },
+      "volume_relative": {
+        "state": "normal",
+        "detail": {
+          "ratio": 1.0,
+          "recent_avg": 56039.35599999999,
+          "hist_avg": 55825.764800000004
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "far_below",
+        "detail": {
+          "z_score": -2.39,
+          "pct_distance": -1.99
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_below_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_low",
+        "detail": {
+          "rsi_value": 30.7
+        },
+        "confidence": "moderate"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 215.99001,
+          "low": 204.27,
+          "position": 0.19
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "SOLUSDT",
+    "timeframe": "1h",
+    "start_ts": "2024-07-28T07:00:00",
+    "decision_ts": "2024-08-03T09:00:00",
+    "exit_ts": "2024-08-03T21:00:00",
+    "entry_price": 150.937,
+    "exit_price": 142.783,
+    "sig_trend_direction": "bearish_strong",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "falling",
+    "sig_price_vs_ma25": "below",
+    "sig_ma_cross_7_25": "ma7_below_stable",
+    "sig_rsi_zone": "neutral_low",
+    "sig_support_resistance": "mid_range",
+    "bias_score": -5,
+    "bias_direction": "bearish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -5.4,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bearish_strong",
+        "detail": {
+          "slope_pct_per_candle": -0.1647,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 3,
+          "bearish_candles": 2,
+          "body_ratio_vs_hist": 0.48,
+          "body_trend": "rising"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "falling",
+        "detail": {
+          "ratio": 0.52,
+          "recent_avg": 662745.2,
+          "hist_avg": 1273903.35
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "below",
+        "detail": {
+          "z_score": -1.33,
+          "pct_distance": -2.72
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_below_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_low",
+        "detail": {
+          "rsi_value": 37.6
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 171.383,
+          "low": 148.2,
+          "position": 0.12
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "DOTUSDT",
+    "timeframe": "1h",
+    "start_ts": "2024-04-26T07:00:00",
+    "decision_ts": "2024-05-02T09:00:00",
+    "exit_ts": "2024-05-02T21:00:00",
+    "entry_price": 7.0089998,
+    "exit_price": 7.336,
+    "sig_trend_direction": "bullish_strong",
+    "sig_recent_momentum": "accelerating_up",
+    "sig_volume_relative": "falling",
+    "sig_price_vs_ma25": "far_above",
+    "sig_ma_cross_7_25": "ma7_above_stable",
+    "sig_rsi_zone": "neutral_high",
+    "sig_support_resistance": "breaking_resistance",
+    "bias_score": 9,
+    "bias_direction": "bullish",
+    "bias_strength": "strong",
+    "outcome_direction": "up",
+    "outcome_pct": 4.67,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bullish_strong",
+        "detail": {
+          "slope_pct_per_candle": 0.2957,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "accelerating_up",
+        "detail": {
+          "bullish_candles": 4,
+          "bearish_candles": 1,
+          "body_ratio_vs_hist": 0.66,
+          "body_trend": "rising"
+        },
+        "confidence": "strong"
+      },
+      "volume_relative": {
+        "state": "falling",
+        "detail": {
+          "ratio": 0.61,
+          "recent_avg": 1311665.3199999998,
+          "hist_avg": 2147670.2950000004
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "far_above",
+        "detail": {
+          "z_score": 2.79,
+          "pct_distance": 4.13
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_above_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_high",
+        "detail": {
+          "rsi_value": 68.9
+        },
+        "confidence": "moderate"
+      },
+      "support_resistance": {
+        "state": "breaking_resistance",
+        "detail": {
+          "high": 7.0089998,
+          "low": 6.0300002,
+          "position": 1.0
+        },
+        "confidence": "strong"
+      }
+    }
+  },
+  {
+    "symbol": "SOLUSDT",
+    "timeframe": "1h",
+    "start_ts": "2022-03-18T01:00:00",
+    "decision_ts": "2022-03-24T03:00:00",
+    "exit_ts": "2022-03-24T15:00:00",
+    "entry_price": 94.629997,
+    "exit_price": 101.61,
+    "sig_trend_direction": "bullish_strong",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "normal",
+    "sig_price_vs_ma25": "above",
+    "sig_ma_cross_7_25": "ma7_above_stable",
+    "sig_rsi_zone": "neutral_high",
+    "sig_support_resistance": "mid_range",
+    "bias_score": 5,
+    "bias_direction": "bullish",
+    "bias_strength": "strong",
+    "outcome_direction": "up",
+    "outcome_pct": 7.38,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bullish_strong",
+        "detail": {
+          "slope_pct_per_candle": 0.2112,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 3,
+          "bearish_candles": 2,
+          "body_ratio_vs_hist": 1.19,
+          "body_trend": "rising"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "normal",
+        "detail": {
+          "ratio": 1.18,
+          "recent_avg": 481825.8,
+          "hist_avg": 409911.4
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "above",
+        "detail": {
+          "z_score": 1.12,
+          "pct_distance": 1.78
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_above_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_high",
+        "detail": {
+          "rsi_value": 57.6
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 96.349998,
+          "low": 88.900002,
+          "position": 0.77
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "LINKUSDT",
+    "timeframe": "1h",
+    "start_ts": "2025-05-24T08:00:00",
+    "decision_ts": "2025-05-30T10:00:00",
+    "exit_ts": "2025-05-30T22:00:00",
+    "entry_price": 14.518,
+    "exit_price": 13.878,
+    "sig_trend_direction": "bearish_strong",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "normal",
+    "sig_price_vs_ma25": "below",
+    "sig_ma_cross_7_25": "ma7_below_stable",
+    "sig_rsi_zone": "neutral_low",
+    "sig_support_resistance": "mid_range",
+    "bias_score": -5,
+    "bias_direction": "bearish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -4.41,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bearish_strong",
+        "detail": {
+          "slope_pct_per_candle": -0.3709,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 2,
+          "bearish_candles": 3,
+          "body_ratio_vs_hist": 0.63,
+          "body_trend": "falling"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "normal",
+        "detail": {
+          "ratio": 0.79,
+          "recent_avg": 803338.61,
+          "hist_avg": 1018151.0255000001
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "below",
+        "detail": {
+          "z_score": -1.43,
+          "pct_distance": -3.35
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_below_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_low",
+        "detail": {
+          "rsi_value": 32.7
+        },
+        "confidence": "moderate"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 16.186001,
+          "low": 14.134,
+          "position": 0.19
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "LTCUSDT",
+    "timeframe": "1h",
+    "start_ts": "2022-11-07T14:00:00",
+    "decision_ts": "2022-11-13T16:00:00",
+    "exit_ts": "2022-11-14T04:00:00",
+    "entry_price": 57.849998,
+    "exit_price": 54.98,
+    "sig_trend_direction": "bearish_strong",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "normal",
+    "sig_price_vs_ma25": "below",
+    "sig_ma_cross_7_25": "ma7_below_stable",
+    "sig_rsi_zone": "neutral_low",
+    "sig_support_resistance": "mid_range",
+    "bias_score": -5,
+    "bias_direction": "bearish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -4.96,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bearish_strong",
+        "detail": {
+          "slope_pct_per_candle": -0.2666,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 3,
+          "bearish_candles": 2,
+          "body_ratio_vs_hist": 0.55,
+          "body_trend": "falling"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "normal",
+        "detail": {
+          "ratio": 1.1,
+          "recent_avg": 124070.59760000001,
+          "hist_avg": 113016.55275
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "below",
+        "detail": {
+          "z_score": -1.39,
+          "pct_distance": -2.13
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_below_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_low",
+        "detail": {
+          "rsi_value": 38.2
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 62.040001,
+          "low": 56.73,
+          "position": 0.21
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "SOLUSDT",
+    "timeframe": "1h",
+    "start_ts": "2023-03-18T07:00:00",
+    "decision_ts": "2023-03-24T09:00:00",
+    "exit_ts": "2023-03-24T21:00:00",
+    "entry_price": 21.568001,
+    "exit_price": 20.598,
+    "sig_trend_direction": "bearish",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "falling",
+    "sig_price_vs_ma25": "below",
+    "sig_ma_cross_7_25": "fresh_bearish_cross",
+    "sig_rsi_zone": "neutral_low",
+    "sig_support_resistance": "mid_range",
+    "bias_score": -5,
+    "bias_direction": "bearish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -4.5,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bearish",
+        "detail": {
+          "slope_pct_per_candle": -0.1123,
+          "lookback": 20
+        },
+        "confidence": "moderate"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 2,
+          "bearish_candles": 3,
+          "body_ratio_vs_hist": 0.81,
+          "body_trend": "rising"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "falling",
+        "detail": {
+          "ratio": 0.67,
+          "recent_avg": 688400.2,
+          "hist_avg": 1021350.25
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "below",
+        "detail": {
+          "z_score": -1.08,
+          "pct_distance": -1.78
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "fresh_bearish_cross",
+        "detail": {
+          "bars_since_cross": "1",
+          "lookback": 10
+        },
+        "confidence": "strong"
+      },
+      "rsi_zone": {
+        "state": "neutral_low",
+        "detail": {
+          "rsi_value": 39.8
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 23.094,
+          "low": 20.917999,
+          "position": 0.3
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "ADAUSDT",
+    "timeframe": "1h",
+    "start_ts": "2020-07-14T08:00:00",
+    "decision_ts": "2020-07-20T10:00:00",
+    "exit_ts": "2020-07-20T22:00:00",
+    "entry_price": 0.12145,
+    "exit_price": 0.11814,
+    "sig_trend_direction": "sideways",
+    "sig_recent_momentum": "accelerating_down",
+    "sig_volume_relative": "normal",
+    "sig_price_vs_ma25": "far_below",
+    "sig_ma_cross_7_25": "fresh_bearish_cross",
+    "sig_rsi_zone": "neutral_low",
+    "sig_support_resistance": "mid_range",
+    "bias_score": -6,
+    "bias_direction": "bearish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -2.73,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "sideways",
+        "detail": {
+          "slope_pct_per_candle": 0.0089,
+          "lookback": 20
+        },
+        "confidence": "weak"
+      },
+      "recent_momentum": {
+        "state": "accelerating_down",
+        "detail": {
+          "bullish_candles": 1,
+          "bearish_candles": 4,
+          "body_ratio_vs_hist": 0.99,
+          "body_trend": "rising"
+        },
+        "confidence": "strong"
+      },
+      "volume_relative": {
+        "state": "normal",
+        "detail": {
+          "ratio": 1.24,
+          "recent_avg": 17347246.6,
+          "hist_avg": 13960176.55
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "far_below",
+        "detail": {
+          "z_score": -1.7,
+          "pct_distance": -1.1
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "fresh_bearish_cross",
+        "detail": {
+          "bars_since_cross": "0",
+          "lookback": 10
+        },
+        "confidence": "strong"
+      },
+      "rsi_zone": {
+        "state": "neutral_low",
+        "detail": {
+          "rsi_value": 38.7
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 0.12476,
+          "low": 0.12002,
+          "position": 0.3
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "BNBUSDT",
+    "timeframe": "1h",
+    "start_ts": "2024-10-31T08:00:00",
+    "decision_ts": "2024-11-06T10:00:00",
+    "exit_ts": "2024-11-06T22:00:00",
+    "entry_price": 582.06,
+    "exit_price": 594.42999,
+    "sig_trend_direction": "bullish_strong",
+    "sig_recent_momentum": "accelerating_up",
+    "sig_volume_relative": "rising",
+    "sig_price_vs_ma25": "far_above",
+    "sig_ma_cross_7_25": "ma7_above_stable",
+    "sig_rsi_zone": "neutral_high",
+    "sig_support_resistance": "mid_range",
+    "bias_score": 7,
+    "bias_direction": "bullish",
+    "bias_strength": "strong",
+    "outcome_direction": "up",
+    "outcome_pct": 2.13,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bullish_strong",
+        "detail": {
+          "slope_pct_per_candle": 0.2063,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "accelerating_up",
+        "detail": {
+          "bullish_candles": 4,
+          "bearish_candles": 1,
+          "body_ratio_vs_hist": 0.57,
+          "body_trend": "rising"
+        },
+        "confidence": "strong"
+      },
+      "volume_relative": {
+        "state": "rising",
+        "detail": {
+          "ratio": 1.63,
+          "recent_avg": 70086.78300000001,
+          "hist_avg": 42928.62101
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "far_above",
+        "detail": {
+          "z_score": 2.14,
+          "pct_distance": 1.94
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_above_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_high",
+        "detail": {
+          "rsi_value": 63.8
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 589.85999,
+          "low": 543.21997,
+          "position": 0.83
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "BNBUSDT",
+    "timeframe": "1h",
+    "start_ts": "2024-09-17T08:00:00",
+    "decision_ts": "2024-09-23T10:00:00",
+    "exit_ts": "2024-09-23T22:00:00",
+    "entry_price": 591.91998,
+    "exit_price": 606.66998,
+    "sig_trend_direction": "bullish",
+    "sig_recent_momentum": "exhausted_down",
+    "sig_volume_relative": "falling",
+    "sig_price_vs_ma25": "above",
+    "sig_ma_cross_7_25": "ma7_above_stable",
+    "sig_rsi_zone": "neutral_high",
+    "sig_support_resistance": "mid_range",
+    "bias_score": 5,
+    "bias_direction": "bullish",
+    "bias_strength": "strong",
+    "outcome_direction": "up",
+    "outcome_pct": 2.49,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bullish",
+        "detail": {
+          "slope_pct_per_candle": 0.1103,
+          "lookback": 20
+        },
+        "confidence": "moderate"
+      },
+      "recent_momentum": {
+        "state": "exhausted_down",
+        "detail": {
+          "bullish_candles": 1,
+          "bearish_candles": 4,
+          "body_ratio_vs_hist": 0.69,
+          "body_trend": "falling"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "falling",
+        "detail": {
+          "ratio": 0.57,
+          "recent_avg": 19776.8478,
+          "hist_avg": 34585.1088
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "above",
+        "detail": {
+          "z_score": 0.82,
+          "pct_distance": 0.68
+        },
+        "confidence": "moderate"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_above_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_high",
+        "detail": {
+          "rsi_value": 55.6
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 599.71997,
+          "low": 576.07001,
+          "position": 0.67
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "BNBUSDT",
+    "timeframe": "1h",
+    "start_ts": "2024-08-02T08:00:00",
+    "decision_ts": "2024-08-08T10:00:00",
+    "exit_ts": "2024-08-08T22:00:00",
+    "entry_price": 488.72,
+    "exit_price": 519.16998,
+    "sig_trend_direction": "bullish_strong",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "falling",
+    "sig_price_vs_ma25": "above",
+    "sig_ma_cross_7_25": "recent_bullish_cross",
+    "sig_rsi_zone": "neutral_high",
+    "sig_support_resistance": "mid_range",
+    "bias_score": 5,
+    "bias_direction": "bullish",
+    "bias_strength": "strong",
+    "outcome_direction": "up",
+    "outcome_pct": 6.23,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bullish_strong",
+        "detail": {
+          "slope_pct_per_candle": 0.1789,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 3,
+          "bearish_candles": 2,
+          "body_ratio_vs_hist": 0.54,
+          "body_trend": "falling"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "falling",
+        "detail": {
+          "ratio": 0.51,
+          "recent_avg": 22203.9382,
+          "hist_avg": 43764.147450000004
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "above",
+        "detail": {
+          "z_score": 0.78,
+          "pct_distance": 1.26
+        },
+        "confidence": "moderate"
+      },
+      "ma_cross_7_25": {
+        "state": "recent_bullish_cross",
+        "detail": {
+          "bars_since_cross": "4",
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_high",
+        "detail": {
+          "rsi_value": 55.9
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 497.42999,
+          "low": 467.39999,
+          "position": 0.71
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "BTCUSDT",
+    "timeframe": "1h",
+    "start_ts": "2020-01-01T12:00:00",
+    "decision_ts": "2020-01-07T14:00:00",
+    "exit_ts": "2020-01-08T02:00:00",
+    "entry_price": 7842.98,
+    "exit_price": 8282.0,
+    "sig_trend_direction": "bullish_strong",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "normal",
+    "sig_price_vs_ma25": "above",
+    "sig_ma_cross_7_25": "ma7_above_stable",
+    "sig_rsi_zone": "neutral_high",
+    "sig_support_resistance": "mid_range",
+    "bias_score": 5,
+    "bias_direction": "bullish",
+    "bias_strength": "strong",
+    "outcome_direction": "up",
+    "outcome_pct": 5.6,
+    "outcome_whipsaw": false,
+    "edu_score": 90,
+    "coherence": "confirmed",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bullish_strong",
+        "detail": {
+          "slope_pct_per_candle": 0.1818,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 2,
+          "bearish_candles": 3,
+          "body_ratio_vs_hist": 0.61,
+          "body_trend": "flat"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "normal",
+        "detail": {
+          "ratio": 1.01,
+          "recent_avg": 8419.70558,
+          "hist_avg": 8312.061865
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "above",
+        "detail": {
+          "z_score": 0.89,
+          "pct_distance": 1.07
+        },
+        "confidence": "moderate"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_above_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_high",
+        "detail": {
+          "rsi_value": 62.1
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 8014.9102,
+          "low": 7303.0,
+          "position": 0.76
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "SOLUSDT",
+    "timeframe": "1h",
+    "start_ts": "2021-08-13T01:00:00",
+    "decision_ts": "2021-08-19T03:00:00",
+    "exit_ts": "2021-08-19T15:00:00",
+    "entry_price": 69.75,
+    "exit_price": 73.563004,
+    "sig_trend_direction": "bearish_strong",
+    "sig_recent_momentum": "accelerating_down",
+    "sig_volume_relative": "falling",
+    "sig_price_vs_ma25": "below",
+    "sig_ma_cross_7_25": "fresh_bearish_cross",
+    "sig_rsi_zone": "neutral_low",
+    "sig_support_resistance": "mid_range",
+    "bias_score": -8,
+    "bias_direction": "bearish",
+    "bias_strength": "strong",
+    "outcome_direction": "up",
+    "outcome_pct": 5.47,
+    "outcome_whipsaw": false,
+    "edu_score": 85,
+    "coherence": "contrarian",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bearish_strong",
+        "detail": {
+          "slope_pct_per_candle": -0.1524,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "accelerating_down",
+        "detail": {
+          "bullish_candles": 1,
+          "bearish_candles": 4,
+          "body_ratio_vs_hist": 1.09,
+          "body_trend": "rising"
+        },
+        "confidence": "strong"
+      },
+      "volume_relative": {
+        "state": "falling",
+        "detail": {
+          "ratio": 0.67,
+          "recent_avg": 1672630.2,
+          "hist_avg": 2487103.75
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "below",
+        "detail": {
+          "z_score": -0.66,
+          "pct_distance": -4.02
+        },
+        "confidence": "moderate"
+      },
+      "ma_cross_7_25": {
+        "state": "fresh_bearish_cross",
+        "detail": {
+          "bars_since_cross": "0",
+          "lookback": 10
+        },
+        "confidence": "strong"
+      },
+      "rsi_zone": {
+        "state": "neutral_low",
+        "detail": {
+          "rsi_value": 44.3
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 80.5,
+          "low": 58.672001,
+          "position": 0.51
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "LINKUSDT",
+    "timeframe": "1h",
+    "start_ts": "2025-08-12T20:00:00",
+    "decision_ts": "2025-08-18T22:00:00",
+    "exit_ts": "2025-08-19T10:00:00",
+    "entry_price": 26.207001,
+    "exit_price": 24.323999,
+    "sig_trend_direction": "bullish_strong",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "normal",
+    "sig_price_vs_ma25": "above",
+    "sig_ma_cross_7_25": "recent_bullish_cross",
+    "sig_rsi_zone": "neutral_high",
+    "sig_support_resistance": "mid_range",
+    "bias_score": 5,
+    "bias_direction": "bullish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -7.19,
+    "outcome_whipsaw": false,
+    "edu_score": 85,
+    "coherence": "contrarian",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bullish_strong",
+        "detail": {
+          "slope_pct_per_candle": 0.2338,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 3,
+          "bearish_candles": 2,
+          "body_ratio_vs_hist": 1.1,
+          "body_trend": "rising"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "normal",
+        "detail": {
+          "ratio": 0.7,
+          "recent_avg": 2532861.1399999997,
+          "hist_avg": 3595256.1100000003
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "above",
+        "detail": {
+          "z_score": 1.27,
+          "pct_distance": 3.94
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "recent_bullish_cross",
+        "detail": {
+          "bars_since_cross": "4",
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_high",
+        "detail": {
+          "rsi_value": 61.8
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 26.719999,
+          "low": 22.358,
+          "position": 0.88
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "LINKUSDT",
+    "timeframe": "1h",
+    "start_ts": "2025-08-16T14:00:00",
+    "decision_ts": "2025-08-22T16:00:00",
+    "exit_ts": "2025-08-23T04:00:00",
+    "entry_price": 27.403,
+    "exit_price": 26.152,
+    "sig_trend_direction": "bullish_strong",
+    "sig_recent_momentum": "accelerating_up",
+    "sig_volume_relative": "climactic",
+    "sig_price_vs_ma25": "far_above",
+    "sig_ma_cross_7_25": "fresh_bullish_cross",
+    "sig_rsi_zone": "overbought",
+    "sig_support_resistance": "mid_range",
+    "bias_score": 6,
+    "bias_direction": "bullish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -4.57,
+    "outcome_whipsaw": false,
+    "edu_score": 85,
+    "coherence": "contrarian",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bullish_strong",
+        "detail": {
+          "slope_pct_per_candle": 0.2484,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "accelerating_up",
+        "detail": {
+          "bullish_candles": 5,
+          "bearish_candles": 0,
+          "body_ratio_vs_hist": 5.11,
+          "body_trend": "rising"
+        },
+        "confidence": "strong"
+      },
+      "volume_relative": {
+        "state": "climactic",
+        "detail": {
+          "ratio": 4.25,
+          "recent_avg": 6767410.7,
+          "hist_avg": 1591745.6895
+        },
+        "confidence": "strong"
+      },
+      "price_vs_ma25": {
+        "state": "far_above",
+        "detail": {
+          "z_score": 3.15,
+          "pct_distance": 9.48
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "fresh_bullish_cross",
+        "detail": {
+          "bars_since_cross": "1",
+          "lookback": 10
+        },
+        "confidence": "strong"
+      },
+      "rsi_zone": {
+        "state": "overbought",
+        "detail": {
+          "rsi_value": 76.6
+        },
+        "confidence": "strong"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 27.863001,
+          "low": 24.113001,
+          "position": 0.88
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "XRPUSDT",
+    "timeframe": "1h",
+    "start_ts": "2025-02-07T02:00:00",
+    "decision_ts": "2025-02-13T04:00:00",
+    "exit_ts": "2025-02-13T16:00:00",
+    "entry_price": 2.4714,
+    "exit_price": 2.4210999,
+    "sig_trend_direction": "bullish_strong",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "falling",
+    "sig_price_vs_ma25": "above",
+    "sig_ma_cross_7_25": "ma7_above_stable",
+    "sig_rsi_zone": "neutral_high",
+    "sig_support_resistance": "mid_range",
+    "bias_score": 5,
+    "bias_direction": "bullish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -2.04,
+    "outcome_whipsaw": false,
+    "edu_score": 85,
+    "coherence": "contrarian",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bullish_strong",
+        "detail": {
+          "slope_pct_per_candle": 0.1855,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 2,
+          "bearish_candles": 3,
+          "body_ratio_vs_hist": 1.07,
+          "body_trend": "falling"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "falling",
+        "detail": {
+          "ratio": 0.44,
+          "recent_avg": 14945974.8,
+          "hist_avg": 34132058.25
+        },
+        "confidence": "strong"
+      },
+      "price_vs_ma25": {
+        "state": "above",
+        "detail": {
+          "z_score": 0.95,
+          "pct_distance": 1.52
+        },
+        "confidence": "moderate"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_above_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_high",
+        "detail": {
+          "rsi_value": 58.4
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 2.5283,
+          "low": 2.3306999,
+          "position": 0.71
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "XRPUSDT",
+    "timeframe": "1h",
+    "start_ts": "2025-02-01T14:00:00",
+    "decision_ts": "2025-02-07T16:00:00",
+    "exit_ts": "2025-02-08T04:00:00",
+    "entry_price": 2.4581001,
+    "exit_price": 2.3668001,
+    "sig_trend_direction": "bullish_strong",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "rising",
+    "sig_price_vs_ma25": "above",
+    "sig_ma_cross_7_25": "recent_bullish_cross",
+    "sig_rsi_zone": "neutral_high",
+    "sig_support_resistance": "mid_range",
+    "bias_score": 5,
+    "bias_direction": "bullish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -3.71,
+    "outcome_whipsaw": false,
+    "edu_score": 85,
+    "coherence": "contrarian",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bullish_strong",
+        "detail": {
+          "slope_pct_per_candle": 0.3582,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 2,
+          "bearish_candles": 3,
+          "body_ratio_vs_hist": 1.96,
+          "body_trend": "flat"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "rising",
+        "detail": {
+          "ratio": 2.48,
+          "recent_avg": 120224850.4,
+          "hist_avg": 48429415.1
+        },
+        "confidence": "strong"
+      },
+      "price_vs_ma25": {
+        "state": "above",
+        "detail": {
+          "z_score": 1.26,
+          "pct_distance": 4.01
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "recent_bullish_cross",
+        "detail": {
+          "bars_since_cross": "4",
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_high",
+        "detail": {
+          "rsi_value": 58.3
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 2.5392001,
+          "low": 2.2634001,
+          "position": 0.71
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "BTCUSDT",
+    "timeframe": "1h",
+    "start_ts": "2020-01-02T06:00:00",
+    "decision_ts": "2020-01-08T08:00:00",
+    "exit_ts": "2020-01-08T20:00:00",
+    "entry_price": 8316.9404,
+    "exit_price": 8049.77,
+    "sig_trend_direction": "bullish_strong",
+    "sig_recent_momentum": "indecisive",
+    "sig_volume_relative": "falling",
+    "sig_price_vs_ma25": "far_above",
+    "sig_ma_cross_7_25": "ma7_above_stable",
+    "sig_rsi_zone": "neutral_high",
+    "sig_support_resistance": "mid_range",
+    "bias_score": 5,
+    "bias_direction": "bullish",
+    "bias_strength": "strong",
+    "outcome_direction": "down",
+    "outcome_pct": -3.21,
+    "outcome_whipsaw": false,
+    "edu_score": 85,
+    "coherence": "contrarian",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bullish_strong",
+        "detail": {
+          "slope_pct_per_candle": 0.3815,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "indecisive",
+        "detail": {
+          "bullish_candles": 3,
+          "bearish_candles": 2,
+          "body_ratio_vs_hist": 0.34,
+          "body_trend": "falling"
+        },
+        "confidence": "strong"
+      },
+      "volume_relative": {
+        "state": "falling",
+        "detail": {
+          "ratio": 0.43,
+          "recent_avg": 6141.09356,
+          "hist_avg": 14337.153695
+        },
+        "confidence": "strong"
+      },
+      "price_vs_ma25": {
+        "state": "far_above",
+        "detail": {
+          "z_score": 2.33,
+          "pct_distance": 2.78
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "ma7_above_stable",
+        "detail": {
+          "bars_since_cross": null,
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_high",
+        "detail": {
+          "rsi_value": 65.0
+        },
+        "confidence": "moderate"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 8468.4199,
+          "low": 7481.7402,
+          "position": 0.85
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "SOLUSDT",
+    "timeframe": "1h",
+    "start_ts": "2021-07-29T07:00:00",
+    "decision_ts": "2021-08-04T09:00:00",
+    "exit_ts": "2021-08-04T21:00:00",
+    "entry_price": 33.691002,
+    "exit_price": 36.375,
+    "sig_trend_direction": "bearish_strong",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "falling",
+    "sig_price_vs_ma25": "below",
+    "sig_ma_cross_7_25": "recent_bearish_cross",
+    "sig_rsi_zone": "neutral_low",
+    "sig_support_resistance": "mid_range",
+    "bias_score": -5,
+    "bias_direction": "bearish",
+    "bias_strength": "strong",
+    "outcome_direction": "up",
+    "outcome_pct": 7.97,
+    "outcome_whipsaw": false,
+    "edu_score": 85,
+    "coherence": "contrarian",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bearish_strong",
+        "detail": {
+          "slope_pct_per_candle": -0.2126,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 2,
+          "bearish_candles": 3,
+          "body_ratio_vs_hist": 0.54,
+          "body_trend": "rising"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "falling",
+        "detail": {
+          "ratio": 0.56,
+          "recent_avg": 241219.6,
+          "hist_avg": 430578.75
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "below",
+        "detail": {
+          "z_score": -0.78,
+          "pct_distance": -1.74
+        },
+        "confidence": "moderate"
+      },
+      "ma_cross_7_25": {
+        "state": "recent_bearish_cross",
+        "detail": {
+          "bars_since_cross": "5",
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_low",
+        "detail": {
+          "rsi_value": 44.1
+        },
+        "confidence": "weak"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 35.849998,
+          "low": 32.330002,
+          "position": 0.39
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "ADAUSDT",
+    "timeframe": "1h",
+    "start_ts": "2024-04-11T14:00:00",
+    "decision_ts": "2024-04-17T16:00:00",
+    "exit_ts": "2024-04-18T04:00:00",
+    "entry_price": 0.43169999,
+    "exit_price": 0.44909999,
+    "sig_trend_direction": "bearish_strong",
+    "sig_recent_momentum": "accelerating_down",
+    "sig_volume_relative": "climactic",
+    "sig_price_vs_ma25": "far_below",
+    "sig_ma_cross_7_25": "recent_bearish_cross",
+    "sig_rsi_zone": "oversold",
+    "sig_support_resistance": "mid_range",
+    "bias_score": -5,
+    "bias_direction": "bearish",
+    "bias_strength": "strong",
+    "outcome_direction": "up",
+    "outcome_pct": 4.03,
+    "outcome_whipsaw": false,
+    "edu_score": 85,
+    "coherence": "contrarian",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bearish_strong",
+        "detail": {
+          "slope_pct_per_candle": -0.2846,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "accelerating_down",
+        "detail": {
+          "bullish_candles": 1,
+          "bearish_candles": 4,
+          "body_ratio_vs_hist": 1.33,
+          "body_trend": "rising"
+        },
+        "confidence": "strong"
+      },
+      "volume_relative": {
+        "state": "climactic",
+        "detail": {
+          "ratio": 3.48,
+          "recent_avg": 74635890.4,
+          "hist_avg": 21470842.1
+        },
+        "confidence": "strong"
+      },
+      "price_vs_ma25": {
+        "state": "far_below",
+        "detail": {
+          "z_score": -3.16,
+          "pct_distance": -4.55
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "recent_bearish_cross",
+        "detail": {
+          "bars_since_cross": "5",
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "oversold",
+        "detail": {
+          "rsi_value": 30.0
+        },
+        "confidence": "moderate"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 0.47760001,
+          "low": 0.4269,
+          "position": 0.09
+        },
+        "confidence": "weak"
+      }
+    }
+  },
+  {
+    "symbol": "LTCUSDT",
+    "timeframe": "1h",
+    "start_ts": "2022-04-08T14:00:00",
+    "decision_ts": "2022-04-14T16:00:00",
+    "exit_ts": "2022-04-15T04:00:00",
+    "entry_price": 106.68,
+    "exit_price": 109.99,
+    "sig_trend_direction": "bearish_strong",
+    "sig_recent_momentum": "mixed",
+    "sig_volume_relative": "rising",
+    "sig_price_vs_ma25": "below",
+    "sig_ma_cross_7_25": "recent_bearish_cross",
+    "sig_rsi_zone": "neutral_low",
+    "sig_support_resistance": "mid_range",
+    "bias_score": -5,
+    "bias_direction": "bearish",
+    "bias_strength": "strong",
+    "outcome_direction": "up",
+    "outcome_pct": 3.1,
+    "outcome_whipsaw": false,
+    "edu_score": 85,
+    "coherence": "contrarian",
+    "signals_full": {
+      "trend_direction": {
+        "state": "bearish_strong",
+        "detail": {
+          "slope_pct_per_candle": -0.1852,
+          "lookback": 20
+        },
+        "confidence": "strong"
+      },
+      "recent_momentum": {
+        "state": "mixed",
+        "detail": {
+          "bullish_candles": 2,
+          "bearish_candles": 3,
+          "body_ratio_vs_hist": 1.43,
+          "body_trend": "falling"
+        },
+        "confidence": "moderate"
+      },
+      "volume_relative": {
+        "state": "rising",
+        "detail": {
+          "ratio": 1.48,
+          "recent_avg": 95107.38519999999,
+          "hist_avg": 64254.0989
+        },
+        "confidence": "moderate"
+      },
+      "price_vs_ma25": {
+        "state": "below",
+        "detail": {
+          "z_score": -1.32,
+          "pct_distance": -2.82
+        },
+        "confidence": "strong"
+      },
+      "ma_cross_7_25": {
+        "state": "recent_bearish_cross",
+        "detail": {
+          "bars_since_cross": "4",
+          "lookback": 10
+        },
+        "confidence": "moderate"
+      },
+      "rsi_zone": {
+        "state": "neutral_low",
+        "detail": {
+          "rsi_value": 33.9
+        },
+        "confidence": "moderate"
+      },
+      "support_resistance": {
+        "state": "mid_range",
+        "detail": {
+          "high": 112.3,
+          "low": 102.5,
+          "position": 0.43
+        },
+        "confidence": "weak"
+      }
+    }
+  }
+]

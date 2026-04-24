@@ -1,0 +1,95 @@
+{
+  "id": "setup_11_confirmed_bullish",
+  "profile": "confirmed_bullish_obvio",
+  "symbol": "SOLUSDT",
+  "timeframe": "1h",
+  "decision_ts": "2021-03-27T15:00:00",
+  "exit_ts": "2021-03-28T03:00:00",
+  "entry_price": 15.994,
+  "exit_price": 17.257401,
+  "outcome_pct": 7.9,
+  "signals": {
+    "trend_direction": {
+      "state": "bullish_strong",
+      "confidence": "strong",
+      "detail": {
+        "slope_pct_per_candle": 0.5258,
+        "lookback": 20
+      }
+    },
+    "recent_momentum": {
+      "state": "mixed",
+      "confidence": "moderate",
+      "detail": {
+        "bullish_candles": 2,
+        "bearish_candles": 3,
+        "body_ratio_vs_hist": 0.73,
+        "body_trend": "rising"
+      }
+    },
+    "volume_relative": {
+      "state": "normal",
+      "confidence": "moderate",
+      "detail": {
+        "ratio": 1.22,
+        "recent_avg": 481299.0,
+        "hist_avg": 394267.3
+      }
+    },
+    "price_vs_ma25": {
+      "state": "far_above",
+      "confidence": "strong",
+      "detail": {
+        "z_score": 3.16,
+        "pct_distance": 5.77
+      }
+    },
+    "ma_cross_7_25": {
+      "state": "ma7_above_stable",
+      "confidence": "moderate",
+      "detail": {
+        "bars_since_cross": null,
+        "lookback": 10
+      }
+    },
+    "rsi_zone": {
+      "state": "neutral_high",
+      "confidence": "moderate",
+      "detail": {
+        "rsi_value": 69.7
+      }
+    },
+    "support_resistance": {
+      "state": "mid_range",
+      "confidence": "weak",
+      "detail": {
+        "high": 16.228901,
+        "low": 12.35,
+        "position": 0.94
+      }
+    }
+  },
+  "bias": {
+    "direction": "bullish",
+    "strength": "strong"
+  },
+  "outcome": {
+    "direction": "up",
+    "pct_change": 7.9,
+    "whipsaw": false
+  },
+  "edu_score": 90,
+  "coherence": "confirmed",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "Tendencia alcista sin sobrecompra aún.",
+      "en": "Uptrend not yet overbought.",
+      "zh": "趋势上涨,尚未超买。"
+    },
+    "holistic": {
+      "es": "Contexto alcista coherente con la acción del precio. El precio subió +7.90%.",
+      "en": "Bullish context coherent with price action. Price rose +7.90%.",
+      "zh": "看涨背景与价格一致。价格上涨 +7.90%。"
+    }
+  }
+}

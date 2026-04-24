@@ -1,0 +1,95 @@
+{
+  "id": "setup_17_confirmed_bearish",
+  "profile": "confirmed_bearish_bluechip",
+  "symbol": "BTCUSDT",
+  "timeframe": "1h",
+  "decision_ts": "2021-01-10T14:00:00",
+  "exit_ts": "2021-01-11T02:00:00",
+  "entry_price": 39480.02,
+  "exit_price": 36417.07,
+  "outcome_pct": -7.76,
+  "signals": {
+    "trend_direction": {
+      "state": "bearish",
+      "confidence": "moderate",
+      "detail": {
+        "slope_pct_per_candle": -0.1258,
+        "lookback": 20
+      }
+    },
+    "recent_momentum": {
+      "state": "mixed",
+      "confidence": "moderate",
+      "detail": {
+        "bullish_candles": 2,
+        "bearish_candles": 3,
+        "body_ratio_vs_hist": 1.87,
+        "body_trend": "falling"
+      }
+    },
+    "volume_relative": {
+      "state": "climactic",
+      "confidence": "strong",
+      "detail": {
+        "ratio": 2.54,
+        "recent_avg": 22013.5646,
+        "hist_avg": 8683.25611
+      }
+    },
+    "price_vs_ma25": {
+      "state": "far_below",
+      "confidence": "strong",
+      "detail": {
+        "z_score": -1.89,
+        "pct_distance": -2.5
+      }
+    },
+    "ma_cross_7_25": {
+      "state": "fresh_bearish_cross",
+      "confidence": "strong",
+      "detail": {
+        "bars_since_cross": "3",
+        "lookback": 10
+      }
+    },
+    "rsi_zone": {
+      "state": "neutral_low",
+      "confidence": "weak",
+      "detail": {
+        "rsi_value": 40.9
+      }
+    },
+    "support_resistance": {
+      "state": "mid_range",
+      "confidence": "weak",
+      "detail": {
+        "high": 42125.512,
+        "low": 38500.0,
+        "position": 0.27
+      }
+    }
+  },
+  "bias": {
+    "direction": "bearish",
+    "strength": "strong"
+  },
+  "outcome": {
+    "direction": "down",
+    "pct_change": -7.76,
+    "whipsaw": false
+  },
+  "edu_score": 90,
+  "coherence": "confirmed",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "Tendencia bajista tras cruce de medias.",
+      "en": "Downtrend after MA bearish cross.",
+      "zh": "均线死叉后趋势下跌。"
+    },
+    "holistic": {
+      "es": "Contexto bajista consistente con la caída. El precio cayó -7.76%.",
+      "en": "Bearish context consistent with drop. Price fell -7.76%.",
+      "zh": "看跌背景与跌幅一致。价格下跌 -7.76%。"
+    }
+  }
+}

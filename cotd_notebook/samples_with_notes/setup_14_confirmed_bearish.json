@@ -1,0 +1,95 @@
+{
+  "id": "setup_14_confirmed_bearish",
+  "profile": "confirmed_bearish_bluechip",
+  "symbol": "ETHUSDT",
+  "timeframe": "1h",
+  "decision_ts": "2021-06-25T20:00:00",
+  "exit_ts": "2021-06-26T08:00:00",
+  "entry_price": 1865.01,
+  "exit_price": 1731.36,
+  "outcome_pct": -7.17,
+  "signals": {
+    "trend_direction": {
+      "state": "bearish_strong",
+      "confidence": "strong",
+      "detail": {
+        "slope_pct_per_candle": -0.5494,
+        "lookback": 20
+      }
+    },
+    "recent_momentum": {
+      "state": "mixed",
+      "confidence": "moderate",
+      "detail": {
+        "bullish_candles": 3,
+        "bearish_candles": 2,
+        "body_ratio_vs_hist": 1.14,
+        "body_trend": "rising"
+      }
+    },
+    "volume_relative": {
+      "state": "rising",
+      "confidence": "moderate",
+      "detail": {
+        "ratio": 1.35,
+        "recent_avg": 234632.902,
+        "hist_avg": 173227.19025000004
+      }
+    },
+    "price_vs_ma25": {
+      "state": "below",
+      "confidence": "moderate",
+      "detail": {
+        "z_score": -0.72,
+        "pct_distance": -2.69
+      }
+    },
+    "ma_cross_7_25": {
+      "state": "ma7_below_stable",
+      "confidence": "moderate",
+      "detail": {
+        "bars_since_cross": null,
+        "lookback": 10
+      }
+    },
+    "rsi_zone": {
+      "state": "neutral_low",
+      "confidence": "weak",
+      "detail": {
+        "rsi_value": 41.8
+      }
+    },
+    "support_resistance": {
+      "state": "mid_range",
+      "confidence": "weak",
+      "detail": {
+        "high": 2036.0,
+        "low": 1790.0,
+        "position": 0.3
+      }
+    }
+  },
+  "bias": {
+    "direction": "bearish",
+    "strength": "strong"
+  },
+  "outcome": {
+    "direction": "down",
+    "pct_change": -7.17,
+    "whipsaw": false
+  },
+  "edu_score": 90,
+  "coherence": "confirmed",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "Precio y medias alineados a la baja.",
+      "en": "Price and MAs aligned downward.",
+      "zh": "价格与均线向下对齐。"
+    },
+    "holistic": {
+      "es": "Contexto bajista consistente con la caída. El precio cayó -7.17%.",
+      "en": "Bearish context consistent with drop. Price fell -7.17%.",
+      "zh": "看跌背景与跌幅一致。价格下跌 -7.17%。"
+    }
+  }
+}

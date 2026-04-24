@@ -1,0 +1,95 @@
+{
+  "id": "setup_06_confirmed_bullish",
+  "profile": "confirmed_bullish_obvio",
+  "symbol": "XRPUSDT",
+  "timeframe": "1h",
+  "decision_ts": "2022-02-07T10:00:00",
+  "exit_ts": "2022-02-07T22:00:00",
+  "entry_price": 0.76340002,
+  "exit_price": 0.82450002,
+  "outcome_pct": 8.0,
+  "signals": {
+    "trend_direction": {
+      "state": "bullish_strong",
+      "confidence": "strong",
+      "detail": {
+        "slope_pct_per_candle": 0.8593,
+        "lookback": 20
+      }
+    },
+    "recent_momentum": {
+      "state": "accelerating_up",
+      "confidence": "strong",
+      "detail": {
+        "bullish_candles": 4,
+        "bearish_candles": 1,
+        "body_ratio_vs_hist": 1.56,
+        "body_trend": "rising"
+      }
+    },
+    "volume_relative": {
+      "state": "climactic",
+      "confidence": "strong",
+      "detail": {
+        "ratio": 2.74,
+        "recent_avg": 81858145.6,
+        "hist_avg": 29905571.075
+      }
+    },
+    "price_vs_ma25": {
+      "state": "far_above",
+      "confidence": "strong",
+      "detail": {
+        "z_score": 2.39,
+        "pct_distance": 9.46
+      }
+    },
+    "ma_cross_7_25": {
+      "state": "ma7_above_stable",
+      "confidence": "moderate",
+      "detail": {
+        "bars_since_cross": null,
+        "lookback": 10
+      }
+    },
+    "rsi_zone": {
+      "state": "overbought",
+      "confidence": "strong",
+      "detail": {
+        "rsi_value": 79.4
+      }
+    },
+    "support_resistance": {
+      "state": "mid_range",
+      "confidence": "weak",
+      "detail": {
+        "high": 0.77399999,
+        "low": 0.6505,
+        "position": 0.91
+      }
+    }
+  },
+  "bias": {
+    "direction": "bullish",
+    "strength": "strong"
+  },
+  "outcome": {
+    "direction": "up",
+    "pct_change": 8.0,
+    "whipsaw": false
+  },
+  "edu_score": 90,
+  "coherence": "confirmed",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "Tendencia alcista, estructura sostenida.",
+      "en": "Uptrend, structure sustained.",
+      "zh": "趋势上涨,结构稳固。"
+    },
+    "holistic": {
+      "es": "Dirección alcista sostenida por el contexto. El precio subió +8.00%.",
+      "en": "Bullish direction sustained by context. Price rose +8.00%.",
+      "zh": "背景支撑看涨方向。价格上涨 +8.00%。"
+    }
+  }
+}

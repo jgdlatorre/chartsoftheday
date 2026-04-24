@@ -1,0 +1,95 @@
+{
+  "id": "setup_27_contrarian_bear_fails",
+  "profile": "contrarian_bearish_falla",
+  "symbol": "DOTUSDT",
+  "timeframe": "4h",
+  "decision_ts": "2025-05-06T12:00:00",
+  "exit_ts": "2025-05-08T12:00:00",
+  "entry_price": 3.9059999,
+  "exit_price": 4.296,
+  "outcome_pct": 9.98,
+  "signals": {
+    "trend_direction": {
+      "state": "bearish_strong",
+      "confidence": "strong",
+      "detail": {
+        "slope_pct_per_candle": -0.2706,
+        "lookback": 20
+      }
+    },
+    "recent_momentum": {
+      "state": "mixed",
+      "confidence": "moderate",
+      "detail": {
+        "bullish_candles": 1,
+        "bearish_candles": 3,
+        "body_ratio_vs_hist": 1.02,
+        "body_trend": "rising"
+      }
+    },
+    "volume_relative": {
+      "state": "normal",
+      "confidence": "moderate",
+      "detail": {
+        "ratio": 1.17,
+        "recent_avg": 4418794.1,
+        "hist_avg": 3787215.3
+      }
+    },
+    "price_vs_ma25": {
+      "state": "below",
+      "confidence": "strong",
+      "detail": {
+        "z_score": -1.36,
+        "pct_distance": -2.35
+      }
+    },
+    "ma_cross_7_25": {
+      "state": "ma7_below_stable",
+      "confidence": "moderate",
+      "detail": {
+        "bars_since_cross": null,
+        "lookback": 10
+      }
+    },
+    "rsi_zone": {
+      "state": "neutral_low",
+      "confidence": "weak",
+      "detail": {
+        "rsi_value": 40.7
+      }
+    },
+    "support_resistance": {
+      "state": "mid_range",
+      "confidence": "weak",
+      "detail": {
+        "high": 4.3280001,
+        "low": 3.8210001,
+        "position": 0.17
+      }
+    }
+  },
+  "bias": {
+    "direction": "bearish",
+    "strength": "strong"
+  },
+  "outcome": {
+    "direction": "up",
+    "pct_change": 9.98,
+    "whipsaw": false
+  },
+  "edu_score": 85,
+  "coherence": "contrarian",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "Tendencia bajista, pero momentum no acompaña.",
+      "en": "Downtrend, but momentum not following.",
+      "zh": "趋势下跌,但动量不跟进。"
+    },
+    "holistic": {
+      "es": "La tendencia bajista se agotó ahí. El precio subió +9.98%.",
+      "en": "Downtrend exhausted at that point. Price rose +9.98%.",
+      "zh": "跌势在此耗尽。价格上涨 +9.98%。"
+    }
+  }
+}

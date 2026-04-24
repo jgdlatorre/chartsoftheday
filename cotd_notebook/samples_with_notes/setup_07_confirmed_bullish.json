@@ -1,0 +1,95 @@
+{
+  "id": "setup_07_confirmed_bullish",
+  "profile": "confirmed_bullish_obvio",
+  "symbol": "DOGEUSDT",
+  "timeframe": "1h",
+  "decision_ts": "2025-07-10T11:00:00",
+  "exit_ts": "2025-07-10T23:00:00",
+  "entry_price": 0.18057001,
+  "exit_price": 0.19499999,
+  "outcome_pct": 7.99,
+  "signals": {
+    "trend_direction": {
+      "state": "bullish_strong",
+      "confidence": "strong",
+      "detail": {
+        "slope_pct_per_candle": 0.2034,
+        "lookback": 20
+      }
+    },
+    "recent_momentum": {
+      "state": "mixed",
+      "confidence": "moderate",
+      "detail": {
+        "bullish_candles": 2,
+        "bearish_candles": 3,
+        "body_ratio_vs_hist": 0.5,
+        "body_trend": "rising"
+      }
+    },
+    "volume_relative": {
+      "state": "falling",
+      "confidence": "moderate",
+      "detail": {
+        "ratio": 0.58,
+        "recent_avg": 186475276.0,
+        "hist_avg": 321765385.4
+      }
+    },
+    "price_vs_ma25": {
+      "state": "above",
+      "confidence": "moderate",
+      "detail": {
+        "z_score": 0.92,
+        "pct_distance": 1.28
+      }
+    },
+    "ma_cross_7_25": {
+      "state": "ma7_above_stable",
+      "confidence": "moderate",
+      "detail": {
+        "bars_since_cross": null,
+        "lookback": 10
+      }
+    },
+    "rsi_zone": {
+      "state": "neutral_high",
+      "confidence": "weak",
+      "detail": {
+        "rsi_value": 59.4
+      }
+    },
+    "support_resistance": {
+      "state": "mid_range",
+      "confidence": "weak",
+      "detail": {
+        "high": 0.18667001,
+        "low": 0.16825999,
+        "position": 0.67
+      }
+    }
+  },
+  "bias": {
+    "direction": "bullish",
+    "strength": "strong"
+  },
+  "outcome": {
+    "direction": "up",
+    "pct_change": 7.99,
+    "whipsaw": false
+  },
+  "edu_score": 90,
+  "coherence": "confirmed",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "Precio y medias alineados al alza.",
+      "en": "Price and MAs aligned upward.",
+      "zh": "价格与均线向上对齐。"
+    },
+    "holistic": {
+      "es": "Señal alcista limpia y contexto a favor. El precio subió +7.99%.",
+      "en": "Clean bullish signal with context aligned. Price rose +7.99%.",
+      "zh": "看涨信号清晰,背景支持。价格上涨 +7.99%。"
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "id": "setup_21_contrarian_bull_fails",
+  "profile": "contrarian_bullish_falla",
+  "symbol": "LINKUSDT",
+  "timeframe": "1h",
+  "decision_ts": "2021-09-12T22:00:00",
+  "exit_ts": "2021-09-13T10:00:00",
+  "entry_price": 29.103001,
+  "exit_price": 26.202,
+  "outcome_pct": -9.97,
+  "signals": {
+    "trend_direction": {
+      "state": "bullish_strong",
+      "confidence": "strong",
+      "detail": {
+        "slope_pct_per_candle": 0.3639,
+        "lookback": 20
+      }
+    },
+    "recent_momentum": {
+      "state": "mixed",
+      "confidence": "moderate",
+      "detail": {
+        "bullish_candles": 2,
+        "bearish_candles": 3,
+        "body_ratio_vs_hist": 1.63,
+        "body_trend": "rising"
+      }
+    },
+    "volume_relative": {
+      "state": "normal",
+      "confidence": "moderate",
+      "detail": {
+        "ratio": 1.29,
+        "recent_avg": 805426.964,
+        "hist_avg": 626658.4395000001
+      }
+    },
+    "price_vs_ma25": {
+      "state": "far_above",
+      "confidence": "strong",
+      "detail": {
+        "z_score": 1.63,
+        "pct_distance": 3.83
+      }
+    },
+    "ma_cross_7_25": {
+      "state": "ma7_above_stable",
+      "confidence": "moderate",
+      "detail": {
+        "bars_since_cross": null,
+        "lookback": 10
+      }
+    },
+    "rsi_zone": {
+      "state": "neutral_high",
+      "confidence": "weak",
+      "detail": {
+        "rsi_value": 61.3
+      }
+    },
+    "support_resistance": {
+      "state": "mid_range",
+      "confidence": "weak",
+      "detail": {
+        "high": 29.799999,
+        "low": 25.638,
+        "position": 0.83
+      }
+    }
+  },
+  "bias": {
+    "direction": "bullish",
+    "strength": "strong"
+  },
+  "outcome": {
+    "direction": "down",
+    "pct_change": -9.97,
+    "whipsaw": false
+  },
+  "edu_score": 85,
+  "coherence": "contrarian",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "Tendencia alcista, pero contexto se agota.",
+      "en": "Uptrend, but context wearing thin.",
+      "zh": "趋势上涨,但背景正在耗尽。"
+    },
+    "holistic": {
+      "es": "La tendencia alcista no sostuvo el contexto. El precio cayó -9.97%.",
+      "en": "Uptrend did not sustain context. Price fell -9.97%.",
+      "zh": "涨势未能维持背景。价格下跌 -9.97%。"
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "id": "setup_22_contrarian_bull_fails",
+  "profile": "contrarian_bullish_falla",
+  "symbol": "ETHUSDT",
+  "timeframe": "4h",
+  "decision_ts": "2021-02-20T08:00:00",
+  "exit_ts": "2021-02-22T08:00:00",
+  "entry_price": 2006.0699,
+  "exit_price": 1805.4301,
+  "outcome_pct": -10.0,
+  "signals": {
+    "trend_direction": {
+      "state": "bullish_strong",
+      "confidence": "strong",
+      "detail": {
+        "slope_pct_per_candle": 0.5245,
+        "lookback": 20
+      }
+    },
+    "recent_momentum": {
+      "state": "mixed",
+      "confidence": "moderate",
+      "detail": {
+        "bullish_candles": 3,
+        "bearish_candles": 2,
+        "body_ratio_vs_hist": 1.68,
+        "body_trend": "rising"
+      }
+    },
+    "volume_relative": {
+      "state": "normal",
+      "confidence": "moderate",
+      "detail": {
+        "ratio": 1.05,
+        "recent_avg": 412612.708,
+        "hist_avg": 394108.09199999995
+      }
+    },
+    "price_vs_ma25": {
+      "state": "far_above",
+      "confidence": "strong",
+      "detail": {
+        "z_score": 2.09,
+        "pct_distance": 6.45
+      }
+    },
+    "ma_cross_7_25": {
+      "state": "ma7_above_stable",
+      "confidence": "moderate",
+      "detail": {
+        "bars_since_cross": null,
+        "lookback": 10
+      }
+    },
+    "rsi_zone": {
+      "state": "neutral_high",
+      "confidence": "moderate",
+      "detail": {
+        "rsi_value": 68.3
+      }
+    },
+    "support_resistance": {
+      "state": "mid_range",
+      "confidence": "weak",
+      "detail": {
+        "high": 2048.0,
+        "low": 1652.0,
+        "position": 0.89
+      }
+    }
+  },
+  "bias": {
+    "direction": "bullish",
+    "strength": "strong"
+  },
+  "outcome": {
+    "direction": "down",
+    "pct_change": -10.0,
+    "whipsaw": false
+  },
+  "edu_score": 85,
+  "coherence": "contrarian",
+  "pedagogical_notes": {
+    "tooltip": {
+      "es": "Tendencia alcista, pero momentum no acompaña.",
+      "en": "Uptrend, but momentum not following.",
+      "zh": "趋势上涨,但动量不跟进。"
+    },
+    "holistic": {
+      "es": "Dirección alcista aparente, contexto en contra. El precio cayó -10.00%.",
+      "en": "Apparent bullish direction, context against. Price fell -10.00%.",
+      "zh": "方向看似上涨,背景相反。价格下跌 -10.00%。"
+    }
+  }
+}
