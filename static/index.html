@@ -2608,7 +2608,7 @@ function renderPlay() {
     <!-- Chart (chart-wrap is relative so Edu tooltip can float inside) -->
     <div id="chart-wrap" style="margin-top:6px; position:relative;">${chartSvg}${(function(){
       const notes = getPedagogicalNotes();
-      if (state.edu !== 'on' || !notes.tooltip || state.tooltipVisible === false) return '';
+      if (state.edu !== 'on' || state.mode !== 'pro' || !notes.tooltip || state.tooltipVisible === false) return '';
       return `
         <div class="edu-tooltip">
           <svg class="edu-tooltip-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
