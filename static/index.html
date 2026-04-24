@@ -98,7 +98,7 @@
     transition: background 0.15s ease, color 0.15s ease;
   }
   body {
-    padding: max(26px, calc(env(safe-area-inset-top) + 10px)) 10px max(20px, env(safe-area-inset-bottom)) 10px;
+    padding: max(26px, calc(env(safe-area-inset-top) + 10px)) 10px max(40px, calc(env(safe-area-inset-bottom) + 24px)) 10px;
     position: relative;
     overflow-x: hidden;
   }
@@ -508,8 +508,8 @@
     border: 1px solid color-mix(in srgb, var(--up) 22%, transparent);
   }
   .v5-verdict.miss {
-    background: var(--bg-2);
-    border: 1px solid var(--border);
+    background: var(--down-bg);
+    border: 1px solid color-mix(in srgb, var(--down) 22%, transparent);
   }
   .v5-verdict-icon {
     width: 40px; height: 40px;
@@ -519,18 +519,19 @@
     flex-shrink: 0;
   }
   .v5-verdict.hit .v5-verdict-icon { background: var(--up); color: #FFFFFF; }
-  .v5-verdict.miss .v5-verdict-icon { background: var(--text-mute); color: #FFFFFF; }
+  .v5-verdict.miss .v5-verdict-icon { background: var(--down); color: #FFFFFF; }
   .v5-verdict-content { flex: 1; min-width: 0; }
   .v5-verdict-title {
     font-size: 18px; font-weight: 700; color: var(--text);
     letter-spacing: 0.02em;
   }
   .v5-verdict.hit .v5-verdict-title { color: var(--up); }
-  .v5-verdict.miss .v5-verdict-title { color: var(--text-dim); }
+  .v5-verdict.miss .v5-verdict-title { color: var(--down); }
   .v5-verdict-sub {
-    font-size: 13px; color: var(--text-dim);
+    font-size: 14px; color: var(--text-2);
     font-variant-numeric: tabular-nums;
-    margin-top: 2px;
+    margin-top: 3px;
+    font-weight: 500;
   }
   .v5-verdict-points {
     font-size: 24px; font-weight: 700;
@@ -538,7 +539,7 @@
     flex-shrink: 0;
   }
   .v5-verdict.hit .v5-verdict-points { color: var(--up); }
-  .v5-verdict.miss .v5-verdict-points { color: var(--text-dim); }
+  .v5-verdict.miss .v5-verdict-points { color: var(--down); }
 
   /* Reveal pair meta row (below verdict) */
   .v5-reveal-pair {
@@ -720,6 +721,7 @@ const I18N = {
     cotdComeBackTomorrow: 'Vuelve mañana para el siguiente gráfico',
     cotdPlayNow: 'Jugar hoy',
     cotdAcademyCta: 'Aprende más sobre trading en Binance Academy',
+    priceMove: 'Movimiento',
     cotdResultHit: '¡Acierto!',
     cotdResultMiss: 'Fallo',
     cotdResultYourStreak: (n) => `Tu racha esta semana: ${n}/3`,
@@ -813,6 +815,7 @@ const I18N = {
     cotdComeBackTomorrow: 'Come back tomorrow for the next chart',
     cotdPlayNow: 'Play today',
     cotdAcademyCta: 'Learn more about trading on Binance Academy',
+    priceMove: 'Move',
     cotdResultHit: 'Hit!',
     cotdResultMiss: 'Miss',
     cotdResultYourStreak: (n) => `Your streak this week: ${n}/3`,
@@ -902,6 +905,7 @@ const I18N = {
     cotdComeBackTomorrow: '明天再来看下一个图表',
     cotdPlayNow: '今日游玩',
     cotdAcademyCta: '在 Binance Academy 学习更多交易知识',
+    priceMove: '涨跌',
     cotdResultHit: '命中!',
     cotdResultMiss: '错过',
     cotdResultYourStreak: (n) => `本周连胜: ${n}/3`,
@@ -2467,17 +2471,6 @@ function renderReveal() {
     }
   } catch (e) {}
 
-  // Smart price formatting — variable precision based on magnitude
-  const fmtPrice = (v) => {
-    if (v == null || isNaN(v)) return '';
-    if (v >= 1000) return v.toFixed(2);
-    if (v >= 10) return v.toFixed(3);
-    if (v >= 1) return v.toFixed(4);
-    return v.toFixed(6);
-  };
-  const entryPriceStr = fmtPrice(r.entry_price);
-  const exitPriceStr = fmtPrice(r.exit_price);
-
   // Round label
   const roundStr = String(state.round);
 
@@ -2516,7 +2509,7 @@ function renderReveal() {
     <div class="v5-pair-header" style="padding:6px 2px 4px;">
       <div class="v5-pair-name" style="display:flex; align-items:baseline; flex-wrap:wrap; gap:8px;">
         <span>${base}<span class="sub"> / ${quote}</span></span>
-        ${periodStr ? `<span style="font-size:11px; color:var(--text-dim); font-weight:500;">${periodStr}</span>` : ''}
+        ${periodStr ? `<span style="font-size:12px; color:var(--text-2); font-weight:500;">${periodStr}</span>` : ''}
       </div>
     </div>
 
@@ -2538,15 +2531,13 @@ function renderReveal() {
       <div class="v5-verdict-icon">${verdict.icon}</div>
       <div class="v5-verdict-content">
         <div class="v5-verdict-title">${verdict.label}</div>
-        <div class="v5-verdict-sub">
-          ${entryPriceStr && exitPriceStr ? `${entryPriceStr} → ${exitPriceStr} · ` : ''}${arrow} ${pctStr}
-        </div>
+        <div class="v5-verdict-sub">${t('priceMove')} ${arrow} ${pctStr}</div>
       </div>
       <div class="v5-verdict-points">${pointsStr}</div>
     </div>
 
     <!-- Next round hint -->
-    <div style="text-align:center; margin-top:10px; font-size:12px; color:var(--text-dim);">
+    <div style="text-align:center; margin-top:12px; font-size:13px; color:var(--text-2); font-weight:500;">
       ${t('nextRound')}
     </div>
   `;
