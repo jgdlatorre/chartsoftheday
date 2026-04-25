@@ -2597,12 +2597,12 @@ function renderPlay() {
       </div>
     </div>
 
-    <!-- Toolbar: TF tabs LEFT + Lite/Pro (DYOR in Edu) RIGHT -->
+    <!-- Toolbar: TF tabs LEFT + Lite/Pro RIGHT (visible in all modes incl. Edu) -->
     <div class="v5-chart-toolbar">
       <div class="v5-tf-group">
         ${tfBtn('1h')}${tfBtn('4h')}${tfBtn('1d')}
       </div>
-      ${state.edu === 'on' ? '' : `<div class="mode-group">${modeBtn('lite', 'Lite')}${modeBtn('pro', 'Pro')}</div>`}
+      <div class="mode-group">${modeBtn('lite', 'Lite')}${modeBtn('pro', 'Pro')}</div>
     </div>
 
     <!-- Chart (chart-wrap is relative so Edu tooltip can float inside) -->
@@ -2631,7 +2631,9 @@ function renderPlay() {
     <div style="display:grid; grid-template-columns:${state.edu === 'on' ? '1fr auto 1fr' : '1fr 1fr'}; gap:${state.edu === 'on' ? '8px' : '10px'}; margin-top:12px; align-items:stretch;" id="action-buttons">
       <button class="btn btn-long" id="btn-long">${t('btnLong')}</button>
       ${state.edu === 'on' ? (function(){
-        const isActive = state.mode === 'pro';
+        // DYOR active = chart in Pro AND pedagogical tooltip currently shown.
+        // Toggling DYOR controls the tooltip; mode Lite/Pro is changed via the toolbar.
+        const isActive = state.mode === 'pro' && state.tooltipVisible !== false;
         const bg = isActive ? 'var(--amber)' : 'transparent';
         const color = isActive ? '#0B0E11' : 'var(--amber)';
         const weight = isActive ? '800' : '700';
@@ -2646,12 +2648,19 @@ function renderPlay() {
   document.getElementById('btn-long').addEventListener('click', () => handleDecision('long'));
   document.getElementById('btn-short').addEventListener('click', () => handleDecision('short'));
 
-  // DYOR toggle (Edu mode) — switches lite ↔ pro view; also re-shows tooltip
+  // DYOR (Edu mode):
+  //   - In Lite: jump to Pro and show tooltip (single-press flow)
+  //   - In Pro:  toggle tooltip visibility only (mode unchanged)
+  // Mode toggling is the toolbar Lite/Pro's job.
   const btnDyor = document.getElementById('btn-dyor');
   if (btnDyor) {
     btnDyor.addEventListener('click', () => {
-      setMode(state.mode === 'pro' ? 'lite' : 'pro');
-      state.tooltipVisible = true;
+      if (state.mode !== 'pro') {
+        setMode('pro');
+        state.tooltipVisible = true;
+      } else {
+        state.tooltipVisible = !state.tooltipVisible;
+      }
       haptic(8);
       renderPlay();
     });
@@ -2812,12 +2821,12 @@ function renderReveal() {
       </div>
     </div>
 
-    <!-- Toolbar: TF tabs (locked) + Lite/Pro -->
+    <!-- Toolbar: TF tabs (locked) + Lite/Pro (visible in all modes incl. Edu) -->
     <div class="v5-chart-toolbar">
       <div class="v5-tf-group">
         ${tfBtn('1h')}${tfBtn('4h')}${tfBtn('1d')}
       </div>
-      ${state.edu === 'on' ? '' : `<div class="mode-group">${modeBtn('lite', 'Lite')}${modeBtn('pro', 'Pro')}</div>`}
+      <div class="mode-group">${modeBtn('lite', 'Lite')}${modeBtn('pro', 'Pro')}</div>
     </div>
 
     <!-- Chart (showing full reveal) -->
