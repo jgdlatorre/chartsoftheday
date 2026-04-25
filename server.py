@@ -20,7 +20,7 @@ import random
 import secrets
 import sys
 import time
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 from functools import wraps
 from pathlib import Path
 from threading import Lock
@@ -35,7 +35,6 @@ DATA_DIRS = {
     "1d": ROOT / "data_1d",
 }
 SECTIONS_POOL_FILE = ROOT / "sections_pool.json"
-EDU_POOL_FILE = ROOT / "edu_pool.json"
 SESSIONS_DIR = ROOT / "sessions"
 STATIC_DIR = ROOT / "static"
 SESSIONS_DIR.mkdir(exist_ok=True)
@@ -57,11 +56,6 @@ DATASETS: dict[str, dict[str, pd.DataFrame]] = {}
 # Sections pool: pre-extracted rounds for lightweight deploys.
 # If the file exists at boot, the server uses it instead of the raw CSVs.
 SECTIONS_POOL: list | None = None
-
-# Edu pool: 35 curated setups with pedagogical_notes (tooltip + holistic) in ES/EN/ZH.
-# Rotates cyclically through 7 days of 5 setups each, deterministic by UTC date.
-EDU_POOL: list | None = None
-EDU_EPOCH = date(2026, 4, 1)  # day 0 of the rotation cycle
 
 # Access token (env var). If set, requests require ?k=<token> or a valid cookie.
 # Leave unset locally to skip auth.
@@ -172,40 +166,6 @@ def load_sections_pool() -> bool:
         return False
 
 
-def load_edu_pool() -> bool:
-    """Load the curated Edu pool (35 setups with pedagogical_notes)."""
-    global EDU_POOL
-    if not EDU_POOL_FILE.exists():
-        print(f"edu pool not found ({EDU_POOL_FILE.name}) — /daily?edu=1 will 503")
-        return False
-    try:
-        with open(EDU_POOL_FILE) as f:
-            payload = json.load(f)
-        EDU_POOL = payload.get("sections", [])
-        print(f"Loaded {len(EDU_POOL)} edu sections from {EDU_POOL_FILE.name}")
-        return True
-    except Exception as e:
-        print(f"WARNING: failed to load edu pool: {e}", file=sys.stderr)
-        return False
-
-
-def edu_section_for_today(chart_index: int, day_offset: int = 0) -> dict | None:
-    """Pick the edu section for today's N-th round using a 7-day cyclic rotation.
-    Day 0 of the cycle serves setups 1..5, day 1 serves 6..10, ..., day 6 serves 31..35.
-    `day_offset` lets the dev "Next day" button preview future days without changing the clock.
-    """
-    if not EDU_POOL:
-        return None
-    simulated_date = datetime.utcnow().date() + timedelta(days=day_offset)
-    days_since = (simulated_date - EDU_EPOCH).days
-    day_in_cycle = days_since % 7
-    start = day_in_cycle * 5
-    idx = start + (chart_index - 1)
-    if idx < 0 or idx >= len(EDU_POOL):
-        return None
-    return EDU_POOL[idx]
-
-
 def build_round_from_section(section: dict, rng: random.Random) -> dict:
     """Convert a pool section into the round payload format the client expects.
     Computes bots votes fresh per call (they're cheap and need variance).
@@ -256,14 +216,13 @@ def build_round_from_section(section: dict, rng: random.Random) -> dict:
             "decision_ts_1h": section.get("decision_ts_1h"),
             "tfs": tf_cache,
             "created_at": time.time(),
-            "is_edu": bool(section.get("pedagogical_notes")),
         }
         now = time.time()
         stale = [k for k, v in ROUND_CACHE.items() if now - v["created_at"] > 600]
         for k in stale:
             del ROUND_CACHE[k]
 
-    payload = {
+    return {
         "round_id": round_id,
         "symbol": section["symbol"],
         "warmup_bars": WARMUP_BARS,
@@ -271,11 +230,6 @@ def build_round_from_section(section: dict, rng: random.Random) -> dict:
         "context_bars": CONTEXT_BARS,
         "timeframes": tf_payloads,
     }
-    if section.get("pedagogical_notes"):
-        payload["pedagogical_notes"] = section["pedagogical_notes"]
-    if section.get("anchor_tf"):
-        payload["anchor_tf"] = section["anchor_tf"]
-    return payload
 
 
 def _bar_compact_to_array(b: dict) -> list:
@@ -507,17 +461,6 @@ def get_daily(chart_index):
     except ValueError:
         day_offset = 0
 
-    # Edu branch: curated pool with pedagogical notes.
-    if request.args.get("edu", "") == "1":
-        if not EDU_POOL:
-            return jsonify({"error": "edu pool not loaded"}), 503
-        section = edu_section_for_today(chart_index, day_offset=day_offset)
-        if section is None:
-            return jsonify({"error": "no edu section for this slot"}), 500
-        resp = jsonify(build_round_from_section(section, random.Random()))
-        resp.headers["Cache-Control"] = "no-store"
-        return resp
-
     simulated_date = datetime.utcnow().date() + timedelta(days=day_offset)
     today = simulated_date.strftime("%Y-%m-%d")
 
@@ -592,7 +535,6 @@ def decide():
         "monkey_hit": monkey_hit,
         "monkey_sentiment_long_pct": tf_info["monkey_long_count"],
         "monkey_hits_individual": monkey_hits_individual,
-        "edu": bool(cached.get("is_edu")),
     })
 
 
@@ -646,7 +588,6 @@ def _bootstrap():
 
     if load_sections_pool():
         print("mode: SECTIONS POOL (deploy-ready, no CSVs needed)")
-        load_edu_pool()
         return
 
     # Fallback: legacy CSV mode
@@ -657,7 +598,6 @@ def _bootstrap():
         bias = historical_long_bias_tf(tf_name)
         LONG_BIAS_BY_TF[tf_name] = round(bias, 4)
         print(f"  {tf_name}: {bias:.4f}")
-    load_edu_pool()
 
 
 # Boot on import (works with gunicorn: `gunicorn server:app`)
