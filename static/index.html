@@ -682,7 +682,7 @@
 // ──────────────────────────────────────────────────────────────
 const CONTEXT_BARS = 80;
 const FUTURE_BARS = 48;
-const ROUND_SECONDS = 30;
+const ROUND_SECONDS = 15;
 const ROUNDS_PER_GAME = 5;  // COTD: 5 charts per day
 
 // ──────────────────────────────────────────────────────────────
@@ -691,7 +691,7 @@ const ROUNDS_PER_GAME = 5;  // COTD: 5 charts per day
 const I18N = {
   es: {
     langName: 'Español',
-    appTagline: 'Lee el mercado en 30 segundos',
+    appTagline: 'Lee el mercado en 15 segundos',
     // Charts of the Day (COTD) — adapted from Binance WOTD framework
     cotdName: 'Gráficos del día',
     cotdSharePool: 'Comparte 500 puntos',
@@ -706,13 +706,13 @@ const I18N = {
     devTitle: 'DEV · PRUEBA',
     devNextDay: 'Siguiente día',
     devReplay: 'Jugar otra vez',
-    devResetWeek: 'reset semana',
+    devResetWeek: 'Reset semana',
     cotdWinsNeeded: 'Acierta 3 días para obtener recompensas',
     cotdParticipants: 'Número total de participantes',
     cotdRewardPool: 'Pool de recompensas',
     cotdHistory: 'Historial de actividad',
     cotdHowToPlay: 'Cómo jugar',
-    cotdHowInstruction: 'Decide si suben o bajan los 5 gráficos del día. Tienes 30 segundos para cada uno.',
+    cotdHowInstruction: 'Decide si suben o bajan los 5 gráficos del día. Tienes 15 segundos para cada uno.',
     cotdHowCorrect: 'Acierto: el precio fue en tu dirección',
     cotdHowWrong: 'Fallo: el precio fue en la dirección opuesta',
     cotdHowStreak: 'Los usuarios que acierten 3 días podrán optar al reparto del pool de recompensas.',
@@ -731,16 +731,16 @@ const I18N = {
     cotdShareButton: 'Compartir',
     cotdReferralCode: 'Código de referido',
     cotdShareLink: 'Compartir enlace',
-    homeRules1Html: '<b>5 rondas</b> · <b>30 segundos</b> cada una',
+    homeRules1Html: '<b>5 rondas</b> · <b>15 segundos</b> cada una',
     homeRules2Html: 'Gráfico real. Decides <b style="color:#2D7D4E;">SUBE</b> o <b style="color:#A3352F;">BAJA</b>.',
     homeRules3Html: '¿Sube o baja en las próximas <b>48 velas</b>?',
     homeStart: 'Empezar',
-    homePitch: '30 segundos. El gráfico. Tu lectura.',
+    homePitch: '15 segundos. El gráfico. Tu lectura.',
     // TODO: replace with compliance-approved copy before public launch
     disclaimerHome: 'Aplicación educativa. Los resultados pasados no garantizan resultados futuros.',
     disclaimerSummary1: 'Aplicación educativa con datos históricos. Los resultados simulados no representan trading real.',
     disclaimerSummary2: 'No es asesoramiento financiero. Los aciertos pasados no garantizan aciertos futuros.',
-    loading: 'cargando vela aleatoria...',
+    loading: 'Cargando vela aleatoria...',
     round: 'ronda',
     revealed: 'Revelado',
     anonymousAsset: 'activo anónimo',
@@ -750,7 +750,7 @@ const I18N = {
     short: 'baja',
     btnLong: '↑ SUBE',
     btnShort: '↓ BAJA',
-    nextRound: 'siguiente ronda...',
+    nextRound: 'Siguiente ronda...',
     monkeyHitCount: (n) => `🤖 ${n}/100`,
     // summary
     gameOver: 'SESIÓN TERMINADA',
@@ -775,7 +775,7 @@ const I18N = {
     profileMid: 'medio',
     profileWeak: 'débil',
     // First-play tooltips
-    tooltipTimer: '30 segundos. Sin pausa, sin saltar.',
+    tooltipTimer: '15 segundos. Sin pausa, sin saltar.',
     tooltipButtons: '¿Sube o baja en las próximas 48 velas?',
     tooltipMonkey: '100 bots votan en la misma ronda. Gánales.',
     // date
@@ -787,7 +787,7 @@ const I18N = {
   },
   en: {
     langName: 'English',
-    appTagline: 'Read the market in 30 seconds',
+    appTagline: 'Read the market in 15 seconds',
     cotdName: 'Charts of the Day',
     cotdSharePool: 'Share 500 points',
     cotdPeriod: (from, to) => `From ${from} to ${to}`,
@@ -801,13 +801,13 @@ const I18N = {
     devTitle: 'DEV · TEST',
     devNextDay: 'Next day',
     devReplay: 'Play again',
-    devResetWeek: 'reset week',
+    devResetWeek: 'Reset week',
     cotdWinsNeeded: 'Win 3 days to earn rewards',
     cotdParticipants: 'Total participants',
     cotdRewardPool: 'Reward pool',
     cotdHistory: 'Activity history',
     cotdHowToPlay: 'How to play',
-    cotdHowInstruction: "Decide if today's 5 charts go up or down. 30 seconds each.",
+    cotdHowInstruction: "Decide if today's 5 charts go up or down. 15 seconds each.",
     cotdHowCorrect: 'Hit: price went your way',
     cotdHowWrong: 'Miss: price went the opposite way',
     cotdHowStreak: 'Users who win on 3 days become eligible to share the reward pool.',
@@ -826,15 +826,15 @@ const I18N = {
     cotdShareButton: 'Share',
     cotdReferralCode: 'Referral code',
     cotdShareLink: 'Share link',
-    homeRules1Html: '<b>5 rounds</b> · <b>30 seconds</b> each',
+    homeRules1Html: '<b>5 rounds</b> · <b>15 seconds</b> each',
     homeRules2Html: 'Real chart. Choose <b style="color:#2D7D4E;">UP</b> or <b style="color:#A3352F;">DOWN</b>.',
     homeRules3Html: 'Will it go up or down in the next <b>48 candles</b>?',
     homeStart: 'Start',
-    homePitch: '30 seconds. The chart. Your read.',
+    homePitch: '15 seconds. The chart. Your read.',
     disclaimerHome: 'Educational app. Past results do not guarantee future results.',
     disclaimerSummary1: 'Educational app using historical data. Simulated results do not represent actual trading.',
     disclaimerSummary2: 'Not financial advice. Past wins do not guarantee future wins.',
-    loading: 'loading random candle...',
+    loading: 'Loading random candle...',
     round: 'round',
     revealed: 'Revealed',
     anonymousAsset: 'anonymous asset',
@@ -844,7 +844,7 @@ const I18N = {
     short: 'down',
     btnLong: '↑ UP',
     btnShort: '↓ DOWN',
-    nextRound: 'next round...',
+    nextRound: 'Next round...',
     monkeyHitCount: (n) => `🤖 ${n}/100`,
     gameOver: 'SESSION ENDED',
     summaryHits: (h) => `${h}H`,
@@ -867,7 +867,7 @@ const I18N = {
     profileStrong: 'strong',
     profileMid: 'mid',
     profileWeak: 'weak',
-    tooltipTimer: '30 seconds. No pause, no skip.',
+    tooltipTimer: '15 seconds. No pause, no skip.',
     tooltipButtons: 'Up or down in the next 48 candles?',
     tooltipMonkey: '100 bots vote the same round. Beat them.',
     months: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
@@ -878,7 +878,7 @@ const I18N = {
   },
   zh: {
     langName: '简体中文',
-    appTagline: '30秒看懂市场',
+    appTagline: '15秒看懂市场',
     cotdName: '每日图表',
     cotdSharePool: '瓜分 500 积分',
     cotdPeriod: (from, to) => `${from} 至 ${to}`,
@@ -898,7 +898,7 @@ const I18N = {
     cotdRewardPool: '奖励池',
     cotdHistory: '活动历史',
     cotdHowToPlay: '如何游玩',
-    cotdHowInstruction: '判断今日 5 张图表是涨是跌。每张 30 秒。',
+    cotdHowInstruction: '判断今日 5 张图表是涨是跌。每张 15 秒。',
     cotdHowCorrect: '命中: 价格如你所料',
     cotdHowWrong: '错过: 价格反方向',
     cotdHowStreak: '本期间内答对 3 天的用户将可瓜分奖励池。',
@@ -917,11 +917,11 @@ const I18N = {
     cotdShareButton: '分享',
     cotdReferralCode: '推荐代码',
     cotdShareLink: '分享链接',
-    homeRules1Html: '<b>5 局</b> · 每局 <b>30 秒</b>',
+    homeRules1Html: '<b>5 局</b> · 每局 <b>15 秒</b>',
     homeRules2Html: '币安图表。选 <b style="color:#2D7D4E;">涨</b> 或 <b style="color:#A3352F;">跌</b>。',
     homeRules3Html: '接下来的 <b>48 根K线</b> 会涨还是跌？',
     homeStart: '开始',
-    homePitch: '30 秒。看图表。你的判断。',
+    homePitch: '15 秒。看图表。你的判断。',
     disclaimerHome: '教育应用。过往表现不代表未来结果。',
     disclaimerSummary1: '基于历史数据的教育应用。模拟结果不代表真实交易。',
     disclaimerSummary2: '非投资建议。过去的成绩不保证未来的成绩。',
@@ -958,7 +958,7 @@ const I18N = {
     profileStrong: '强',
     profileMid: '中',
     profileWeak: '弱',
-    tooltipTimer: '30 秒。不能暂停，不能跳过。',
+    tooltipTimer: '15 秒。不能暂停，不能跳过。',
     tooltipButtons: '接下来 48 根K线，涨还是跌？',
     tooltipMonkey: '100 个机器人也在投票。打败它们。',
     months: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
@@ -1002,6 +1002,91 @@ function formatDate(iso) {
   return dict.formatDate(d, dict.months);
 }
 
+// Per-TF natural-language horizon. Short form (`getHorizonLabel`) is reused
+// by the verdict ("Subió +1.69% en 1 sem"). Full form (`getVeilQuestion`)
+// goes into the chart's velo overlay ("¿en 1 semana?").
+const TF_HORIZON_LABEL = {
+  '1h': { es: '1 día', en: '1 day', zh: '1天' },
+  '4h': { es: '1 sem', en: '1 wk',  zh: '1周' },
+  '1d': { es: '1 mes', en: '1 mo',  zh: '1月' },
+};
+// Two-line game question that lives inside a bordered box on the velo.
+const TF_VEIL_QUESTION = {
+  '1h': {
+    es: ['¿Sube o baja',  'en 1 día?'],
+    en: ['Up or down',    'in 1 day?'],
+    zh: ['1天内',          '涨还是跌?'],
+  },
+  '4h': {
+    es: ['¿Sube o baja',  'en 1 semana?'],
+    en: ['Up or down',    'in 1 week?'],
+    zh: ['1周内',          '涨还是跌?'],
+  },
+  '1d': {
+    es: ['¿Sube o baja',  'en 1 mes?'],
+    en: ['Up or down',    'in 1 month?'],
+    zh: ['1月内',          '涨还是跌?'],
+  },
+};
+function getHorizonLabel(tf, lang) {
+  const entry = TF_HORIZON_LABEL[tf];
+  if (!entry) return '';
+  return entry[lang] || entry.es;
+}
+function getVeilQuestion(tf, lang) {
+  const entry = TF_VEIL_QUESTION[tf];
+  if (!entry) return ['?', ''];
+  return entry[lang] || entry.es;
+}
+function formatVerdictMove(pct, tf, lang) {
+  const h = getHorizonLabel(tf, lang);
+  const sign = pct >= 0 ? '+' : '';
+  const pctStr = `${sign}${pct.toFixed(1)}%`;
+  const verb = pct >= 0
+    ? (lang === 'en' ? 'Rose' : lang === 'zh' ? '涨' : 'Subió')
+    : (lang === 'en' ? 'Fell' : lang === 'zh' ? '跌' : 'Cayó');
+  if (lang === 'zh') return `${verb} ${pctStr} / ${h}`;
+  const conn = lang === 'en' ? 'in' : 'en';
+  return `${verb} ${pctStr} ${conn} ${h}`;
+}
+
+// Adaptive price formatting (used by play/reveal headers).
+// Magnitudes: ≥1000 → integer with thousands sep, ≥1 → 2dp, ≥0.01 → 4dp,
+// ≥0.0001 → 6dp, smaller → scientific.
+function fmtPrice(p) {
+  if (!Number.isFinite(p)) return '—';
+  if (p >= 1000) return Math.round(p).toLocaleString('en-US');
+  if (p >= 1) return p.toFixed(2);
+  if (p >= 0.01) return p.toFixed(4);
+  if (p >= 0.0001) return p.toFixed(6);
+  return p.toExponential(2);
+}
+
+// Stats over the visible chart range. In play (showAll=false) the loop spans
+// only the CONTEXT (excludes velo); in reveal (showAll=true) it extends to the
+// last bar of the future. `current` is always the decision close. In Lite,
+// max/min come from close prices (line view shows closes); in Pro, from h/l.
+// Returns absolute bar indices so callers can position labels at the exact bar.
+function getContextPriceStats(tfData, mode, showAll) {
+  const wm = tfData.warmup_count || 0;
+  const fc = tfData.future_count || 0;
+  const ctx = tfData.bars.length - wm - fc;
+  const decisionIdx = wm + ctx - 1;
+  const lastIdx = showAll ? tfData.bars.length - 1 : decisionIdx;
+  const current = tfData.bars[decisionIdx].c;
+  const exit = tfData.bars[lastIdx].c;
+  let highVal = -Infinity, lowVal = Infinity, highIdx = wm, lowIdx = wm;
+  const useClose = (mode === 'lite');
+  for (let i = wm; i <= lastIdx; i++) {
+    const b = tfData.bars[i];
+    const hp = useClose ? b.c : b.h;
+    const lp = useClose ? b.c : b.l;
+    if (hp > highVal) { highVal = hp; highIdx = i; }
+    if (lp < lowVal)  { lowVal  = lp; lowIdx  = i; }
+  }
+  return { current, exit, decisionIdx, lastIdx, high: highVal, highIdx, low: lowVal, lowIdx };
+}
+
 const state = {
   screen: 'home',
   round: 0,
@@ -1010,7 +1095,7 @@ const state = {
   history: [],
   monkeyScore: 0,
   current: null,
-  tfActive: '1h',
+  tfActive: '1d',
   currentStart: 0,
   timerHandle: null,
   timerStart: 0,
@@ -1195,10 +1280,12 @@ function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
   const visibleFrom = warmupCount;
   const visibleTo = showAll ? allBars.length : contextEnd;
 
-  // Variable height: Pro needs extra room for volume + RSI panels
-  // Lite keeps original compact height (just price line)
+  // Variable height: Pro needs extra room for volume + RSI panels.
+  // All panel coordinates are scaled by 0.9 vs the original layout to free
+  // ~10% of vertical space for the SUBE/BAJA buttons + safe-area padding on
+  // small phones. Internal price/vol/RSI ratios are preserved.
   const W = 420;
-  const H = mode === 'pro' ? 560 : 520;
+  const H = mode === 'pro' ? 504 : 468;
   const padL = 8, padR = 8;
 
   // Volume panel: only in Pro mode AND if any bar has v>0
@@ -1210,17 +1297,17 @@ function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
   }
   const hasRSI = (mode === 'pro');
 
-  // Zone layout for Pro (H=560): price 14-400 (386px), vol 410-460 (50px), rsi 470-540 (70px)
-  // Zone layout for Lite (H=520): price 14-500 (486px), nothing below
+  // Zone layout for Pro (H=504): price 13-360 (347px), vol 369-414 (45px), rsi 423-486 (63px)
+  // Zone layout for Lite (H=468): price 13-450 (437px), nothing below
   let priceTop, priceBot, volTop, volBot, rsiTop, rsiBot;
   if (mode === 'pro') {
-    priceTop = 14;
-    priceBot = hasVolume ? 400 : 440;
-    volTop = 410; volBot = 460;
-    rsiTop = 470; rsiBot = 540;
+    priceTop = 13;
+    priceBot = hasVolume ? 360 : 396;
+    volTop = 369; volBot = 414;
+    rsiTop = 423; rsiBot = 486;
   } else {
-    priceTop = 14;
-    priceBot = 500;
+    priceTop = 13;
+    priceBot = 450;
     volTop = 0; volBot = 0;  // unused
     rsiTop = 0; rsiBot = 0;  // unused
   }
@@ -1490,22 +1577,117 @@ function renderChart(allBars, warmupCount, contextBars, futureBars, showAll) {
   // ─────── Decision marker + future zone ───────
   const decisionGlobalIdx = contextEnd - 1;
   const decisionX = xAt(decisionGlobalIdx) + barW / 2;
-  // Bottom of chart activity (includes RSI if present)
+  const chartRight = W - padR;
   const chartBottom = hasRSI ? rsiBot : (hasVolume ? volBot : priceBot);
+  // High-contrast text color for in-chart labels (price box, velo question).
+  const textHi = theme === 'light' ? '#0B0E11' : '#EAECEF';
 
   if (showAll) {
     // Dotted vertical line at decision point — spans all panels
     svg += `<line x1="${decisionX.toFixed(1)}" y1="${priceTop}" x2="${decisionX.toFixed(1)}" y2="${chartBottom}" stroke="${C.textDim}" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>`;
     // Entry price horizontal guide
     const entryY = yPrice(allBars[decisionGlobalIdx].c);
-    svg += `<line x1="${padL}" y1="${entryY.toFixed(1)}" x2="${W - padR}" y2="${entryY.toFixed(1)}" stroke="${C.amber}" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.7"/>`;
+    svg += `<line x1="${padL}" y1="${entryY.toFixed(1)}" x2="${chartRight}" y2="${entryY.toFixed(1)}" stroke="${C.amber}" stroke-width="0.8" stroke-dasharray="4,3" opacity="0.7"/>`;
   } else {
-    // Reserved future zone — spans all panels
-    svg += `<rect x="${decisionX.toFixed(1)}" y="0" width="${(W - decisionX).toFixed(1)}" height="${H}" fill="${C.futureBg}" opacity="0.85"/>`;
+    // Reserved future zone — spans from decision to the chart's right edge.
+    const veloW = chartRight - decisionX;
+    svg += `<rect x="${decisionX.toFixed(1)}" y="0" width="${veloW.toFixed(1)}" height="${H}" fill="${C.futureBg}" opacity="0.85"/>`;
     svg += `<line x1="${decisionX.toFixed(1)}" y1="${priceTop}" x2="${decisionX.toFixed(1)}" y2="${chartBottom}" stroke="${C.futureLine}" stroke-width="1" stroke-dasharray="3,3" opacity="0.65"/>`;
-    const midX = decisionX + (W - decisionX) / 2;
-    const midY = (priceTop + priceBot) / 2;
-    svg += `<text x="${midX.toFixed(1)}" y="${(midY + 10).toFixed(1)}" text-anchor="middle" fill="${C.question}" font-family="Arial" font-size="36" font-weight="800">?</text>`;
+    // Velo question card: 2-line game question inside a rounded box.
+    // Sized to its content so it always fits within the velo (~152px wide).
+    // Vertically positioned in the half OPPOSITE to the last context candle so
+    // the entry-price box and the question never overlap. The 0.95 multiplier
+    // adds a small dead-zone around midY to avoid bistable flicker.
+    const lines = getVeilQuestion(state.tfActive, state.lang);
+    const vFont = 14;
+    const vLineH = 18;
+    const vPadH = 14;
+    const vPadV = 10;
+    const isCJK = (c) => /[\u4e00-\u9fff]/.test(c);
+    const estW = (s) => {
+      let w = 0;
+      for (const c of s) w += isCJK(c) ? vFont : vFont * 0.6;
+      return w;
+    };
+    const contentW = Math.max(estW(lines[0]), estW(lines[1]));
+    const boxW = contentW + 2 * vPadH;
+    const boxH = 2 * vLineH + 2 * vPadV - 4;
+    const midX = decisionX + veloW / 2;
+    const chartMidY = (priceTop + priceBot) / 2;
+    const lastCandleY = yPrice(allBars[decisionGlobalIdx].c);
+    const isLastCandleInUpperHalf = lastCandleY < chartMidY * 0.95;
+    const veilBoxYPercent = isLastCandleInUpperHalf ? 0.75 : 0.25;
+    const veilBoxY = priceTop + (priceBot - priceTop) * veilBoxYPercent;
+    const boxX = midX - boxW / 2;
+    const boxY = veilBoxY - boxH / 2;
+    svg += `<rect x="${boxX.toFixed(1)}" y="${boxY.toFixed(1)}" width="${boxW.toFixed(1)}" height="${boxH.toFixed(1)}" fill="${C.bg}" fill-opacity="0.88" stroke="${C.textDim}" stroke-width="1.2" rx="6" ry="6"/>`;
+    const line1Y = veilBoxY - 3;
+    const line2Y = veilBoxY + 15;
+    svg += `<text x="${midX.toFixed(1)}" y="${line1Y.toFixed(1)}" text-anchor="middle" fill="${textHi}" font-family="Arial" font-size="${vFont}" font-weight="700">${lines[0]}</text>`;
+    svg += `<text x="${midX.toFixed(1)}" y="${line2Y.toFixed(1)}" text-anchor="middle" fill="${textHi}" font-family="Arial" font-size="${vFont}" font-weight="700">${lines[1]}</text>`;
+  }
+
+  // ─────── Anchored price labels (entry + max/min + exit on reveal) ───────
+  // Visible in BOTH modes (Lite uses close, Pro uses high/low for max/min).
+  // In play (showAll=false): max/min over CONTEXT only. In reveal: extended to
+  // the future bars, plus a second box marking the EXIT price.
+  {
+    const stats = getContextPriceStats(
+      { bars: allBars, warmup_count: warmupCount, future_count: futureBars },
+      mode,
+      showAll
+    );
+    const entryY = yPrice(stats.current);
+
+    // Entry price box: anchored to decisionX so it sits at the CONTEXT/velo
+    // (or context/future) boundary, adjacent to the Lite endpoint circle when
+    // present. Amber stroke ties it visually to the decision marker.
+    const boxH = 16;
+    const entryTxt = fmtPrice(stats.current);
+    const entryBoxW = Math.max(40, 7 * entryTxt.length + 6);
+    const entryBoxX = decisionX + 1;
+    svg += `<rect x="${entryBoxX.toFixed(1)}" y="${(entryY - boxH/2).toFixed(1)}" width="${entryBoxW}" height="${boxH}" fill="${C.bg}" stroke="${C.amber}" stroke-width="0.9" rx="4"/>`;
+    svg += `<text x="${(entryBoxX + entryBoxW/2).toFixed(1)}" y="${(entryY + 4).toFixed(1)}" text-anchor="middle" fill="${textHi}" font-family="Arial" font-size="11" font-weight="700">${entryTxt}</text>`;
+
+    // Exit price box (reveal only): anchored to the right edge of the chart
+    // drawing area. Box extends LEFTWARD so it stays inside the SVG. Stroke
+    // textDim (less prominent than the amber entry box) — same shape, neutral
+    // color: complementary "this is where the round ended" reference.
+    if (showAll) {
+      const exitY = yPrice(stats.exit);
+      const exitTxt = fmtPrice(stats.exit);
+      const exitBoxW = Math.max(40, 7 * exitTxt.length + 6);
+      const exitBoxX = chartRight - exitBoxW;
+      svg += `<rect x="${exitBoxX.toFixed(1)}" y="${(exitY - boxH/2).toFixed(1)}" width="${exitBoxW}" height="${boxH}" fill="${C.bg}" fill-opacity="0.92" stroke="${C.textDim}" stroke-width="0.9" rx="4"/>`;
+      svg += `<text x="${(exitBoxX + exitBoxW/2).toFixed(1)}" y="${(exitY + 4).toFixed(1)}" text-anchor="middle" fill="${textHi}" font-family="Arial" font-size="11" font-weight="700">${exitTxt}</text>`;
+    }
+
+    // Max/Min labels carry a localized prefix (Max/High/高 + Min/Low/低).
+    const maxLabel = state.lang === 'en' ? 'High' : state.lang === 'zh' ? '高' : 'Max';
+    const minLabel = state.lang === 'en' ? 'Low'  : state.lang === 'zh' ? '低' : 'Min';
+    const maxText = `${maxLabel} ${fmtPrice(stats.high)}`;
+    const minText = `${minLabel} ${fmtPrice(stats.low)}`;
+    // Anchor adapts when the bar is too close to a chart edge (text would clip).
+    const labelHalfW = 38;  // approx half-width of "High 65.43" at 12px
+    const anchorAt = (barX) => {
+      if (barX + labelHalfW > chartRight - 2) return { anchor: 'end',   x: chartRight - 2 };
+      if (barX - labelHalfW < padL + 2)       return { anchor: 'start', x: padL + 2 };
+      return { anchor: 'middle', x: barX };
+    };
+
+    // Max — 8px tick + price text above the highest context bar.
+    const maxX = xAt(stats.highIdx);
+    const maxY = yPrice(stats.high);
+    const maxA = anchorAt(maxX);
+    svg += `<line x1="${maxX.toFixed(1)}" y1="${(maxY - 9).toFixed(1)}" x2="${maxX.toFixed(1)}" y2="${(maxY - 1).toFixed(1)}" stroke="${C.textDim}" stroke-width="1" opacity="0.9"/>`;
+    svg += `<text x="${maxA.x.toFixed(1)}" y="${(maxY - 12).toFixed(1)}" text-anchor="${maxA.anchor}" fill="${C.textDim}" font-family="Arial" font-size="12" font-weight="600">${maxText}</text>`;
+
+    // Min — symmetric below the lowest context bar.
+    const minX = xAt(stats.lowIdx);
+    const minY = yPrice(stats.low);
+    const minA = anchorAt(minX);
+    svg += `<line x1="${minX.toFixed(1)}" y1="${(minY + 1).toFixed(1)}" x2="${minX.toFixed(1)}" y2="${(minY + 9).toFixed(1)}" stroke="${C.textDim}" stroke-width="1" opacity="0.9"/>`;
+    svg += `<text x="${minA.x.toFixed(1)}" y="${(minY + 21).toFixed(1)}" text-anchor="${minA.anchor}" fill="${C.textDim}" font-family="Arial" font-size="12" font-weight="600">${minText}</text>`;
   }
 
   svg += `</svg>`;
@@ -1529,9 +1711,9 @@ function rerenderCurrentChart() {
     const tf = state.tfActive;
     const tfData = state.current.timeframes[tf];
     if (!tfData) return;
+    const ctxLen = tfData.bars.length - tfData.warmup_count - tfData.future_count;
     chartWrap.innerHTML = renderChart(tfData.bars, tfData.warmup_count,
-                                      tfData.bars.length - tfData.warmup_count,
-                                      tfData.future_count, false);
+                                      ctxLen, tfData.future_count, false);
   }
 }
 
@@ -1645,7 +1827,7 @@ async function nextRound() {
 
   hydrateRound(data);
   state.current = data;
-  state.tfActive = '1h';
+  state.tfActive = '1d';  // default horizon = 1 month; user can flip during play
   state.currentStart = Date.now();
   renderPlay();
   startTimer();
@@ -1850,18 +2032,19 @@ async function handleDecision(decision) {
       haptic([50, 30, 50]);  // sharper double-buzz on fail/timeout
     }
 
-    // Future bars now come keyed by TF (each TF is its own game)
-    const futureByTf = hydrateFutureByTf(result.future_bars_by_tf || {});
+    // /daily payload already includes the velo bars (warmup + ctx + velo) in tf.bars
+    // since Paso 2.2, so the reveal is just the same array with proper accounting:
+    // context_count is the pure visible-past, future_count is the velo length.
+    // (We discard /decide.future_bars_by_tf — would duplicate the velo bars.)
     const tfReveals = {};
     for (const tfName of ['1h', '4h', '1d']) {
       const tf = state.current.timeframes[tfName];
       if (!tf) continue;
-      const future = futureByTf[tfName] || [];
       tfReveals[tfName] = {
-        bars: tf.bars.concat(future),
+        bars: tf.bars,
         warmup_count: tf.warmup_count,
-        context_count: tf.bars.length - tf.warmup_count,
-        future_count: future.length,
+        context_count: tf.bars.length - tf.warmup_count - tf.future_count,
+        future_count: tf.future_count,
       };
     }
 
@@ -2300,9 +2483,11 @@ function renderPlay() {
   state.screen = 'play';
   const tf = state.tfActive;
   const tfData = state.current.timeframes[tf];
+  // tfData.bars includes warmup + context + velo bars; subtract future_count to
+  // pass renderChart the pure visible-context size for correct decision-point layout.
+  const ctxLen = tfData.bars.length - tfData.warmup_count - tfData.future_count;
   const chartSvg = renderChart(tfData.bars, tfData.warmup_count,
-                 tfData.bars.length - tfData.warmup_count,
-                 tfData.future_count, false);
+                 ctxLen, tfData.future_count, false);
 
   // Symbol + period shown from play start (no longer censored as ●●●)
   const fullSymbol = state.current.symbol || 'BTCUSDT';
@@ -2332,10 +2517,10 @@ function renderPlay() {
   const roundStr = String(state.round).padStart(2, '0');
   const totalStr = String(ROUNDS_PER_GAME).padStart(2, '0');
 
-  // TF button — v5 style
+  // TF button — v5 style. Compact label ("1h" / "4h" / "1d").
   const tfBtn = (name) => {
     const active = tf === name;
-    return `<button class="v5-tf ${active ? 'active' : ''}" data-tf="${name}">${name.toUpperCase()}</button>`;
+    return `<button class="v5-tf ${active ? 'active' : ''}" data-tf="${name}">${name}</button>`;
   };
   // Mode button — v5 style
   const modeBtn = (m, label) => {
@@ -2389,8 +2574,9 @@ function renderPlay() {
     </div>
     <div class="timer-bar"><div class="timer-fill" id="timer-fill" style="width:100%;"></div></div>
 
-    <!-- Action buttons (SUBE | BAJA) -->
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; align-items:stretch;" id="action-buttons">
+    <!-- Action buttons (SUBE | BAJA) — safe-area padding keeps them above
+         iOS gesture bar + browser URL bar even on small phones in Pro mode -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; align-items:stretch; padding-bottom: max(16px, env(safe-area-inset-bottom));" id="action-buttons">
       <button class="btn btn-long" id="btn-long">${t('btnLong')}</button>
       <button class="btn btn-short" id="btn-short">${t('btnShort')}</button>
     </div>
@@ -2507,10 +2693,10 @@ function renderReveal() {
   // Round label
   const roundStr = String(state.round);
 
-  // TF tabs LOCKED in reveal (can only see the bet TF active)
+  // TF tabs LOCKED in reveal (can only see the bet TF active). Compact label.
   const tfBtn = (name) => {
     const active = tf === name;
-    return `<button class="v5-tf ${active ? 'active' : ''}" disabled style="opacity:${active ? 1 : 0.4};">${name.toUpperCase()}</button>`;
+    return `<button class="v5-tf ${active ? 'active' : ''}" disabled style="opacity:${active ? 1 : 0.4};">${name}</button>`;
   };
   const modeBtn = (m, label) => {
     const active = state.mode === m;
@@ -2562,13 +2748,13 @@ function renderReveal() {
       <div class="v5-verdict-icon">${verdict.icon}</div>
       <div class="v5-verdict-content">
         <div class="v5-verdict-title">${verdict.label}</div>
-        <div class="v5-verdict-sub">${t('priceMove')} ${arrow} ${pctStr}</div>
+        <div class="v5-verdict-sub">${formatVerdictMove(pct, tf, state.lang)}</div>
       </div>
       <div class="v5-verdict-points">${pointsStr}</div>
     </div>
 
-    <!-- Next round hint -->
-    <div style="text-align:center; margin-top:12px; font-size:13px; color:var(--text-2); font-weight:500;">
+    <!-- Next round hint — same safe-area padding as the play action row -->
+    <div style="text-align:center; margin-top:12px; font-size:13px; color:var(--text-2); font-weight:500; padding-bottom: max(16px, env(safe-area-inset-bottom));">
       ${t('nextRound')}
     </div>
   `;

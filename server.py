@@ -39,11 +39,25 @@ SESSIONS_DIR = ROOT / "sessions"
 STATIC_DIR = ROOT / "static"
 SESSIONS_DIR.mkdir(exist_ok=True)
 
-# Same dimensions for all TFs — simpler and visually consistent.
+# Per-TF horizons: each TF has its own "round" length so the chart's future
+# velo maps to a natural calendar horizon (1 day / 1 week / 1 month).
+# Visible context : future ratio ≈ 5/3 (golden-ratio rounded) → velo ≈ 37.5%.
+CONTEXT_BY_TF = {"1h": 40, "4h": 70, "1d": 50}    # bars BEFORE decision (visible)
+FUTURE_BY_TF  = {"1h": 24, "4h": 42, "1d": 30}    # bars AFTER  decision (velo)
+
+# Pool layout (set by extract_sections.py): each section's per-TF bars[] has
+# 280 entries before the decision (= 200 generous warmup + 80 generic context)
+# and 48 after. New per-TF horizons re-slice this same array — the constant
+# below pins the contract between extractor and runtime.
+STORED_BARS_BEFORE_DECISION = 280  # warmup(200) + context(80) at extraction time
+
+# Window dimensions used by the CSV fallback path (`_build_round`,
+# `historical_long_bias_tf`, `load_all_csvs`). These describe the raw window
+# carved from the CSVs; the per-TF re-slicing happens later from that window.
+WARMUP_BARS = 200
 CONTEXT_BARS = 80
 FUTURE_BARS = 48
-WARMUP_BARS = 200
-MIN_WINDOW = WARMUP_BARS + CONTEXT_BARS + FUTURE_BARS  # 328 bars needed per TF
+MIN_WINDOW = WARMUP_BARS + CONTEXT_BARS + FUTURE_BARS  # 328 bars per TF
 
 # Allowed TOP10 assets (long history).
 ALLOWED = {
@@ -178,35 +192,50 @@ def build_round_from_section(section: dict, rng: random.Random) -> dict:
 
     for tf_name, tfs in section["tfs"].items():
         bars_full = tfs["bars"]
-        warmup = tfs["warmup_count"]
-        ctx_count = tfs["context_count"]
+        ctx = CONTEXT_BY_TF[tf_name]
+        fut = FUTURE_BY_TF[tf_name]
 
-        # Context slice = warmup + context bars (first warmup+context bars of "bars")
-        context_bars = bars_full[: warmup + ctx_count]
-        future_bars = bars_full[warmup + ctx_count : warmup + ctx_count + FUTURE_BARS]
+        # Per-TF re-slice of the stored window. Decision bar lives at
+        # index STORED_BARS_BEFORE_DECISION - 1 (= 279). Effective warmup is
+        # whatever remains before the visible context.
+        warmup_count = STORED_BARS_BEFORE_DECISION - ctx
+        decision_idx = STORED_BARS_BEFORE_DECISION - 1
+        future_end_idx = decision_idx + fut
+
+        # Visible bars sent to client: [warmup..context..future]
+        visible_bars = bars_full[: STORED_BARS_BEFORE_DECISION + fut]
+        # Future-only slice for the reveal bars_by_tf payload
+        future_bars = bars_full[STORED_BARS_BEFORE_DECISION : STORED_BARS_BEFORE_DECISION + fut]
+
+        # Recompute outcome from bars at the new horizon (NOT from stored truth).
+        decision_close = float(bars_full[decision_idx]["c"])
+        exit_close = float(bars_full[future_end_idx]["c"])
+        truth = "long" if exit_close > decision_close else "short"
+        decision_ts = bars_full[decision_idx]["ts"]
+        exit_ts = bars_full[future_end_idx]["ts"]
 
         bias = LONG_BIAS_BY_TF.get(tf_name, 0.5)
         monkey_votes = [rng.random() < bias for _ in range(100)]
         monkey_long = sum(monkey_votes)
 
         tf_cache[tf_name] = {
-            "entry_price": tfs["entry_price"],
-            "exit_price": tfs["exit_price"],
-            "truth": tfs["truth"],
-            "decision_ts": tfs["decision_ts"],
-            "exit_ts": tfs["exit_ts"],
+            "entry_price": decision_close,
+            "exit_price": exit_close,
+            "truth": truth,
+            "decision_ts": decision_ts,
+            "exit_ts": exit_ts,
             "future_bars": [_bar_compact_to_array(b) for b in future_bars],
             "monkey_votes": monkey_votes,
             "monkey_long_count": monkey_long,
         }
 
         tf_payloads[tf_name] = {
-            "bars": [_bar_compact_to_array(b) for b in context_bars],
-            "warmup_count": int(warmup),
-            "future_count": FUTURE_BARS,
+            "bars": [_bar_compact_to_array(b) for b in visible_bars],
+            "warmup_count": int(warmup_count),
+            "future_count": fut,
             "monkey_sentiment_long_pct": monkey_long,
-            "decision_ts": tfs["decision_ts"],
-            "exit_ts": tfs["exit_ts"],
+            "decision_ts": decision_ts,
+            "exit_ts": exit_ts,
         }
 
     round_id = secrets.token_hex(8)
@@ -375,17 +404,22 @@ def _build_round(rng):
         pos = int(ts.searchsorted(decision_ts, side="right")) - 1
         if pos < 0:
             continue
-        future_end = pos + FUTURE_BARS
+
+        ctx = CONTEXT_BY_TF[tf_name]
+        fut = FUTURE_BY_TF[tf_name]
+
+        future_end = pos + fut
         if future_end >= len(tf_df):
             return _build_round(rng)
 
-        desired_start = pos - (WARMUP_BARS + CONTEXT_BARS) + 1
+        # Keep STORED_BARS_BEFORE_DECISION worth of history before decision
+        # (warmup + visible context). Effective warmup_count varies per TF.
+        desired_start = pos - STORED_BARS_BEFORE_DECISION + 1
         if desired_start < 0:
             return _build_round(rng)
-        context_start = desired_start
-        actual_warmup = WARMUP_BARS
+        warmup_count = STORED_BARS_BEFORE_DECISION - ctx
 
-        context_df = tf_df.iloc[context_start : pos + 1]
+        visible_df = tf_df.iloc[desired_start : future_end + 1]
         future_df = tf_df.iloc[pos + 1 : future_end + 1]
 
         entry_price = float(tf_df["close"].iat[pos])
@@ -408,9 +442,9 @@ def _build_round(rng):
         }
 
         tf_payloads[tf_name] = {
-            "bars": bars_to_list(context_df),
-            "warmup_count": int(actual_warmup),
-            "future_count": FUTURE_BARS,
+            "bars": bars_to_list(visible_df),
+            "warmup_count": int(warmup_count),
+            "future_count": fut,
             "monkey_sentiment_long_pct": monkey_long,
             "decision_ts": tf_df["timestamp"].iat[pos].isoformat(),
             "exit_ts": tf_df["timestamp"].iat[future_end].isoformat(),
