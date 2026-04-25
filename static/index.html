@@ -1847,8 +1847,9 @@ async function nextRound() {
   if (state.edu === 'on' && state.current.anchor_tf) {
     state.tfActive = state.current.anchor_tf;
   }
-  // Fresh round → tooltip visible by default
-  state.tooltipVisible = true;
+  // Fresh round → tooltip hidden by default; user must press DYOR to surface it.
+  // (state.mode is intentionally NOT reset, so visualization preference persists.)
+  state.tooltipVisible = false;
   state.currentStart = Date.now();
   renderPlay();
   startTimer();
